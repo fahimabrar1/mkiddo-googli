@@ -569,7 +569,7 @@ MonoBehaviour:
   canDrag: 0
   dropSide: 0
   distance: 0.1
-  duration: 0.1
+  duration: 0.4
 --- !u!61 &487627790
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1096,7 +1096,7 @@ MonoBehaviour:
   canDrag: 0
   dropSide: 0
   distance: 0.1
-  duration: 0.1
+  duration: 0.4
 --- !u!61 &1249799953
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1606,7 +1606,7 @@ MonoBehaviour:
   canDrag: 0
   dropSide: 0
   distance: 0.1
-  duration: 0.1
+  duration: 0.4
 --- !u!61 &1302052562
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1821,7 +1821,7 @@ MonoBehaviour:
   canDrag: 0
   dropSide: 0
   distance: 0.1
-  duration: 0.1
+  duration: 0.4
 --- !u!61 &1727408624
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1968,7 +1968,7 @@ MonoBehaviour:
   canDrag: 0
   dropSide: 0
   distance: 0.1
-  duration: 0.1
+  duration: 0.4
 --- !u!61 &1750226168
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2115,7 +2115,7 @@ MonoBehaviour:
   canDrag: 0
   dropSide: 0
   distance: 0.1
-  duration: 0.1
+  duration: 0.4
 --- !u!61 &1797509786
 BoxCollider2D:
   m_ObjectHideFlags: 0
