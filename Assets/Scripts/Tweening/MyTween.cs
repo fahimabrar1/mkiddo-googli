@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -5,58 +6,75 @@ using UnityEngine;
 
 public class MyTween
 {
-    private Sequence tweenUpDownSequence;
-    private Sequence tweenLeftRightSequence;
-    private Sequence tweenDiagonalSequence;
+    // Private fields
+    private Sequence _tweenUpDownSequence;
+    private Sequence _tweenLeftRightSequence;
+    private Sequence _tweenDiagonalSequence;
 
+    private Transform _transform;
 
+    // Constructor
+    public MyTween(Transform transform)
+    {
+        _transform = transform;
+    }
+
+    // Stops a specific tween sequence
     public void StopTween(int tweenIndex)
     {
         switch (tweenIndex)
         {
             case 0:
-                tweenUpDownSequence?.Kill();
+                _tweenUpDownSequence?.Kill();
                 break;
             case 1:
-                tweenLeftRightSequence?.Kill();
+                _tweenLeftRightSequence?.Kill();
                 break;
             case 2:
-                tweenDiagonalSequence?.Kill();
+                _tweenDiagonalSequence?.Kill();
                 break;
         }
     }
-    public void TweenUpDown(Transform transform, float distance, float duration)
+
+    // Moves the transform back to a target position
+    public void TweenBackToPosition(Vector3 targetposition, float duration, Action OnCompleteCallback = null)
     {
-        tweenUpDownSequence = DOTween.Sequence();
+        _transform.DOMove(targetposition, duration).OnComplete(() => OnCompleteCallback?.Invoke());
+    }
+
+    // Tweens the transform up and down
+    public void TweenUpDown(float distance, float duration)
+    {
+        _tweenUpDownSequence = DOTween.Sequence();
         Vector3 up = new(0, distance, 0);
         Vector3 down = new(0, -distance, 0);
 
-        tweenUpDownSequence.Append(transform.DOMove(transform.position + up, duration).SetEase(Ease.InOutQuad))
-                   .Append(transform.DOMove(transform.position + down, duration).SetEase(Ease.InOutQuad))
-                   .SetLoops(-1, LoopType.Yoyo);
+        _tweenUpDownSequence.Append(_transform.DOMove(_transform.position + up, duration).SetEase(Ease.InOutQuad))
+                          .Append(_transform.DOMove(_transform.position + down, duration).SetEase(Ease.InOutQuad))
+                          .SetLoops(-1, LoopType.Yoyo);
     }
-    public void TweenLeftRight(Transform transform, float distance, float duration)
+
+    // Tweens the transform left and right
+    public void TweenLeftRight(float distance, float duration)
     {
-        tweenLeftRightSequence = DOTween.Sequence();
+        _tweenLeftRightSequence = DOTween.Sequence();
         Vector3 right = new(distance, 0, 0);
         Vector3 left = new(-distance, 0, 0);
 
-        tweenLeftRightSequence.Append(transform.DOMove(transform.position + right, duration).SetEase(Ease.InOutQuad))
-                   .Append(transform.DOMove(transform.position + left, duration).SetEase(Ease.InOutQuad))
-                   .SetLoops(-1, LoopType.Yoyo);
-
-
+        _tweenLeftRightSequence.Append(_transform.DOMove(_transform.position + right, duration).SetEase(Ease.InOutQuad))
+                  .Append(_transform.DOMove(_transform.position + left, duration).SetEase(Ease.InOutQuad))
+                  .SetLoops(-1, LoopType.Yoyo);
     }
 
-
-    public void TweenDiagonal(Transform transform, float distance, float duration)
+    // Tweens the transform diagonally
+    public void TweenDiagonal(float distance, float duration)
     {
-        tweenDiagonalSequence = DOTween.Sequence();
+        _tweenDiagonalSequence = DOTween.Sequence();
         Vector3 diagonalUpRight = new(distance, distance, 0);
         Vector3 diagonalDownLeft = new(-distance, -distance, 0);
 
-        tweenDiagonalSequence.Append(transform.DOMove(transform.position + diagonalUpRight, duration).SetEase(Ease.InOutQuad))
-                   .Append(transform.DOMove(transform.position + diagonalDownLeft, duration).SetEase(Ease.InOutQuad))
-                   .SetLoops(-1, LoopType.Yoyo);
+        _tweenDiagonalSequence.Append(_transform.DOMove(_transform.position + diagonalUpRight, duration).SetEase(Ease.InOutQuad))
+                  .Append(_transform.DOMove(_transform.position + diagonalDownLeft, duration).SetEase(Ease.InOutQuad))
+                  .SetLoops(-1, LoopType.Yoyo);
     }
 }

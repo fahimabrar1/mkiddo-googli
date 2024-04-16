@@ -1,53 +1,67 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
-using Unity.VisualScripting;
+using UnityEngine;
 
 public class DragAndDropManager : MonoBehaviour
 {
-
+    // Enumeration for the two possible drop sides
     public enum DropSide
     {
         left,
         right
     }
 
-
+    // Reference to the left drop container
     public DropContainer leftContainer;
+
+    // Reference to the right drop container
     public DropContainer rightContainer;
-    public List<DraggableObject> draggableObjects = new();
 
+    // List of all draggable objects
+    public List<DraggableObject> Draggables = new();
 
-    /// <summary>
-    /// Awake is called when the script instance is being loaded.
-    /// </summary>
-    void Awake()
+    // Total number of objects placed
+    public int TotalObjectsPlaced { get; private set; }
+
+    // Awake is called when the script instance is being loaded
+    private void Awake()
     {
-        var allDraggableObjects = FindObjectsByType<DraggableObject>(FindObjectsSortMode.None);
-        foreach (var Obj in allDraggableObjects)
+        // Find all DraggableObject components in the scene and add them to the Draggables list
+        Draggables = FindObjectsByType<DraggableObject>(FindObjectsSortMode.None).ToList();
+    }
+
+    // Method called when an object is dropped
+    public void OnDropObject(DraggableObject draggableObject, bool matched)
+    {
+        // If the object was not matched, return it to its original position
+        if (!matched)
         {
-            draggableObjects.Add(Obj);
+            draggableObject.ReturnToOriginalPosition();
+            return;
+        }
+
+
+
+        // Increment the total number of objects placed
+        TotalObjectsPlaced++;
+
+        draggableObject.GoToOriginalPosition = false;
+
+        // If all objects have been placed, trigger the game win logic
+        if (TotalObjectsPlaced == Draggables.Count)
+        {
+            // Todo: Game Win
         }
     }
 
 
 
 
-    public void OnDropObject(DraggableObject dragabble, bool matched)
+    public void OnCancelDropObject(DraggableObject draggableObject)
     {
-        var obj = draggableObjects.FirstOrDefault((d) => d == dragabble);
-
-        if (matched)
-        {
-            dragabble.canDrag = false;
-
-            //Todo: Do Tween and Snap to childposition 
-
-        }
-        else
-        {
-            //Todo: Do Tween and Snap to original position 
-        }
+        // Decrement the total number of objects placed
+        TotalObjectsPlaced--;
+        draggableObject.GoToOriginalPosition = true;
+        draggableObject.siteTarget = Vector3.zero;
     }
 }

@@ -1,4 +1,4 @@
-public interface IDragabble
+public interface IDragable
 {
     public void OnMouseDown();
 
