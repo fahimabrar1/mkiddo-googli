@@ -3,21 +3,28 @@ using DG.Tweening;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class DraggableObject : MonoBehaviour, IDragable
 {
+
     public bool isDragging;
     public bool CanDrag;
+
     public bool GoToOriginalPosition;
     public DragAndDropManager.DropSide dropSide;
+    public bool EnableAnimaitons;
     public float distance = 2f; // Distance to move in each direction
     public float duration = 1f; // Time to complete each movement
-    private MyTween myTween;
     private Vector3 originalPosition;
     private Vector3 offset;
     public Vector3 siteTarget;
     private Camera mainCamera;
-    int loopingAnimationIndex = 0;
+
+    public UnityEvent OnMouseDownEvent;
+    public UnityEvent OnMouseUpEvent;
+    public UnityEvent OnReturnToOriginalPositionEvent;
+
 
 
     /// <summary>
@@ -25,13 +32,8 @@ public class DraggableObject : MonoBehaviour, IDragable
     /// </summary>
     void Awake()
     {
-        myTween = new(transform);
         mainCamera = Camera.main;
     }
-
-
-
-
     /// <summary>
     /// Start is called on the frame when a script is enabled just before
     /// any of the Update methods is called the first time.
@@ -41,25 +43,6 @@ public class DraggableObject : MonoBehaviour, IDragable
         CanDrag = true;
         GoToOriginalPosition = false;
         siteTarget = Vector3.zero;
-        originalPosition = transform.position; // Consider this the central point
-        loopingAnimationIndex = Mathf.RoundToInt(UnityEngine.Random.Range(0, 3));
-        SetLoopingTween();
-    }
-
-    private void SetLoopingTween()
-    {
-        if (loopingAnimationIndex == 0)
-        {
-            myTween.TweenUpDown(distance, duration);
-        }
-        else if (loopingAnimationIndex == 1)
-        {
-            myTween.TweenLeftRight(distance, duration);
-        }
-        else
-        {
-            myTween.TweenDiagonal(distance, duration);
-        }
     }
 
     void Update()
@@ -96,41 +79,23 @@ public class DraggableObject : MonoBehaviour, IDragable
         }
     }
 
+
+
     public void OnMouseDown()
     {
-        Debug.Log("Mouse Down - Started dragging.");
-        myTween?.StopTween(loopingAnimationIndex);
-        isDragging = true;
-        GoToOriginalPosition = true;
+
+        OnMouseDownEvent.Invoke();
     }
 
     public void OnMouseUp()
     {
-        Debug.Log("Mouse Up - Stopped dragging.");
-        if (GoToOriginalPosition)
-            ReturnToOriginalPosition();
-        else if (siteTarget != Vector3.zero)
-            SetToSidePosition(siteTarget);
+        OnMouseUpEvent.Invoke();
+        OnReturnToOriginalPositionEvent.Invoke();
     }
 
     public void ReturnToOriginalPosition()
     {
-        GoToOriginalPosition = false;
-        isDragging = false;
-        if (CanDrag)
-        {
-            myTween.TweenBackToPosition(originalPosition, 0.25f, () =>
-            {
-                Debug.Log("Tween Complete - Restored original position.");
-                SetLoopingTween();
-            });
-        }
+        OnReturnToOriginalPositionEvent.Invoke();
     }
 
-    public void SetToSidePosition(Vector3 target)
-    {
-        // Disable dragging for the matched object
-        CanDrag = false;
-        myTween.TweenBackToPosition(target, 0.5f);
-    }
 }

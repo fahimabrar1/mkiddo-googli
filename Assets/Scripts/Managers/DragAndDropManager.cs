@@ -7,8 +7,10 @@ public class DragAndDropManager : MonoBehaviour
     // Enumeration for the two possible drop sides
     public enum DropSide
     {
+        noSide,
         left,
-        right
+        right,
+
     }
 
     // Reference to the left drop container
