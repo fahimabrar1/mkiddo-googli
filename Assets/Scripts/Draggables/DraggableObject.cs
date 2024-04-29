@@ -5,22 +5,27 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
+[Serializable]
+public class OnSetSiteBooleanEvent : UnityEvent<bool> { }
+
+[Serializable]
+public class OnSetSiteTargetVectorEvent : UnityEvent<Vector3> { }
+
 public class DraggableObject : MonoBehaviour, IDragable
 {
 
     public bool isDragging;
     public bool CanDrag;
 
-    public bool GoToOriginalPosition;
     public DragAndDropManager.DropSide dropSide;
     public bool EnableAnimaitons;
     public float distance = 2f; // Distance to move in each direction
     public float duration = 1f; // Time to complete each movement
-    private Vector3 originalPosition;
     private Vector3 offset;
-    public Vector3 siteTarget;
     private Camera mainCamera;
 
+    public OnSetSiteBooleanEvent OnSetSiteBoolEvent;
+    public OnSetSiteTargetVectorEvent OnSetSiteTargetVec3Event;
     public UnityEvent OnMouseDownEvent;
     public UnityEvent OnMouseUpEvent;
     public UnityEvent OnReturnToOriginalPositionEvent;
@@ -41,8 +46,6 @@ public class DraggableObject : MonoBehaviour, IDragable
     void Start()
     {
         CanDrag = true;
-        GoToOriginalPosition = false;
-        siteTarget = Vector3.zero;
     }
 
     void Update()
@@ -83,7 +86,6 @@ public class DraggableObject : MonoBehaviour, IDragable
 
     public void OnMouseDown()
     {
-
         OnMouseDownEvent.Invoke();
     }
 

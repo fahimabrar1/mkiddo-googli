@@ -47,7 +47,7 @@ public class DragAndDropManager : MonoBehaviour
         // Increment the total number of objects placed
         TotalObjectsPlaced++;
 
-        draggableObject.GoToOriginalPosition = false;
+        draggableObject.OnSetSiteBoolEvent?.Invoke(false);
 
         // If all objects have been placed, trigger the game win logic
         if (TotalObjectsPlaced == Draggables.Count)
@@ -63,7 +63,7 @@ public class DragAndDropManager : MonoBehaviour
     {
         // Decrement the total number of objects placed
         TotalObjectsPlaced--;
-        draggableObject.GoToOriginalPosition = true;
-        draggableObject.siteTarget = Vector3.zero;
+        draggableObject.OnSetSiteBoolEvent?.Invoke(true);
+        draggableObject.OnSetSiteTargetVec3Event?.Invoke(Vector3.zero);
     }
 }

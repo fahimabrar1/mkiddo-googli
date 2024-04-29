@@ -1,28 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
+
+[System.Serializable]
+public class DraggableObjectEvent : UnityEvent<DraggableObject> { }
 
 public class DropContainer : MonoBehaviour
 {
-
-
     public DragAndDropManager dragAndDropManager;
     public DragAndDropManager.DropSide dropSide;
-    public List<Vector3> Positions = new();
 
     private DraggableObject lastEnteredDraggableObject;
-    private int occupiedPosition = 0;
 
-    /// <summary>
-    /// Awake is called when the script instance is being loaded.
-    /// </summary>
-    void Awake()
-    {
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            Positions.Add(transform.GetChild(i).transform.position);
-        }
-    }
+    public DraggableObjectEvent OnTriggerEnter2DEvent;
+    public UnityEvent OnTriggerExit2DEvent;
 
     /// <summary>
     /// Sent when another object enters a trigger collider attached to this
@@ -37,13 +28,13 @@ public class DropContainer : MonoBehaviour
             if (draggableObject.dropSide == dropSide)
             {
                 lastEnteredDraggableObject = draggableObject;
-                draggableObject.siteTarget = Positions[occupiedPosition];
-                occupiedPosition++;
                 dragAndDropManager.OnDropObject(draggableObject, true);
+                OnTriggerEnter2DEvent.Invoke(draggableObject);
+
             }
             else
             {
-                draggableObject.GoToOriginalPosition = true;
+                draggableObject.OnSetSiteBoolEvent?.Invoke(true);
             }
         }
     }
@@ -60,7 +51,7 @@ public class DropContainer : MonoBehaviour
         {
             if (lastEnteredDraggableObject == draggableObject)
             {
-                occupiedPosition--;
+                OnTriggerExit2DEvent?.Invoke();
                 dragAndDropManager.OnCancelDropObject(draggableObject);
             }
         }

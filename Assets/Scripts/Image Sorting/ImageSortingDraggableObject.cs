@@ -30,6 +30,8 @@ public class ImageSortingDraggableObject : MonoBehaviour
     /// </summary>
     void Start()
     {
+        siteTarget = Vector3.zero;
+
         loopingAnimationIndex = Mathf.RoundToInt(UnityEngine.Random.Range(0, 3));
         SetLoopingTween();
         originalPosition = transform.position; // Consider this the central point
@@ -94,9 +96,20 @@ public class ImageSortingDraggableObject : MonoBehaviour
     public void OnMouseUpCallback()
     {
         Debug.Log("Mouse Up - Stopped dragging.");
+        Debug.Log("GoToOriginalPosition: " + GoToOriginalPosition);
         if (GoToOriginalPosition)
             ReturnToOriginalPosition();
         else if (siteTarget != Vector3.zero)
             SetToSidePosition(siteTarget);
+    }
+
+    public void OnSetSiteBoolean(bool value)
+    {
+        GoToOriginalPosition = value;
+    }
+
+    public void OnSetSiteTargetVec3(Vector3 value)
+    {
+        siteTarget = value;
     }
 }
