@@ -9,6 +9,7 @@ public class Timer : MonoBehaviour
     public float totalTime = 20f; // Total time for the timer
     private float currentTime; // Current time left
     private float previousTime; // Current time left
+    private bool isActive; // if the timer is active
     public Image progressBar; // Reference to the progress bar image
     public List<Image> stars; // List of Image components representing stars
     public TextMeshProUGUI TimerText; // List of Image components representing stars
@@ -19,10 +20,13 @@ public class Timer : MonoBehaviour
         currentTime = 0; // Set current time to total time at the start
         previousTime = 0; // Set previous time
         TimerText.text = totalTime.ToString() + "s";
+        isActive = true;
     }
 
     void Update()
     {
+        if (!isActive)
+            return;
         // Decrease current time
         currentTime += Time.deltaTime;
 
@@ -75,5 +79,10 @@ public class Timer : MonoBehaviour
         {
             stars[index1].color = Color.grey;
         }
+    }
+
+    public void Stop()
+    {
+        isActive = false;
     }
 }

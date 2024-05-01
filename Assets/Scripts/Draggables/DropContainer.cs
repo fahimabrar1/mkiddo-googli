@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
+using DG.Tweening;
 
 
 [System.Serializable]
@@ -14,6 +16,9 @@ public class DropContainer : MonoBehaviour
 
     public DraggableObjectEvent OnTriggerEnter2DEvent;
     public UnityEvent OnTriggerExit2DEvent;
+
+    public SpriteRenderer currentRenderObject;
+    public GameObject combinedSprite;
 
     /// <summary>
     /// Sent when another object enters a trigger collider attached to this
@@ -55,5 +60,12 @@ public class DropContainer : MonoBehaviour
                 dragAndDropManager.OnCancelDropObject(draggableObject);
             }
         }
+    }
+
+    internal void ActivateWinScenatio()
+    {
+        currentRenderObject.enabled = false;
+        combinedSprite.SetActive(true);
+        combinedSprite.transform.DOScale(1.2f, 1);
     }
 }

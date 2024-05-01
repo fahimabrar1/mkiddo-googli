@@ -225,7 +225,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1301221779}
@@ -489,6 +489,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 91d3e9c35e8d7694295eaa8cbe67defb, type: 3}
+--- !u!114 &795470412 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3232732354990365938, guid: 50a7680f16a0ea146a594b45a17353e7, type: 3}
+  m_PrefabInstance: {fileID: 7893450260959390774}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3137c3b16681a4b45bfbbf26b6678759, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1065477629
 GameObject:
   m_ObjectHideFlags: 0
@@ -1074,7 +1085,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4348457a7d434144e8a999e689508174, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dragAndDropManager: {fileID: 0}
+  dragAndDropManager: {fileID: 1853116331}
   dropSide: 1
   OnTriggerEnter2DEvent:
     m_PersistentCalls:
@@ -1082,6 +1093,8 @@ MonoBehaviour:
   OnTriggerExit2DEvent:
     m_PersistentCalls:
       m_Calls: []
+  currentRenderObject: {fileID: 1301221778}
+  combinedSprite: {fileID: 200165792}
 --- !u!1001 &1337271371
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1381,6 +1394,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b99b35453d92c5446ad8485b2cba9e3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timer: {fileID: 795470412}
   centerContainer: {fileID: 1301221782}
   Draggables: []
 --- !u!1001 &1943279173
@@ -1499,14 +1513,6 @@ PrefabInstance:
     - target: {fileID: 8455721984515433154, guid: 91d3e9c35e8d7694295eaa8cbe67defb, type: 3}
       propertyPath: m_Name
       value: drag_and_drop_dragger
-      objectReference: {fileID: 0}
-    - target: {fileID: 9154604239867670785, guid: 91d3e9c35e8d7694295eaa8cbe67defb, type: 3}
-      propertyPath: m_Size.x
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 9154604239867670785, guid: 91d3e9c35e8d7694295eaa8cbe67defb, type: 3}
-      propertyPath: m_Size.y
-      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 9154604239867670785, guid: 91d3e9c35e8d7694295eaa8cbe67defb, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x

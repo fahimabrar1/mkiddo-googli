@@ -3,7 +3,7 @@ using UnityEngine;
 public class DropManager : MonoBehaviour
 {
 
-
+    public Timer timer;
     public virtual void OnDropObject(DraggableObject draggableObject, bool matched)
     { }
 

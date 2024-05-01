@@ -50,6 +50,9 @@ public class DragAndDropManager : DropManager
         //Todo:win
         Debug.LogWarning("Won");
         draggableObject.gameObject.SetActive(false);
+
+        centerContainer.ActivateWinScenatio();
+        timer.Stop();
     }
 
 
