@@ -7,8 +7,8 @@ public class DraggableObjectEvent : UnityEvent<DraggableObject> { }
 
 public class DropContainer : MonoBehaviour
 {
-    public DragAndDropManager dragAndDropManager;
-    public DragAndDropManager.DropSide dropSide;
+    public DropManager dragAndDropManager;
+    public ImageSortingManager.DropSide dropSide;
 
     private DraggableObject lastEnteredDraggableObject;
 

@@ -131,6 +131,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2450774697939535124, guid: c0dba60f3d3e87f47bd87e3bd1f9528e, type: 3}
+      propertyPath: dropSide
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4026675852835363164, guid: c0dba60f3d3e87f47bd87e3bd1f9528e, type: 3}
       propertyPath: dropSide
       value: 1
@@ -183,6 +187,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 5e091eec7c1f9b04e9f56ec437e980fc, type: 3}
+    - target: {fileID: 8669661777410327525, guid: c0dba60f3d3e87f47bd87e3bd1f9528e, type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -427,7 +435,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 532094147
   m_SortingLayer: 1
-  m_SortingOrder: 1
+  m_SortingOrder: 12
   m_Sprite: {fileID: 21300000, guid: 5e091eec7c1f9b04e9f56ec437e980fc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -542,7 +550,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dragAndDropManager: {fileID: 1853116329}
-  dropSide: 1
+  dropSide: 0
   OnTriggerEnter2DEvent:
     m_PersistentCalls:
       m_Calls:
@@ -584,7 +592,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2450774697939535124, guid: c0dba60f3d3e87f47bd87e3bd1f9528e, type: 3}
       propertyPath: dropSide
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6634609546643510405, guid: c0dba60f3d3e87f47bd87e3bd1f9528e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -733,7 +741,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2450774697939535124, guid: c0dba60f3d3e87f47bd87e3bd1f9528e, type: 3}
       propertyPath: dropSide
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6634609546643510405, guid: c0dba60f3d3e87f47bd87e3bd1f9528e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -783,6 +791,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 1af7524744f44404e9152a220fb39ec1, type: 3}
+    - target: {fileID: 8669661777410327525, guid: c0dba60f3d3e87f47bd87e3bd1f9528e, type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1614,7 +1626,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 532094147
   m_SortingLayer: 1
-  m_SortingOrder: 1
+  m_SortingOrder: 12
   m_Sprite: {fileID: 21300000, guid: 1af7524744f44404e9152a220fb39ec1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1729,7 +1741,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dragAndDropManager: {fileID: 1853116329}
-  dropSide: 2
+  dropSide: 0
   OnTriggerEnter2DEvent:
     m_PersistentCalls:
       m_Calls:
@@ -1956,6 +1968,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2450774697939535124, guid: c0dba60f3d3e87f47bd87e3bd1f9528e, type: 3}
+      propertyPath: dropSide
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4026675852835363164, guid: c0dba60f3d3e87f47bd87e3bd1f9528e, type: 3}
       propertyPath: dropSide
       value: 1
@@ -2008,6 +2024,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 5e091eec7c1f9b04e9f56ec437e980fc, type: 3}
+    - target: {fileID: 8669661777410327525, guid: c0dba60f3d3e87f47bd87e3bd1f9528e, type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2172,7 +2192,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2450774697939535124, guid: c0dba60f3d3e87f47bd87e3bd1f9528e, type: 3}
       propertyPath: dropSide
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6634609546643510405, guid: c0dba60f3d3e87f47bd87e3bd1f9528e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2222,6 +2242,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 1af7524744f44404e9152a220fb39ec1, type: 3}
+    - target: {fileID: 8669661777410327525, guid: c0dba60f3d3e87f47bd87e3bd1f9528e, type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2319,6 +2343,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2450774697939535124, guid: c0dba60f3d3e87f47bd87e3bd1f9528e, type: 3}
+      propertyPath: dropSide
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6634609546643510405, guid: c0dba60f3d3e87f47bd87e3bd1f9528e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.8
@@ -2362,6 +2390,10 @@ PrefabInstance:
     - target: {fileID: 6973659954038487373, guid: c0dba60f3d3e87f47bd87e3bd1f9528e, type: 3}
       propertyPath: m_Name
       value: image_matching_drager (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8669661777410327525, guid: c0dba60f3d3e87f47bd87e3bd1f9528e, type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

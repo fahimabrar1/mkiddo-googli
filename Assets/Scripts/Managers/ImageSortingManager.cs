@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class DragAndDropManager : DropManager
+public class ImageSortingManager : DropManager
 {
     // Enumeration for the two possible drop sides
     public enum DropSide
@@ -13,8 +13,11 @@ public class DragAndDropManager : DropManager
         right,
     }
 
-    // Reference to the center drop container
-    public DropContainer centerContainer;
+    // Reference to the left drop container
+    public DropContainer leftContainer;
+
+    // Reference to the right drop container
+    public DropContainer rightContainer;
 
     // List of all draggable objects
     public List<DraggableObject> Draggables = new();
@@ -30,8 +33,10 @@ public class DragAndDropManager : DropManager
     }
 
     // Method called when an object is dropped
+
     public override void OnDropObject(DraggableObject draggableObject, bool matched)
     {
+
         // If the object was not matched, return it to its original position
         if (!matched)
         {
@@ -47,9 +52,10 @@ public class DragAndDropManager : DropManager
         draggableObject.OnSetSiteBoolEvent?.Invoke(false);
 
         // If all objects have been placed, trigger the game win logic
-        //Todo:win
-        Debug.LogWarning("Won");
-        draggableObject.gameObject.SetActive(false);
+        if (TotalObjectsPlaced == Draggables.Count)
+        {
+            // Todo: Game Win
+        }
     }
 
 
@@ -58,6 +64,7 @@ public class DragAndDropManager : DropManager
     public override void OnCancelDropObject(DraggableObject draggableObject)
     {
         // Decrement the total number of objects placed
+        TotalObjectsPlaced--;
         draggableObject.OnSetSiteBoolEvent?.Invoke(true);
         draggableObject.OnSetSiteTargetVec3Event?.Invoke(Vector3.zero);
     }

@@ -17,7 +17,7 @@ public class DraggableObject : MonoBehaviour, IDragable
     public bool isDragging;
     public bool CanDrag;
 
-    public DragAndDropManager.DropSide dropSide;
+    public ImageSortingManager.DropSide dropSide;
     public bool EnableAnimaitons;
     public float distance = 2f; // Distance to move in each direction
     public float duration = 1f; // Time to complete each movement
