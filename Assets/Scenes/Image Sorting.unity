@@ -569,6 +569,8 @@ MonoBehaviour:
   OnTriggerExit2DEvent:
     m_PersistentCalls:
       m_Calls: []
+  currentRenderObject: {fileID: 0}
+  combinedSprite: {fileID: 0}
 --- !u!114 &325190596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1760,6 +1762,8 @@ MonoBehaviour:
   OnTriggerExit2DEvent:
     m_PersistentCalls:
       m_Calls: []
+  currentRenderObject: {fileID: 0}
+  combinedSprite: {fileID: 0}
 --- !u!114 &1301221783
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2135,6 +2139,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5966300946804775466, guid: 50a7680f16a0ea146a594b45a17353e7, type: 3}
   m_PrefabInstance: {fileID: 1785503038}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1785503040 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3232732354990365938, guid: 50a7680f16a0ea146a594b45a17353e7, type: 3}
+  m_PrefabInstance: {fileID: 1785503038}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3137c3b16681a4b45bfbbf26b6678759, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1853116328
 GameObject:
   m_ObjectHideFlags: 0
@@ -2164,6 +2179,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40c7fca845b30d24ab0620d27d34dea6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timer: {fileID: 1785503040}
   leftContainer: {fileID: 325190595}
   rightContainer: {fileID: 1301221782}
   Draggables: []

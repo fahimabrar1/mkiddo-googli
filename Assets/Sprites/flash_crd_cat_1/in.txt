@@ -1,0 +1,390 @@
+{
+
+"flash_card_category": 
+           [ {
+            "category_number": 1,
+            "category_id": 1,
+            "category_name": "flash card",
+            "category_prompt_audio": "",
+            "category_end_audio": "",
+            "containing_file": "flash_crd_cat_1",
+            "file_url": "flash_crd_cat_1",
+            "flash_card_item": [
+                           {
+                           
+                                "item_number": 1,
+                                "item_name": "A",
+                            
+                                "item_before_image": "C_A",
+                                "item_after_image": "apple",
+
+                                "item_before_audio": "a",
+                                "item_after_audio1": "apple",
+                                "item_after_audio2": "apple_2"
+
+                            },
+
+                            {
+                           
+                                "item_number": 2,
+                                "item_name": "B",
+                            
+                                "item_before_image": "C_B",
+                                "item_after_image": "bee" ,
+
+                                "item_before_audio": "b",
+                                "item_after_audio1": "bee",
+                                "item_after_audio2": "bee_2"
+
+                            },
+
+                            {
+                           
+                                "item_number": 3,
+                                "item_name": "C",
+                            
+                                "item_before_image": "C_C",
+                                "item_after_image": "car" ,
+
+                                "item_before_audio": "c",
+                                "item_after_audio1": "car",
+                                "item_after_audio2": "car_2"
+
+                            },
+
+                            {
+                           
+                                "item_number": 4,
+                                "item_name": "D",
+                            
+                                "item_before_image": "C_D",
+                                "item_after_image": "duck" ,
+
+                                "item_before_audio": "d",
+                                "item_after_audio1": "duck",
+                                "item_after_audio2": "duck_2"
+
+                            },
+
+                            {
+                           
+                                "item_number": 5,
+                                "item_name": "E",
+                            
+                                "item_before_image": "C_E",
+                                "item_after_image": "egg" ,
+
+                                "item_before_audio": "e",
+                                "item_after_audio1": "egg",
+                                "item_after_audio2": "egg_2"
+
+                            },
+
+
+                            {
+                           
+                                "item_number": 6,
+                                "item_name": "F",
+                            
+                                "item_before_image": "C_F",
+                                "item_after_image": "fly" ,
+
+                                "item_before_audio": "f",
+                                "item_after_audio1": "fly",
+                                "item_after_audio2": "fly_2"
+
+                            },
+
+                            {
+                           
+                                "item_number": 7,
+                                "item_name": "G",
+                            
+                                "item_before_image": "C_G",
+                                "item_after_image": "goat" ,
+
+                                "item_before_audio": "g",
+                                "item_after_audio1": "goat",
+                                "item_after_audio2": "goat_2"
+
+                            },
+
+                            {
+                           
+                                "item_number": 8,
+                                "item_name": "H",
+                            
+                                "item_before_image": "C_H",
+                                "item_after_image": "house" ,
+
+                                "item_before_audio": "h",
+                                "item_after_audio1": "house",
+                                "item_after_audio2": "house_2"
+
+                            },
+
+                            {
+                           
+                                "item_number": 9,
+                                "item_name": "I",
+                            
+                                "item_before_image": "C_I",
+                                "item_after_image": "ice" ,
+
+                                "item_before_audio": "i",
+                                "item_after_audio1": "ice",
+                                "item_after_audio2": "ice_2"
+
+                            },
+
+                            {
+                           
+                                "item_number": 10,
+                                "item_name": "J",
+                            
+                                "item_before_image": "C_J",
+                                "item_after_image": "jet" ,
+
+                                "item_before_audio": "j",
+                                "item_after_audio1": "jet",
+                                "item_after_audio2": "jet_2"
+
+                            },
+
+                            {
+                           
+                                "item_number": 11,
+                                "item_name": "K",
+                            
+                                "item_before_image": "C_K",
+                                "item_after_image": "king" ,
+
+                                "item_before_audio": "k",
+                                "item_after_audio1": "king",
+                                "item_after_audio2": "king_2"
+
+                            },
+
+                            {
+                           
+                                "item_number": 12,
+                                "item_name": "L",
+                            
+                                "item_before_image": "C_L",
+                                "item_after_image": "leaf" ,
+
+                                "item_before_audio": "l",
+                                "item_after_audio1": "leaf",
+                                "item_after_audio2": "leaf_2"
+
+                            },
+
+                            {
+                           
+                                "item_number": 13,
+                                "item_name": "M",
+                            
+                                "item_before_image": "C_M",
+                                "item_after_image": "monkey" ,
+
+                                "item_before_audio": "m",
+                                "item_after_audio1": "monkey",
+                                "item_after_audio2": "monkey_2"
+
+                            },
+
+                            {
+                           
+                                "item_number": 14,
+                                "item_name": "N",
+                            
+                                "item_before_image": "C_N",
+                                "item_after_image": "net" ,
+
+                                "item_before_audio": "n",
+                                "item_after_audio1": "net",
+                                "item_after_audio2": "net_2"
+
+                            },
+
+                            {
+                           
+                                "item_number": 15,
+                                "item_name": "O",
+                            
+                                "item_before_image": "C_O",
+                                "item_after_image": "owl" ,
+
+                                "item_before_audio": "o",
+                                "item_after_audio1": "owl",
+                                "item_after_audio2": "owl_2"
+
+                            },
+
+                            {
+                           
+                                "item_number": 16,
+                                "item_name": "P",
+                            
+                                "item_before_image": "C_P",
+                                "item_after_image": "play" ,
+
+                                "item_before_audio": "p",
+                                "item_after_audio1": "play",
+                                "item_after_audio2": "play_2"
+
+                            },
+
+                            {
+                           
+                                "item_number": 17,
+                                "item_name": "Q",
+                            
+                                "item_before_image": "C_Q",
+                                "item_after_image": "queen" ,
+
+                                "item_before_audio": "q",
+                                "item_after_audio1": "queen",
+                                "item_after_audio2": "queen_2"
+
+                            },
+
+                            {
+                           
+                                "item_number": 18,
+                                "item_name": "R",
+                            
+                                "item_before_image": "C_R",
+                                "item_after_image": "rock" ,
+
+                                "item_before_audio": "r",
+                                "item_after_audio1": "rock",
+                                "item_after_audio2": "rock_2"
+
+                            },
+
+                            {
+                           
+                                "item_number": 19,
+                                "item_name": "S",
+                            
+                                "item_before_image": "C_S",
+                                "item_after_image": "sun" ,
+
+                                "item_before_audio": "s",
+                                "item_after_audio1": "sun",
+                                "item_after_audio2": "sun_2"
+
+                            },
+
+                            {
+                           
+                                "item_number": 20,
+                                "item_name": "T",
+                            
+                                "item_before_image": "C_T",
+                                "item_after_image": "tea" ,
+
+                                "item_before_audio": "t",
+                                "item_after_audio1": "tea",
+                                "item_after_audio2": "tea_2"
+
+                            },
+
+                            {
+                           
+                                "item_number": 21,
+                                "item_name": "U",
+                            
+                                "item_before_image": "C_U",
+                                "item_after_image": "up" ,
+
+                                "item_before_audio": "u",
+                                "item_after_audio1": "up",
+                                "item_after_audio2": "up_2"
+
+                            },
+
+                            {
+                           
+                                "item_number": 22,
+                                "item_name": "V",
+                            
+                                "item_before_image": "C_V",
+                                "item_after_image": "vase" ,
+
+                                "item_before_audio": "v",
+                                "item_after_audio1": "vase",
+                                "item_after_audio2": "vase_2"
+
+                            },
+
+                            {
+                           
+                                "item_number": 23,
+                                "item_name": "W",
+                            
+                                "item_before_image": "C_W",
+                                "item_after_image": "wolf" ,
+
+                                "item_before_audio": "w",
+                                "item_after_audio1": "wolf",
+                                "item_after_audio2": "wolf_2"
+
+                            },
+
+
+                            {
+                           
+                                "item_number": 24,
+                                "item_name": "X",
+                            
+                                "item_before_image": "C_X",
+                                "item_after_image": "xylophone" ,
+
+                                "item_before_audio": "x",
+                                "item_after_audio1": "xylophone",
+                                "item_after_audio2": "xylophone_2"
+
+                            },
+
+                            {
+                           
+                                "item_number": 25,
+                                "item_name": "Y",
+                            
+                                "item_before_image": "C_Y",
+                                "item_after_image": "yellow" ,
+
+                                "item_before_audio": "y",
+                                "item_after_audio1": "yellow",
+                                "item_after_audio2": "yellow_2"
+
+                            },
+
+
+                            {
+                           
+                                "item_number": 26,
+                                "item_name": "Z",
+                            
+                                "item_before_image": "C_Z",
+                                "item_after_image": "zoo" ,
+
+                                "item_before_audio": "z",
+                                "item_after_audio1": "zoo",
+                                "item_after_audio2": "zoo_2"
+
+                            }
+
+
+
+                               
+                        ]
+            }
+
+            ]
+             
+
+
+}
