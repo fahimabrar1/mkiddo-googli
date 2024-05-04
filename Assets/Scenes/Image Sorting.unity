@@ -278,7 +278,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2450774697939535124, guid: c0dba60f3d3e87f47bd87e3bd1f9528e, type: 3}
       propertyPath: dropSide
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4026675852835363164, guid: c0dba60f3d3e87f47bd87e3bd1f9528e, type: 3}
       propertyPath: dropSide
@@ -695,7 +695,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dragAndDropManager: {fileID: 1853116329}
-  dropSide: 0
+  dropSide: 2
   OnTriggerEnter2DEvent:
     m_PersistentCalls:
       m_Calls:
@@ -739,7 +739,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2450774697939535124, guid: c0dba60f3d3e87f47bd87e3bd1f9528e, type: 3}
       propertyPath: dropSide
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6634609546643510405, guid: c0dba60f3d3e87f47bd87e3bd1f9528e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -888,7 +888,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2450774697939535124, guid: c0dba60f3d3e87f47bd87e3bd1f9528e, type: 3}
       propertyPath: dropSide
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6634609546643510405, guid: c0dba60f3d3e87f47bd87e3bd1f9528e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1744,7 +1744,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dragAndDropManager: {fileID: 1853116329}
-  dropSide: 0
+  dropSide: 3
   OnTriggerEnter2DEvent:
     m_PersistentCalls:
       m_Calls:
@@ -2120,7 +2120,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2450774697939535124, guid: c0dba60f3d3e87f47bd87e3bd1f9528e, type: 3}
       propertyPath: dropSide
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4026675852835363164, guid: c0dba60f3d3e87f47bd87e3bd1f9528e, type: 3}
       propertyPath: dropSide
@@ -2354,7 +2354,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2450774697939535124, guid: c0dba60f3d3e87f47bd87e3bd1f9528e, type: 3}
       propertyPath: dropSide
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6634609546643510405, guid: c0dba60f3d3e87f47bd87e3bd1f9528e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2507,7 +2507,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2450774697939535124, guid: c0dba60f3d3e87f47bd87e3bd1f9528e, type: 3}
       propertyPath: dropSide
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6634609546643510405, guid: c0dba60f3d3e87f47bd87e3bd1f9528e, type: 3}
       propertyPath: m_LocalPosition.x

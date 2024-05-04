@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FlashCardAudioPlayer : MonoBehaviour
+public class DragAndDropAudioPlayer : MonoBehaviour
 {
-    public List<FlashCardAudioModel> flashCardAudioModels;
+    public List<DragAndDropAudioModel> dragAndDropAudioPlayer;
     private AudioSource audioSource;
 
     /// <summary>
@@ -23,9 +23,9 @@ public class FlashCardAudioPlayer : MonoBehaviour
     /// </summary>
     void Start()
     {
-        if (flashCardAudioModels.Count > 0)
+        if (dragAndDropAudioPlayer.Count > 0)
         {
-            foreach (var FlashCardAudioModel in flashCardAudioModels)
+            foreach (var FlashCardAudioModel in dragAndDropAudioPlayer)
             {
                 FlashCardAudioModel.audioIndex = 0;
             }
@@ -36,11 +36,11 @@ public class FlashCardAudioPlayer : MonoBehaviour
     // Function to play a single audio clip
     public void PlayFirstAudioClip(int index)
     {
-        if (index >= 0 && index < flashCardAudioModels.Count)
+        if (index >= 0 && index < dragAndDropAudioPlayer.Count)
         {
-            audioSource.clip = flashCardAudioModels[index].clips[flashCardAudioModels[index].audioIndex];
+            audioSource.clip = dragAndDropAudioPlayer[index].clips[dragAndDropAudioPlayer[index].audioIndex];
             audioSource.Play();
-            flashCardAudioModels[index].audioIndex++;
+            dragAndDropAudioPlayer[index].audioIndex++;
         }
         else
         {
@@ -53,20 +53,20 @@ public class FlashCardAudioPlayer : MonoBehaviour
     {
         IEnumerator PlayAudioClipsSequentiallyCoroutine()
         {
-            int totalAudioCount = flashCardAudioModels[currentFlashCard].clips.Count;
+            int totalAudioCount = dragAndDropAudioPlayer[currentFlashCard].clips.Count;
 
 
             // Loop until the current index reaches the last audio clip
-            while (flashCardAudioModels[currentFlashCard].audioIndex < totalAudioCount)
+            while (dragAndDropAudioPlayer[currentFlashCard].audioIndex < totalAudioCount)
             {
                 // Check if the audio source is not playing
                 if (!audioSource.isPlaying)
                 {
                     // Set the current audio clip and play it
-                    audioSource.clip = flashCardAudioModels[currentFlashCard].clips[flashCardAudioModels[currentFlashCard].audioIndex];
+                    audioSource.clip = dragAndDropAudioPlayer[currentFlashCard].clips[dragAndDropAudioPlayer[currentFlashCard].audioIndex];
                     audioSource.Play();
                     // Increment the index for the next audio clip
-                    flashCardAudioModels[currentFlashCard].audioIndex++;
+                    dragAndDropAudioPlayer[currentFlashCard].audioIndex++;
                 }
                 // Yielding null here allows the loop to continue without waiting
                 yield return null;
@@ -78,8 +78,20 @@ public class FlashCardAudioPlayer : MonoBehaviour
         StartCoroutine(PlayAudioClipsSequentiallyCoroutine());
     }
 
-    internal void ResetAudioIndexForcard(int currentCardIndex)
+    internal void ResetAudioIndexForcard(int currentFlashCard)
     {
-        flashCardAudioModels[currentCardIndex].audioIndex = 0;
+        dragAndDropAudioPlayer[currentFlashCard].audioIndex = 0;
+    }
+
+    internal void PlayFailed(int currentFlashCard)
+    {
+        audioSource.clip = dragAndDropAudioPlayer[currentFlashCard].failed;
+        audioSource.Play();
+    }
+
+    internal void PlaySuccess(int currentFlashCard)
+    {
+        audioSource.clip = dragAndDropAudioPlayer[currentFlashCard].success;
+        audioSource.Play();
     }
 }

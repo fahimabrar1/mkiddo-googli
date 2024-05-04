@@ -39,6 +39,7 @@ public class DropContainer : MonoBehaviour
             }
             else
             {
+                dragAndDropManager.PlayFailedAudio();
                 draggableObject.OnSetSiteBoolEvent?.Invoke(true);
             }
         }

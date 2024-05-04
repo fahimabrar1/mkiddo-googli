@@ -22,6 +22,8 @@ public class DragAndDropManager : DropManager
     // Total number of objects placed
     public int TotalObjectsPlaced { get; private set; }
 
+    public DragAndDropAudioPlayer dragAndDropAudioPlayer;
+
     // Awake is called when the script instance is being loaded
     private void Awake()
     {
@@ -29,12 +31,25 @@ public class DragAndDropManager : DropManager
         Draggables = FindObjectsByType<DraggableObject>(FindObjectsSortMode.None).ToList();
     }
 
+
+
+    /// <summary>
+    /// This function is called when the object becomes enabled and active.
+    /// </summary>
+    void OnEnable()
+    {
+        dragAndDropAudioPlayer.PlayAudioClipsSequentially(0);
+    }
+
+
+
     // Method called when an object is dropped
     public override void OnDropObject(DraggableObject draggableObject, bool matched)
     {
         // If the object was not matched, return it to its original position
         if (!matched)
         {
+
             draggableObject.ReturnToOriginalPosition();
             return;
         }
@@ -49,6 +64,8 @@ public class DragAndDropManager : DropManager
         // If all objects have been placed, trigger the game win logic
         //Todo:win
         Debug.LogWarning("Won");
+        dragAndDropAudioPlayer.PlaySuccess(0);
+
         draggableObject.gameObject.SetActive(false);
 
         centerContainer.ActivateWinScenatio();
@@ -56,7 +73,10 @@ public class DragAndDropManager : DropManager
     }
 
 
-
+    public override void PlayFailedAudio()
+    {
+        dragAndDropAudioPlayer.PlayFailed(0);
+    }
 
     public override void OnCancelDropObject(DraggableObject draggableObject)
     {

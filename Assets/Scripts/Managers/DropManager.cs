@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class DropManager : MonoBehaviour
@@ -9,6 +10,10 @@ public class DropManager : MonoBehaviour
 
 
     public virtual void OnCancelDropObject(DraggableObject draggableObject)
+    {
+    }
+
+    public virtual void PlayFailedAudio()
     {
     }
 }
