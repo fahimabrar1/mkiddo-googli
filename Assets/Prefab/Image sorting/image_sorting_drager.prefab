@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2450774697939535124}
   - component: {fileID: 4026675852835363164}
   m_Layer: 0
-  m_Name: image_matching_drager
+  m_Name: image_sorting_drager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
