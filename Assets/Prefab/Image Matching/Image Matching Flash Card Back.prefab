@@ -129,7 +129,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.16, y: 0.16}
+  m_Size: {x: 2, y: 3}
   m_EdgeRadius: 0
 --- !u!114 &6096674553291366630
 MonoBehaviour:
@@ -146,9 +146,14 @@ MonoBehaviour:
   CardID: 0
   CombinationID: 0
   isBack: 0
+  isClicked: 0
   initializationDuration: 0.2
   rotationDuration: 0.4
   randomZ: 0
+  spriteRenderer: {fileID: 0}
+  backSprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  frontSprite: {fileID: 0}
+  imageMatchignCardHolder: {fileID: 0}
   OnFlashInitializationComplete:
     m_PersistentCalls:
       m_Calls: []

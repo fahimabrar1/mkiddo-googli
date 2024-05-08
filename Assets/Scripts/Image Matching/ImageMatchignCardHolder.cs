@@ -10,11 +10,11 @@ public class ImageMatchignCardHolder : MonoBehaviour
     public List<ImageMatchingCard> cards;
     public List<ImageMatchingCard> cardsFormatch;
 
+    private int toBeMatch = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        cards = new();
         cardsFormatch = new();
         for (int i = 0; i < transform.childCount; i++)
         {
@@ -38,7 +38,18 @@ public class ImageMatchignCardHolder : MonoBehaviour
         {
             if (cardsFormatch[0].CombinationID == cardsFormatch[1].CombinationID)
             {
-                //Todo: then it's a match
+                foreach (var card in cardsFormatch)
+                {
+                    card.FadeOutBottomToTop();
+                }
+
+                cardsFormatch.Clear();
+                toBeMatch++;
+
+                if (toBeMatch == 5)
+                {
+                    //Todo:GameOver
+                }
             }
             else
             {
