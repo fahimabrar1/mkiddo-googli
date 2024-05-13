@@ -38,6 +38,13 @@ public class DragAndDropManager : DropManager
     /// </summary>
     void OnEnable()
     {
+        if (dragAndDropAudioPlayer.dragAndDropAudioPlayer.Count > 0)
+        {
+            foreach (var FlashCardAudioModel in dragAndDropAudioPlayer.dragAndDropAudioPlayer)
+            {
+                FlashCardAudioModel.audioIndex = 0;
+            }
+        }
         dragAndDropAudioPlayer.PlayAudioClipsSequentially(0);
     }
 

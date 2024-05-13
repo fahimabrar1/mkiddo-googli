@@ -19,7 +19,8 @@ public class Timer : MonoBehaviour
         progressBar.fillAmount = 0f;
         currentTime = 0; // Set current time to total time at the start
         previousTime = 0; // Set previous time
-        TimerText.text = totalTime.ToString() + "s";
+        if (TimerText != null)
+            TimerText.text = totalTime.ToString() + "s";
         isActive = true;
     }
 
@@ -55,7 +56,8 @@ public class Timer : MonoBehaviour
         if (newPrevTime < newCurTime)
         {
             previousTime = newCurTime;
-            TimerText.text = (totalTime - newCurTime).ToString() + "s";
+            if (TimerText != null)
+                TimerText.text = (totalTime - newCurTime).ToString() + "s";
         }
     }
 

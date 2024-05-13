@@ -17,21 +17,6 @@ public class DragAndDropAudioPlayer : MonoBehaviour
     }
 
 
-    /// <summary>
-    /// Start is called on the frame when a script is enabled just before
-    /// any of the Update methods is called the first time.
-    /// </summary>
-    void Start()
-    {
-        if (dragAndDropAudioPlayer.Count > 0)
-        {
-            foreach (var FlashCardAudioModel in dragAndDropAudioPlayer)
-            {
-                FlashCardAudioModel.audioIndex = 0;
-            }
-        }
-    }
-
 
     // Function to play a single audio clip
     public void PlayFirstAudioClip(int index)
@@ -64,9 +49,11 @@ public class DragAndDropAudioPlayer : MonoBehaviour
                 {
                     // Set the current audio clip and play it
                     audioSource.clip = dragAndDropAudioPlayer[currentFlashCard].clips[dragAndDropAudioPlayer[currentFlashCard].audioIndex];
-                    audioSource.Play();
                     // Increment the index for the next audio clip
                     dragAndDropAudioPlayer[currentFlashCard].audioIndex++;
+                    audioSource.Play();
+
+
                 }
                 // Yielding null here allows the loop to continue without waiting
                 yield return null;
@@ -78,10 +65,10 @@ public class DragAndDropAudioPlayer : MonoBehaviour
         StartCoroutine(PlayAudioClipsSequentiallyCoroutine());
     }
 
-    internal void ResetAudioIndexForcard(int currentFlashCard)
-    {
-        dragAndDropAudioPlayer[currentFlashCard].audioIndex = 0;
-    }
+    // internal void ResetAudioIndexForcard(int currentFlashCard)
+    // {
+    //     dragAndDropAudioPlayer[currentFlashCard].audioIndex = 0;
+    // }
 
     internal void PlayFailed(int currentFlashCard)
     {
