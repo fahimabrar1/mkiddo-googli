@@ -3,9 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Diagnostics;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class MyWebRequest
 {
@@ -78,6 +80,41 @@ public class MyWebRequest
             else
             {
                 MyDebug.LogWarning("No data found in the response.");
+            }
+        }
+    }
+
+
+
+
+    // Method to fetch the image asynchronously from the specified URL
+    public async void FetchImageAsync(string url, Image image)
+    {
+        using UnityWebRequest www = UnityWebRequestTexture.GetTexture(url);
+        var requestOperation = www.SendWebRequest();
+
+        while (!requestOperation.isDone)
+        {
+            await Task.Yield(); // Yield control back to Unity until the request is done
+        }
+
+        if (www.result != UnityWebRequest.Result.Success)
+        {
+            MyDebug.LogError("Failed to fetch image: " + www.error);
+        }
+        else
+        {
+            // Get the downloaded texture
+            Texture2D texture = DownloadHandlerTexture.GetContent(www);
+
+            // Assign the texture to the image component
+            if (image != null)
+            {
+                image.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
+            }
+            else
+            {
+                MyDebug.LogWarning("Image component not assigned.");
             }
         }
     }
