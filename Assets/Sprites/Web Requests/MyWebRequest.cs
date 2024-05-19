@@ -14,25 +14,52 @@ public class MyWebRequest
 
     protected string baseUrl = "https://api.mkiddo.com";
 
-
-    public IEnumerator DownloadAndUnzip(string url, string access_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbl9ieSI6Ik1TSVNETiIsImdvb2dsZV9pZCI6Ijk4NzQ1NjM3NDI4OTEtMzAiLCJ1aWQiOjM4MTg4LCJtc2lzZG4iOiI4ODAxNjg3MDU2MTQwIiwiZW1haWwiOiIiLCJzb3VyY2UiOiJhcHAiLCJhcHBfbmFtZSI6Im1LaWRkb192OjIuNi4xLmJldGEiLCJpYXQiOjE3MTI0MzA1MjcsImV4cCI6MTcxMjg2MjUyN30.oFouaGLiza11cSFODgS5TjqRWLgAjvntNM0A9HAwH0c")
+    public MyWebRequest()
     {
-        UnityWebRequest www = UnityWebRequest.Get(baseUrl + url);
-        yield return www.SendWebRequest();
-
-        if (www.result != UnityWebRequest.Result.Success)
+        if (!Directory.Exists(Application.persistentDataPath + "/googli"))
         {
-            MyDebug.Log(www.error);
+            Directory.CreateDirectory(Application.persistentDataPath + "/googli");
+        }
+    }
+
+    public IEnumerator DownloadAndUnzip(string url, string fileName, string gameType, int downloadID, Action<float, int> OnUpdateDownloadProgress, string access_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbl9ieSI6Ik1TSVNETiIsImdvb2dsZV9pZCI6Ijk4NzQ1NjM3NDI4OTEtMzAiLCJ1aWQiOjM4MTg4LCJtc2lzZG4iOiI4ODAxNjg3MDU2MTQwIiwiZW1haWwiOiIiLCJzb3VyY2UiOiJhcHAiLCJhcHBfbmFtZSI6Im1LaWRkb192OjIuNi4xLmJldGEiLCJpYXQiOjE3MTI0MzA1MjcsImV4cCI6MTcxMjg2MjUyN30.oFouaGLiza11cSFODgS5TjqRWLgAjvntNM0A9HAwH0c")
+    {
+        UnityWebRequest www = UnityWebRequest.Get(url);
+
+
+        www.SendWebRequest();
+
+        while (!www.isDone)
+        {
+            OnUpdateDownloadProgress?.Invoke(www.downloadProgress, downloadID);
+            yield return new WaitForSeconds(0.05f);
+        }
+
+        if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.DataProcessingError || www.result == UnityWebRequest.Result.ProtocolError)
+        {
+            MyDebug.Log($"Error for file:{fileName}, error: {www.result}");
         }
         else
         {
-            if (!Directory.Exists(Application.dataPath + "/googli"))
+            // if (!Directory.Exists(Application.dataPath + "/googli"))
+            // {
+            //     Directory.CreateDirectory(Application.dataPath + "/googli");
+            // }
+
+            if (!Directory.Exists(Application.dataPath + $"/googli/zips/"))
             {
-                Directory.CreateDirectory(Application.dataPath + "/googli");
+                Directory.CreateDirectory(Application.dataPath + $"/googli/zips/");
+            }
+            if (!Directory.Exists(Application.persistentDataPath + $"/googli/{gameType}/"))
+            {
+
             }
 
-            File.WriteAllBytes(Application.dataPath + "/googli/zips/test.zip", www.downloadHandler.data);
-            ZipFile.ExtractToDirectory(Application.dataPath + "/googli/zips/test.zip", Application.persistentDataPath + "/googli/image_sort/test.zip");
+            File.WriteAllBytes(Application.dataPath + $"/googli/zips/{fileName}.zip", www.downloadHandler.data);
+            ZipFile.ExtractToDirectory(Application.dataPath + $"/googli/zips/{fileName}.zip", Application.persistentDataPath + $"/googli/{gameType}/{fileName}");
+
+            OnUpdateDownloadProgress?.Invoke(1, downloadID);
+
             www.Dispose();
         }
     }

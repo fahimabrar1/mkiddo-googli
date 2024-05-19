@@ -1,16 +1,30 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HomeGridPanelController : MonoBehaviour
 {
+    /// <summary>
+    /// below is the folder names, where we will keep the assets
+    /// imgsort
+    /// dnd
+    /// imgmatch
+    /// </summary>
+    public string gameTypeName;
 
     public List<HomeGridPanel> homeGridPanels = new();
 
     public GameObject HomePanelPrefab;
     public GameObject PagePrefab;
+    public GameObject ProgressBarObject;
+    public Slider ProgressBarSlider;
     public Transform ContentParent;
     public List<Transform> Pages;
+
+    private List<float> downloadProgresses;
+    private int totalDownloads;
     MyWebRequest myWebRequest;
 
 
@@ -37,7 +51,6 @@ public class HomeGridPanelController : MonoBehaviour
             MyDebug.Log("Content Link: " + content.link);
             // Access other properties as needed
         }
-
         Initialize(onApiResponseSuccess.videoBlock.contents);
     }
 
@@ -50,8 +63,63 @@ public class HomeGridPanelController : MonoBehaviour
             if (gameObject.TryGetComponent(out HomeGridPanel panel))
             {
                 homeGridPanels.Add(panel);
-                panel.SetContent(content[i]);
+                panel.SetContent(content[i], this);
             }
         }
+    }
+
+
+    public void OnDownloadAllContent()
+    {
+        totalDownloads = homeGridPanels.Count;
+        downloadProgresses = new List<float>(new float[totalDownloads]);
+
+        ProgressBarObject.SetActive(true);
+        ProgressBarSlider.value = 0;
+
+        for (int i = 0; i < totalDownloads; i++)
+        {
+            StartCoroutine(myWebRequest.DownloadAndUnzip(homeGridPanels[i].content.link, homeGridPanels[i].GetZipTheFileName(), gameTypeName, i, OnUpdateDownloadProgress));
+        }
+    }
+    private void OnUpdateDownloadProgress(float downloadValue, int downloadId)
+    {
+        if (downloadProgresses == null)
+        {
+            Debug.LogError("downloadProgresses list is null.");
+            return;
+        }
+
+        if (downloadId < 0 || downloadId >= downloadProgresses.Count)
+        {
+            Debug.LogError($"Download ID {downloadId} is out of range. downloadProgresses.Count: {downloadProgresses.Count}");
+            return;
+        }
+
+        downloadProgresses[downloadId] = downloadValue;
+        UpdateTotalProgress();
+        downloadProgresses[downloadId] = downloadValue;
+        UpdateTotalProgress();
+    }
+
+    private void UpdateTotalProgress()
+    {
+        float totalProgress = 0;
+
+        foreach (var progress in downloadProgresses)
+        {
+            totalProgress += progress;
+        }
+
+        totalProgress /= totalDownloads;
+        ProgressBarSlider.value = totalProgress;
+        if (totalProgress == 1)
+        {
+            ProgressBarSlider.value = 0;
+            ProgressBarObject.SetActive(false);
+        }
+        // Update your progress bar UI here
+        // e.g., progressBar.fillAmount = totalProgress;
+        Debug.Log("Total Progress: " + totalProgress);
     }
 }
