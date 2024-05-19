@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class HomeGridPanelController : MonoBehaviour
 {
+
+    public int pageID;
     /// <summary>
     /// below is the folder names, where we will keep the assets
     /// imgsort
@@ -14,8 +16,23 @@ public class HomeGridPanelController : MonoBehaviour
     /// </summary>
     public string gameTypeName;
 
-    public List<HomeGridPanel> homeGridPanels = new();
+    /// <summary>
+    /// content_category:1 is for image sort
+    /// content_category:6 is for image sort
+    /// content_category:1 is for mathcing 2 side
+    /// </summary>
+    public string contentCategory;
 
+    /// <summary>
+    /// blockSlug for image sort: SORT_BY_RULE
+    /// blockSlug for image sort: DRAG_N_DROP
+    /// blockSlug for image sort: TWOSIDEMATCHING
+    /// </summary>
+    public string contentType;
+
+
+    public List<HomeGridPanel> homeGridPanels = new();
+    public SwipeSlider swipeSlider;
     public GameObject HomePanelPrefab;
     public GameObject PagePrefab;
     public GameObject ProgressBarObject;
@@ -27,13 +44,20 @@ public class HomeGridPanelController : MonoBehaviour
     private int totalDownloads;
     MyWebRequest myWebRequest;
 
+    /// <summary>
+    /// This function is called when the object becomes enabled and active.
+    /// </summary>
+    void OnEnable()
+    {
+        swipeSlider.GoToStart();
+    }
 
     // Start is called before the first frame update
     void Start()
     {
         myWebRequest = new();
 
-        StartCoroutine(myWebRequest.FetchData("/api/v3/content/content-list?content_category=1", blockSlug: "Sort-by-rule", OnApiResponseSucces: OnSuccessLoadingScreen));
+        StartCoroutine(myWebRequest.FetchData($"/api/v3/content/content-list?content_category={contentCategory}", contentType: contentType, OnApiResponseSucces: OnSuccessLoadingScreen));
     }
 
     private void OnSuccessLoadingScreen(OnApiResponseSuccess onApiResponseSuccess)
@@ -43,7 +67,10 @@ public class HomeGridPanelController : MonoBehaviour
         {
             GameObject gameObject = Instantiate(PagePrefab, ContentParent);
             Pages.Add(gameObject.transform);
+            swipeSlider.Pages.Add(gameObject);
+
         }
+        swipeSlider.SetButtons();
 
         foreach (var content in onApiResponseSuccess.videoBlock.contents)
         {
@@ -95,9 +122,6 @@ public class HomeGridPanelController : MonoBehaviour
             Debug.LogError($"Download ID {downloadId} is out of range. downloadProgresses.Count: {downloadProgresses.Count}");
             return;
         }
-
-        downloadProgresses[downloadId] = downloadValue;
-        UpdateTotalProgress();
         downloadProgresses[downloadId] = downloadValue;
         UpdateTotalProgress();
     }

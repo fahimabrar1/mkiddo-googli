@@ -13,7 +13,9 @@ public class SwipeSlider : MonoBehaviour, IEndDragHandler
 
     public Transform PagesParent;
 
-    public List<GameObject> Pages = new List<GameObject>();
+    public Button NextPageButton;
+    public Button PreviousPageButton;
+    public List<GameObject> Pages = new();
 
 
     // public GameObject DotPrefab;
@@ -46,35 +48,74 @@ public class SwipeSlider : MonoBehaviour, IEndDragHandler
     {
         activeIndex = 0;
         Scrollbar.value = activeIndex;
+        PreviousPageButton.gameObject.SetActive(false);
+        NextPageButton.gameObject.SetActive(false);
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
         float diff = (eventData.pressPosition.x - eventData.position.x) / Screen.width;
-        Debug.Log("DIF: " + diff);
+        Debug.Log($"DIF: {diff},Abs Diff: {Mathf.Abs(diff)}");
 
-        if (Mathf.Abs(diff) > 0.2f)
+        if (Mathf.Abs(diff) > 0)
         {
             if (diff > 0 && activeIndex < Pages.Count - 1)
             {
-                activeIndex++;
-                Debug.Log("Swiped Left. New Active Index: " + activeIndex);
-                JumpToPage(activeIndex);
+                GoToNextPage();
             }
             else if (diff < 0 && activeIndex > 0)
             {
-                activeIndex--;
-                Debug.Log("Swiped Right. New Active Index: " + activeIndex);
-                JumpToPage(activeIndex);
+                GoToPreviousPage();
             }
         }
     }
 
-    public void JumpToPage(int page)
+
+    public void GoToNextPage()
     {
-        float targetValue = (page * 1.0f / (Pages.Count - 1) * 1.0f);
-        Debug.Log("Jumping to page: " + page + " with target value: " + targetValue);
+        PreviousPageButton.gameObject.SetActive(true);
+
+        activeIndex++;
+        if (activeIndex == Pages.Count - 1)
+            NextPageButton.gameObject.SetActive(false);
+        Debug.Log("Swiped Left. New Active Index: " + activeIndex);
+        JumpToPage(activeIndex);
+    }
+
+    public void GoToPreviousPage()
+    {
+        NextPageButton.gameObject.SetActive(true);
+
+        activeIndex--;
+        if (activeIndex == 0)
+            PreviousPageButton.gameObject.SetActive(false);
+        Debug.Log("Swiped Right. New Active Index: " + activeIndex);
+        JumpToPage(activeIndex);
+    }
+
+    public void JumpToPage(int pageIndex)
+    {
+        float targetValue = pageIndex * 1.0f / (Pages.Count - 1) * 1.0f;
+        Debug.Log("Jumping to page: " + pageIndex + " with target value: " + targetValue);
         DOTween.To(() => Scrollbar.value, x => Scrollbar.value = x, targetValue, 0.2f);
+    }
+
+    internal void SetButtons()
+    {
+        if (Pages.Count > 1)
+            NextPageButton.gameObject.SetActive(true);
+    }
+
+    internal void GoToStart()
+    {
+        activeIndex = 0;
+        PreviousPageButton.gameObject.SetActive(false);
+        if (Pages.Count > 1)
+            NextPageButton.gameObject.SetActive(true);
+        else
+            NextPageButton.gameObject.SetActive(false);
+        Debug.Log("Swiped Right. New Active Index: " + activeIndex);
+        JumpToPage(activeIndex);
     }
 }
 

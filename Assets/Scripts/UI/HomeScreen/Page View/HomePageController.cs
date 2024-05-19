@@ -1,18 +1,23 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class HomePageController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public List<GameObject> pages = new();
 
-    // Update is called once per frame
-    void Update()
+    public Action<int> OnUpdatePageAction;
+
+    public void OnClickToChangePage(int pageIndex)
     {
-        
+
+        for (int i = 0; i < pages.Count; i++)
+        {
+            pages[i].SetActive(false);
+        }
+
+        pages[pageIndex].SetActive(true);
     }
 }
