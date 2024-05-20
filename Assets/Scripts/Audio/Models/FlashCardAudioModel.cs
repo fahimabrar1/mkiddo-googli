@@ -24,3 +24,13 @@ public class DragAndDropAudioModel
     public AudioClip success;
 
 }
+
+
+[Serializable]
+public class ImageSortingpAudioModel
+{
+    public AudioClip startingAudio;
+    public AudioClip failedAudio;
+    public AudioClip successAudio;
+
+}

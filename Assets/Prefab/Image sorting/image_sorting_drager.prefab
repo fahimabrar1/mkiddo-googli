@@ -146,7 +146,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isDragging: 0
   CanDrag: 0
-  dropSide: 1
+  spriteRenderer: {fileID: 8669661777410327525}
+  dropSide: 0
   EnableAnimaitons: 0
   distance: 0.1
   duration: 0.4

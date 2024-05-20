@@ -1,36 +1,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class HomeGridPanelController : MonoBehaviour
 {
 
     public int pageID;
-    /// <summary>
-    /// below is the folder names, where we will keep the assets
-    /// imgsort
-    /// dnd
-    /// imgmatch
-    /// </summary>
-    public string gameTypeName;
 
-    /// <summary>
-    /// content_category:1 is for image sort
-    /// content_category:6 is for image sort
-    /// content_category:1 is for mathcing 2 side
-    /// </summary>
-    public string contentCategory;
-
-    /// <summary>
-    /// blockSlug for image sort: SORT_BY_RULE
-    /// blockSlug for image sort: DRAG_N_DROP
-    /// blockSlug for image sort: TWOSIDEMATCHING
-    /// </summary>
-    public string contentType;
-
-
+    public GamePanelData gamePanelData;
     public List<HomeGridPanel> homeGridPanels = new();
     public SwipeSlider swipeSlider;
     public GameObject HomePanelPrefab;
@@ -39,10 +20,13 @@ public class HomeGridPanelController : MonoBehaviour
     public Slider ProgressBarSlider;
     public Transform ContentParent;
     public List<Transform> Pages;
+    public PanelDataSO PanelDataSO;
 
     private List<float> downloadProgresses;
     private int totalDownloads;
     MyWebRequest myWebRequest;
+
+    private Action OnPanelPress;
 
     /// <summary>
     /// This function is called when the object becomes enabled and active.
@@ -57,7 +41,7 @@ public class HomeGridPanelController : MonoBehaviour
     {
         myWebRequest = new();
 
-        StartCoroutine(myWebRequest.FetchData($"/api/v3/content/content-list?content_category={contentCategory}", contentType: contentType, OnApiResponseSucces: OnSuccessLoadingScreen));
+        StartCoroutine(myWebRequest.FetchData($"/api/v3/content/content-list?content_category={gamePanelData.contentCategory}", contentType: gamePanelData.contentType, OnApiResponseSucces: OnSuccessLoadingScreen));
     }
 
     private void OnSuccessLoadingScreen(OnApiResponseSuccess onApiResponseSuccess)
@@ -89,14 +73,16 @@ public class HomeGridPanelController : MonoBehaviour
             GameObject gameObject = Instantiate(HomePanelPrefab, Pages[i / 6]);
             if (gameObject.TryGetComponent(out HomeGridPanel panel))
             {
+                var splits = content[i].link.Split('/');
+                var folderName = splits.Last().Split('.');
                 homeGridPanels.Add(panel);
-                panel.SetContent(content[i], this);
+                panel.SetContent(content[i], folderName[0], this);
             }
         }
     }
 
 
-    public void OnDownloadAllContent()
+    public void OnDownloadAllContent(Action OnPanelPress)
     {
         totalDownloads = homeGridPanels.Count;
         downloadProgresses = new List<float>(new float[totalDownloads]);
@@ -106,8 +92,9 @@ public class HomeGridPanelController : MonoBehaviour
 
         for (int i = 0; i < totalDownloads; i++)
         {
-            StartCoroutine(myWebRequest.DownloadAndUnzip(homeGridPanels[i].content.link, homeGridPanels[i].GetZipTheFileName(), gameTypeName, i, OnUpdateDownloadProgress));
+            StartCoroutine(myWebRequest.DownloadAndUnzip(homeGridPanels[i].content.link, homeGridPanels[i].GetZipTheFileName(), gamePanelData.gameTypeName, i, OnUpdateDownloadProgress));
         }
+        this.OnPanelPress = OnPanelPress;
     }
     private void OnUpdateDownloadProgress(float downloadValue, int downloadId)
     {
@@ -139,6 +126,8 @@ public class HomeGridPanelController : MonoBehaviour
         ProgressBarSlider.value = totalProgress;
         if (totalProgress == 1)
         {
+            OnPanelPress?.Invoke();
+            OnPanelPress = null;
             ProgressBarSlider.value = 0;
             ProgressBarObject.SetActive(false);
         }

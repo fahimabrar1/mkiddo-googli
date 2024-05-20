@@ -413,6 +413,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3119791644985764012, guid: 7e3846bb7f202b34e8202cc53fee4e07, type: 3}
+      propertyPath: pageID
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3119791644985764012, guid: 7e3846bb7f202b34e8202cc53fee4e07, type: 3}
+      propertyPath: PanelDataSO
+      value: 
+      objectReference: {fileID: 11400000, guid: ab6a16c182d3ace4fba2751b148d44ab, type: 2}
+    - target: {fileID: 3119791644985764012, guid: 7e3846bb7f202b34e8202cc53fee4e07, type: 3}
       propertyPath: contentType
       value: DRAG_N_DROP
       objectReference: {fileID: 0}
@@ -432,6 +440,18 @@ PrefabInstance:
       propertyPath: ProgressBarSlider
       value: 
       objectReference: {fileID: 816892117}
+    - target: {fileID: 3119791644985764012, guid: 7e3846bb7f202b34e8202cc53fee4e07, type: 3}
+      propertyPath: gamePanelData.contentType
+      value: DRAG_N_DROP
+      objectReference: {fileID: 0}
+    - target: {fileID: 3119791644985764012, guid: 7e3846bb7f202b34e8202cc53fee4e07, type: 3}
+      propertyPath: gamePanelData.gameTypeName
+      value: dnd
+      objectReference: {fileID: 0}
+    - target: {fileID: 3119791644985764012, guid: 7e3846bb7f202b34e8202cc53fee4e07, type: 3}
+      propertyPath: gamePanelData.contentCategory
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4507377431871122001, guid: 7e3846bb7f202b34e8202cc53fee4e07, type: 3}
       propertyPath: m_AnchorMax.x
       value: 1
@@ -1294,6 +1314,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3119791644985764012, guid: 7e3846bb7f202b34e8202cc53fee4e07, type: 3}
+      propertyPath: pageID
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3119791644985764012, guid: 7e3846bb7f202b34e8202cc53fee4e07, type: 3}
+      propertyPath: PanelDataSO
+      value: 
+      objectReference: {fileID: 11400000, guid: ab6a16c182d3ace4fba2751b148d44ab, type: 2}
+    - target: {fileID: 3119791644985764012, guid: 7e3846bb7f202b34e8202cc53fee4e07, type: 3}
       propertyPath: contentType
       value: TWOSIDEMATCHING
       objectReference: {fileID: 0}
@@ -1313,6 +1341,18 @@ PrefabInstance:
       propertyPath: ProgressBarSlider
       value: 
       objectReference: {fileID: 816892117}
+    - target: {fileID: 3119791644985764012, guid: 7e3846bb7f202b34e8202cc53fee4e07, type: 3}
+      propertyPath: gamePanelData.contentType
+      value: TWOSIDEMATCHING
+      objectReference: {fileID: 0}
+    - target: {fileID: 3119791644985764012, guid: 7e3846bb7f202b34e8202cc53fee4e07, type: 3}
+      propertyPath: gamePanelData.gameTypeName
+      value: imgmatch
+      objectReference: {fileID: 0}
+    - target: {fileID: 3119791644985764012, guid: 7e3846bb7f202b34e8202cc53fee4e07, type: 3}
+      propertyPath: gamePanelData.contentCategory
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4507377431871122001, guid: 7e3846bb7f202b34e8202cc53fee4e07, type: 3}
       propertyPath: m_AnchorMax.x
       value: 1
@@ -2289,6 +2329,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3119791644985764012, guid: 7e3846bb7f202b34e8202cc53fee4e07, type: 3}
+      propertyPath: PanelDataSO
+      value: 
+      objectReference: {fileID: 11400000, guid: ab6a16c182d3ace4fba2751b148d44ab, type: 2}
+    - target: {fileID: 3119791644985764012, guid: 7e3846bb7f202b34e8202cc53fee4e07, type: 3}
       propertyPath: contentType
       value: SORT_BY_RULE
       objectReference: {fileID: 0}
@@ -2308,6 +2352,18 @@ PrefabInstance:
       propertyPath: ProgressBarSlider
       value: 
       objectReference: {fileID: 816892117}
+    - target: {fileID: 3119791644985764012, guid: 7e3846bb7f202b34e8202cc53fee4e07, type: 3}
+      propertyPath: gamePanelData.contentType
+      value: SORT_BY_RULE
+      objectReference: {fileID: 0}
+    - target: {fileID: 3119791644985764012, guid: 7e3846bb7f202b34e8202cc53fee4e07, type: 3}
+      propertyPath: gamePanelData.gameTypeName
+      value: imgsort
+      objectReference: {fileID: 0}
+    - target: {fileID: 3119791644985764012, guid: 7e3846bb7f202b34e8202cc53fee4e07, type: 3}
+      propertyPath: gamePanelData.contentCategory
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4507377431871122001, guid: 7e3846bb7f202b34e8202cc53fee4e07, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

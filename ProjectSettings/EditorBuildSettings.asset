@@ -15,12 +15,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Drag And Drop.unity
     guid: f3aa19c43f38a0941a167fe5d880ba84
   - enabled: 1
-    path: Assets/Scenes/Flash Cards English.unity
-    guid: 4ed7c8f3bf6bf0740a5a8617ed081a84
-  - enabled: 1
-    path: Assets/Scenes/Flash Cards Bangla.unity
-    guid: 12dd63b4d54579445bacad94c622db07
-  - enabled: 1
     path: Assets/Scenes/Image Matching.unity
     guid: deae992628e6fc348880cb49aacea352
   m_configObjects: {}

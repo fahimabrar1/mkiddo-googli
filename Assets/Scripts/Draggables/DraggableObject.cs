@@ -16,6 +16,7 @@ public class DraggableObject : MonoBehaviour, IDragable
 
     public bool isDragging;
     public bool CanDrag;
+    public SpriteRenderer spriteRenderer;
 
     public ImageSortingManager.DropSide dropSide;
     public bool EnableAnimaitons;

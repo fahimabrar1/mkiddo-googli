@@ -17,6 +17,8 @@ public class DropContainer : MonoBehaviour
     public DraggableObjectEvent OnTriggerEnter2DEvent;
     public UnityEvent OnTriggerExit2DEvent;
 
+    [Header("For Drag And Drop Game")]
+
     public SpriteRenderer currentRenderObject;
     public GameObject combinedSprite;
 

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using UnityEngine;
 
@@ -25,11 +26,58 @@ public class ImageSortingManager : DropManager
     // Total number of objects placed
     public int TotalObjectsPlaced { get; private set; }
 
-    // Awake is called when the script instance is being loaded
+    // Reference to the PanelDataSO scriptable object
+    public PanelDataSO panelDataSO;
+
+    // Reference to the ImageSortingAudioPLayer scriptable object
+    public ImageSortingAudioPLayer imageSortingAudioPLayer;
+
     private void Awake()
     {
+        // Construct the file path for the sorted image and audio files
+        string filePath = Application.persistentDataPath + $"/googli/{panelDataSO.gamePanelData.gameTypeName}/{panelDataSO.contentTypeFolderName}/{panelDataSO.contentTypeFolderName}";
+
+        // Get the sorted image and audio files from the file processor
+        var imagesList = FileProcessor.GetSortedImageFiles(filePath);
+        var audioList = FileProcessor.GetSortedAudioFiles(filePath);
+
+        // Get the current level from the player preferences
+        int level = PlayerPrefs.GetInt($"{panelDataSO.contentTypeFolderName}", 0);
+
+        // Play the first audio clip for the current level
+        FileProcessor.GetAudioClipByFileName(audioList[level], imageSortingAudioPLayer.PlayFirstAudioClip);
+
+        // Get the image file names for the right and left containers
+        string imageIndexRight = imagesList[level * 2];
+        string imageIndexLeft = imagesList[(level * 2) + 1];
+
+        // Set the drop side for the right and left containers
+        rightContainer.dropSide = DropSide.right;
+        leftContainer.dropSide = DropSide.left;
+
+        // Set the sprite for the right and left containers
+        Sprite rightSprite = rightContainer.currentRenderObject.sprite = FileProcessor.GetSpriteByFileName(imageIndexRight);
+        Sprite leftSprite = leftContainer.currentRenderObject.sprite = FileProcessor.GetSpriteByFileName(imageIndexLeft);
+
         // Find all DraggableObject components in the scene and add them to the Draggables list
         Draggables = FindObjectsByType<DraggableObject>(FindObjectsSortMode.None).ToList();
+
+        // Divide the Draggables list into two halves and assign the right and left sprites accordingly
+        int halfCount = Draggables.Count / 2;
+
+        for (int i = 0; i < halfCount; i++)
+        {
+            Draggables[i].spriteRenderer.sprite = rightSprite;
+            Draggables[i].dropSide = DropSide.right;
+        }
+
+        for (int i = halfCount; i < Draggables.Count; i++)
+        {
+            Draggables[i].spriteRenderer.sprite = leftSprite;
+            Draggables[i].dropSide = DropSide.left;
+        }
+        // Shuffle the list of Draggables
+        Utility.Shuffle(Draggables);
     }
 
     // Method called when an object is dropped
