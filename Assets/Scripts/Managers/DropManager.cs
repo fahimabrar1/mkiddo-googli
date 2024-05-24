@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class DropManager : MonoBehaviour
+public class DropManager : LevelBaseManager
 {
 
     public Timer timer;

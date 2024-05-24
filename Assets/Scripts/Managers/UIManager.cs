@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    public GameManager gameManager;
+    private GameManager gameManager;
 
+    public GameObject OverlayObject;
+    public GameObject GameOverObject;
+    public GameObject ConfeittiObject;
 
     /// <summary>
     /// Awake is called when the script instance is being loaded.
     /// </summary>
     void Awake()
     {
-        gameManager = FindObjectOfType<GameManager>().GetComponent<GameManager>();
+        gameManager = FindObjectOfType<GameManager>();
     }
 
 
@@ -26,5 +29,20 @@ public class UIManager : MonoBehaviour
     public void OnClickExit()
     {
         gameManager.LoadScene(0);
+    }
+
+
+    public void OnClickNext()
+    {
+        var levelBaseManager = FindObjectOfType<LevelBaseManager>();
+        levelBaseManager.SaveLevel();
+    }
+
+
+    public void OnShowGameOverPanel()
+    {
+        ConfeittiObject.SetActive(true);
+        OverlayObject.SetActive(true);
+        GameOverObject.SetActive(true);
     }
 }

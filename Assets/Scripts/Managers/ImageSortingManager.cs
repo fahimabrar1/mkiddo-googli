@@ -32,6 +32,9 @@ public class ImageSortingManager : DropManager
     // Reference to the ImageSortingAudioPLayer scriptable object
     public ImageSortingAudioPLayer imageSortingAudioPLayer;
 
+    public UIManager uIManager;
+
+
     private void Awake()
     {
         // Construct the file path for the sorted image and audio files
@@ -42,7 +45,7 @@ public class ImageSortingManager : DropManager
         var audioList = FileProcessor.GetSortedAudioFiles(filePath);
 
         // Get the current level from the player preferences
-        int level = PlayerPrefs.GetInt($"{panelDataSO.contentTypeFolderName}", 0);
+        level = PlayerPrefs.GetInt($"{panelDataSO.contentTypeFolderName}", 0);
 
         // Play the first audio clip for the current level
         FileProcessor.GetAudioClipByFileName(audioList[level], imageSortingAudioPLayer.PlayFirstAudioClip);
@@ -78,7 +81,9 @@ public class ImageSortingManager : DropManager
         }
         // Shuffle the list of Draggables
         Utility.Shuffle(Draggables);
+        StarCounts = 0;
     }
+
 
     // Method called when an object is dropped
 
@@ -103,6 +108,7 @@ public class ImageSortingManager : DropManager
         if (TotalObjectsPlaced == Draggables.Count)
         {
             // Todo: Game Win
+            uIManager.OnShowGameOverPanel();
         }
     }
 
@@ -115,5 +121,12 @@ public class ImageSortingManager : DropManager
         TotalObjectsPlaced--;
         draggableObject.OnSetSiteBoolEvent?.Invoke(true);
         draggableObject.OnSetSiteTargetVec3Event?.Invoke(Vector3.zero);
+    }
+
+
+    public override void SaveLevel()
+    {
+        PlayerPrefs.SetFloat($"{panelDataSO.contentTypeFolderName}", level);
+        PlayerPrefs.Save();
     }
 }
