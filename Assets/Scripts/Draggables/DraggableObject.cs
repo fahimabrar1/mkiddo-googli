@@ -1,7 +1,4 @@
 using System;
-using DG.Tweening;
-using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -55,6 +52,7 @@ public class DraggableObject : MonoBehaviour, IDragable
         {
             if (Input.GetMouseButtonDown(0))
             {
+
                 // Convert mouse position into a ray
                 Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
                 RaycastHit2D hit = Physics2D.GetRayIntersection(ray);
@@ -87,18 +85,20 @@ public class DraggableObject : MonoBehaviour, IDragable
 
     public void OnMouseDown()
     {
-        OnMouseDownEvent.Invoke();
+        MyDebug.Log("Clciked");
+
+        OnMouseDownEvent?.Invoke();
     }
 
     public void OnMouseUp()
     {
-        OnMouseUpEvent.Invoke();
-        OnReturnToOriginalPositionEvent.Invoke();
+        OnMouseUpEvent?.Invoke();
+        OnReturnToOriginalPositionEvent?.Invoke();
     }
 
     public void ReturnToOriginalPosition()
     {
-        OnReturnToOriginalPositionEvent.Invoke();
+        OnReturnToOriginalPositionEvent?.Invoke();
     }
 
 }

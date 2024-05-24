@@ -11,8 +11,6 @@ GameObject:
   - component: {fileID: 2014005751628011021}
   - component: {fileID: 2477443582980155251}
   - component: {fileID: 583144651237855241}
-  - component: {fileID: 5932354832540873100}
-  - component: {fileID: 4503087733298483825}
   m_Layer: 6
   m_Name: Confeitti Canvas
   m_TagString: Untagged
@@ -89,37 +87,6 @@ MonoBehaviour:
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
   m_PresetInfoIsWorld: 0
---- !u!114 &5932354832540873100
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4711705389022369130}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
-  m_BlockingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
---- !u!114 &4503087733298483825
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4711705389022369130}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4044697af04240c4cba9c2b3ec7143b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OverlayObject: {fileID: 0}
-  GameOverObject: {fileID: 0}
 --- !u!1001 &3841784456608106823
 PrefabInstance:
   m_ObjectHideFlags: 0

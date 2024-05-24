@@ -39,7 +39,7 @@ public class MyTween
     // Moves the transform back to a target position
     public void TweenBackToPosition(Vector3 targetposition, float duration, Action OnCompleteCallback = null)
     {
-        _transform.DOMove(targetposition, duration).OnComplete(() => OnCompleteCallback?.Invoke());
+        _transform.DOMove(targetposition, duration).SetAutoKill(true).OnComplete(() => OnCompleteCallback?.Invoke());
     }
 
     // Tweens the transform up and down
