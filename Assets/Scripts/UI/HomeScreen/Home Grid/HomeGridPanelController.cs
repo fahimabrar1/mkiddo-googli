@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -18,6 +19,7 @@ public class HomeGridPanelController : MonoBehaviour
     public GameObject PagePrefab;
     public GameObject ProgressBarObject;
     public Slider ProgressBarSlider;
+    public TextMeshProUGUI ProgressBarTexct;
     public Transform ContentParent;
     public List<Transform> Pages;
     public PanelDataSO PanelDataSO;
@@ -100,13 +102,13 @@ public class HomeGridPanelController : MonoBehaviour
     {
         if (downloadProgresses == null)
         {
-            Debug.LogError("downloadProgresses list is null.");
+            MyDebug.LogError("downloadProgresses list is null.");
             return;
         }
 
         if (downloadId < 0 || downloadId >= downloadProgresses.Count)
         {
-            Debug.LogError($"Download ID {downloadId} is out of range. downloadProgresses.Count: {downloadProgresses.Count}");
+            MyDebug.LogError($"Download ID {downloadId} is out of range. downloadProgresses.Count: {downloadProgresses.Count}");
             return;
         }
         downloadProgresses[downloadId] = downloadValue;
@@ -124,8 +126,13 @@ public class HomeGridPanelController : MonoBehaviour
 
         totalProgress /= totalDownloads;
         ProgressBarSlider.value = totalProgress;
+        ProgressBarTexct.text = "Downloading: " + Mathf.RoundToInt(totalProgress * 100).ToString() + "%";
         if (totalProgress == 1)
         {
+            foreach (var panel in homeGridPanels)
+            {
+                panel.SetSaveLevelByuContentFOlderName();
+            }
             OnPanelPress?.Invoke();
             OnPanelPress = null;
             ProgressBarSlider.value = 0;
@@ -133,6 +140,6 @@ public class HomeGridPanelController : MonoBehaviour
         }
         // Update your progress bar UI here
         // e.g., progressBar.fillAmount = totalProgress;
-        Debug.Log("Total Progress: " + totalProgress);
+        MyDebug.Log("Total Progress: " + totalProgress);
     }
 }

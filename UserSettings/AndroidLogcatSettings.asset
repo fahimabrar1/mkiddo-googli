@@ -3,7 +3,7 @@
     "m_SelectedProcess": {
         "deviceId": "V4EMOROZPBWW6LA6",
         "name": "com.MoMagic.mkiddogoogli",
-        "processId": 16174,
+        "processId": 22152,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -24,6 +24,18 @@
             "deviceId": "V4EMOROZPBWW6LA6",
             "name": "com.MoMagic.mkiddogoogli",
             "processId": 16174,
+            "exited": true
+        },
+        {
+            "deviceId": "V4EMOROZPBWW6LA6",
+            "name": "com.MoMagic.mkiddogoogli",
+            "processId": 11885,
+            "exited": true
+        },
+        {
+            "deviceId": "V4EMOROZPBWW6LA6",
+            "name": "com.MoMagic.mkiddogoogli",
+            "processId": 22152,
             "exited": false
         }
     ],

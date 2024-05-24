@@ -22,7 +22,7 @@ public class GameWinPanel : MonoBehaviour
         levelBaseManager = FindObjectOfType<LevelBaseManager>();
         for (int i = 0; i < 3; i++)
         {
-            Stars[i].sprite = levelBaseManager.StarCounts == 0 ? EmptyStar : levelBaseManager.StarCounts - 1 > i ? FileldStart : EmptyStar;
+            Stars[i].sprite = levelBaseManager.StarCounts == 0 ? EmptyStar : levelBaseManager.StarCounts > i ? FileldStart : EmptyStar;
         }
     }
 

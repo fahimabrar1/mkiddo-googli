@@ -3,6 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 public class HomeGridPanel : MonoBehaviour
 {
@@ -38,18 +39,6 @@ public class HomeGridPanel : MonoBehaviour
         }
         else
         {
-            if (content.content_type.Equals("SORT_BY_RULE"))
-            {
-                SetSceneID(1);
-            }
-            else if (content.content_type.Equals("DRAG_N_DROP"))
-            {
-                SetSceneID(2);
-            }
-            else
-            {
-                SetSceneID(3);
-            }
             OnLoadGameScene();
         }
     }
@@ -57,12 +46,14 @@ public class HomeGridPanel : MonoBehaviour
 
     public void OnLoadGameScene()
     {
+        SetSceneID();
+
         homeGridPanelController.PanelDataSO.gamePanelData.gameTypeName = homeGridPanelController.gamePanelData.gameTypeName;
         homeGridPanelController.PanelDataSO.gamePanelData.contentCategory = homeGridPanelController.gamePanelData.contentCategory;
         homeGridPanelController.PanelDataSO.gamePanelData.contentType = homeGridPanelController.gamePanelData.contentType;
         homeGridPanelController.PanelDataSO.contentTypeFolderName = contentTypeFolderName;
 
-        SceneManager.LoadSceneAsync(sceneID + 1);
+        SceneManager.LoadSceneAsync(sceneID);
     }
 
 
@@ -76,9 +67,27 @@ public class HomeGridPanel : MonoBehaviour
     }
 
 
-    public void SetSceneID(int value)
+    public void SetSceneID()
     {
-        sceneID = value;
+        if (content.content_type.Equals("SORT_BY_RULE"))
+        {
+            sceneID = 1;
+        }
+        else if (content.content_type.Equals("DRAG_N_DROP"))
+        {
+            sceneID = 2;
+        }
+        else
+        {
+            sceneID = 3;
+        }
+
+    }
+
+    internal void SetSaveLevelByuContentFOlderName()
+    {
+        PlayerPrefs.SetInt($"{contentTypeFolderName}", 0);
+        PlayerPrefs.Save();
     }
 }
 

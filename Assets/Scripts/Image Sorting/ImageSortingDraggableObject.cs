@@ -24,6 +24,18 @@ public class ImageSortingDraggableObject : MonoBehaviour
     {
         myTween = new(transform);
     }
+
+
+
+    /// <summary>
+    /// This function is called when the behaviour becomes disabled or inactive.
+    /// </summary>
+    void OnDisable()
+    {
+        myTween.StopTween(loopingAnimationIndex);
+    }
+
+
     /// <summary>
     /// Start is called on the frame when a script is enabled just before
     /// any of the Update methods is called the first time.

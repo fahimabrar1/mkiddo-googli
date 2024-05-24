@@ -20,7 +20,7 @@ public class DraggableObject : MonoBehaviour, IDragable
     public float distance = 2f; // Distance to move in each direction
     public float duration = 1f; // Time to complete each movement
     private Vector3 offset;
-    private Camera mainCamera;
+    public Camera mainCamera;
 
     public OnSetSiteBooleanEvent OnSetSiteBoolEvent;
     public OnSetSiteTargetVectorEvent OnSetSiteTargetVec3Event;

@@ -32,6 +32,7 @@ public class DropContainer : MonoBehaviour
 
         if (other.TryGetComponent(out DraggableObject draggableObject))
         {
+            MyDebug.Log($"Game Object Enter2D Name: {other.gameObject.name}");
             if (draggableObject.dropSide == dropSide)
             {
                 lastEnteredDraggableObject = draggableObject;
@@ -57,10 +58,15 @@ public class DropContainer : MonoBehaviour
     {
         if (other.TryGetComponent(out DraggableObject draggableObject))
         {
-            if (lastEnteredDraggableObject == draggableObject)
+            MyDebug.Log($"Game Object Exit2D Name: {other.gameObject.name}");
+            if (lastEnteredDraggableObject != null)
             {
-                OnTriggerExit2DEvent?.Invoke();
-                dragAndDropManager.OnCancelDropObject(draggableObject);
+
+                if (lastEnteredDraggableObject == draggableObject)
+                {
+                    OnTriggerExit2DEvent?.Invoke();
+                    dragAndDropManager.OnCancelDropObject(draggableObject);
+                }
             }
         }
     }

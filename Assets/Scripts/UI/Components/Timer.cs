@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.Events;
 
 public class Timer : MonoBehaviour
 {
@@ -10,8 +11,20 @@ public class Timer : MonoBehaviour
     private float previousTime; // Current time left
     private bool isActive; // if the timer is active
     public Image progressBar; // Reference to the progress bar image
+    public LevelBaseManager levelBaseManager;
     public List<Image> stars; // List of Image components representing stars
     public TextMeshProUGUI TimerText; // List of Image components representing stars
+    public UnityEvent OnTimeUp;
+
+
+    /// <summary>
+    /// Awake is called when the script instance is being loaded.
+    /// </summary>
+    void Awake()
+    {
+        levelBaseManager = FindObjectOfType<LevelBaseManager>();
+    }
+
 
     void Start()
     {
@@ -42,9 +55,11 @@ public class Timer : MonoBehaviour
         // Check if time is up
         if (currentTime >= totalTime)
         {
-
             //Todo:Time's up, do something here (e.g., end game, reset timer, etc.)
             currentTime = totalTime; // Reset timer
+            Stop();
+            OnTimeUp?.Invoke();
+
         }
     }
 
@@ -71,15 +86,20 @@ public class Timer : MonoBehaviour
         if (fillAmount >= 0.75f && index3 >= 0 && index3 < stars.Count)
         {
             stars[index3].color = Color.grey;
+
+            levelBaseManager.StarCounts = 0;
         }
-        if (fillAmount >= 0.5f && index2 >= 0 && index2 < stars.Count)
+        else if (fillAmount >= 0.5f && index2 >= 0 && index2 < stars.Count)
         {
             stars[index2].color = Color.grey;
+            levelBaseManager.StarCounts = 1;
         }
-        if (fillAmount >= 0.25f && index1 >= 0 && index1 < stars.Count)
+        else if (fillAmount >= 0.25f && index1 >= 0 && index1 < stars.Count)
         {
             stars[index1].color = Color.grey;
+            levelBaseManager.StarCounts = 2;
         }
+
     }
 
     public void Stop()

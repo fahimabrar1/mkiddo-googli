@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class ImageSortingManager : DropManager
@@ -34,6 +35,7 @@ public class ImageSortingManager : DropManager
 
     public UIManager uIManager;
 
+    private int totalAudio;
 
     private void Awake()
     {
@@ -43,6 +45,8 @@ public class ImageSortingManager : DropManager
         // Get the sorted image and audio files from the file processor
         var imagesList = FileProcessor.GetSortedImageFiles(filePath);
         var audioList = FileProcessor.GetSortedAudioFiles(filePath);
+
+        totalAudio = audioList.Count;
 
         // Get the current level from the player preferences
         level = PlayerPrefs.GetInt($"{panelDataSO.contentTypeFolderName}", 0);
@@ -81,7 +85,7 @@ public class ImageSortingManager : DropManager
         }
         // Shuffle the list of Draggables
         Utility.Shuffle(Draggables);
-        StarCounts = 0;
+        StarCounts = 3;
     }
 
 
@@ -109,6 +113,7 @@ public class ImageSortingManager : DropManager
         {
             // Todo: Game Win
             uIManager.OnShowGameOverPanel();
+            timer.Stop();
         }
     }
 
@@ -126,7 +131,13 @@ public class ImageSortingManager : DropManager
 
     public override void SaveLevel()
     {
-        PlayerPrefs.SetFloat($"{panelDataSO.contentTypeFolderName}", level);
+        PlayerPrefs.SetInt($"{panelDataSO.contentTypeFolderName}", (level == totalAudio - 1) ? 0 : ++level);
         PlayerPrefs.Save();
+    }
+
+
+    public void DecrementStarCount()
+    {
+        StarCounts--;
     }
 }
