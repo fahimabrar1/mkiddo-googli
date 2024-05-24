@@ -55,7 +55,9 @@ public class MyWebRequest
 
             }
 
+            MyDebug.Log("MWR Writing File to data path");
             File.WriteAllBytes(Application.dataPath + $"/googli/zips/{fileName}.zip", www.downloadHandler.data);
+            MyDebug.Log("MWR Writing File to persistant path");
             ZipFile.ExtractToDirectory(Application.dataPath + $"/googli/zips/{fileName}.zip", Application.persistentDataPath + $"/googli/{gameType}/{fileName}");
 
             OnUpdateDownloadProgress?.Invoke(1, downloadID);

@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class HomeGridPanel : MonoBehaviour
 {
+    public int ID;
     public Image image;
     public Content content;
     public string contentTypeFolderName;
@@ -17,8 +18,9 @@ public class HomeGridPanel : MonoBehaviour
     private int sceneID;
 
 
-    internal void SetContent(Content content, string folderName, HomeGridPanelController homeGridPanelController)
+    internal void SetContent(int ID, Content content, string folderName, HomeGridPanelController homeGridPanelController)
     {
+        this.ID = ID;
         this.homeGridPanelController = homeGridPanelController;
         myWebRequest = new MyWebRequest();
         contentTypeFolderName = folderName;
@@ -60,7 +62,7 @@ public class HomeGridPanel : MonoBehaviour
         homeGridPanelController.PanelDataSO.gamePanelData.contentType = homeGridPanelController.gamePanelData.contentType;
         homeGridPanelController.PanelDataSO.contentTypeFolderName = contentTypeFolderName;
 
-        SceneManager.LoadSceneAsync(sceneID);
+        SceneManager.LoadSceneAsync(sceneID + 1);
     }
 
 

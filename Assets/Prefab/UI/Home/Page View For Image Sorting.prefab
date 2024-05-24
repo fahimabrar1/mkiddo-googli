@@ -928,9 +928,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pageID: 0
-  gameTypeName: 
-  contentCategory: 
-  contentType: 
+  gamePanelData:
+    gameTypeName: 
+    contentCategory: 
+    contentType: 
   homeGridPanels: []
   swipeSlider: {fileID: 5471056613775161965}
   HomePanelPrefab: {fileID: 1132093885031798913, guid: b96e8f72330c97145aaed798daf098d0, type: 3}
@@ -939,6 +940,7 @@ MonoBehaviour:
   ProgressBarSlider: {fileID: 0}
   ContentParent: {fileID: 1979910683092548062}
   Pages: []
+  PanelDataSO: {fileID: 11400000, guid: ab6a16c182d3ace4fba2751b148d44ab, type: 2}
 --- !u!1 &8618582473334270131
 GameObject:
   m_ObjectHideFlags: 0

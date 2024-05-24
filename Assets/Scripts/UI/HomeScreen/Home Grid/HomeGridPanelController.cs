@@ -76,7 +76,7 @@ public class HomeGridPanelController : MonoBehaviour
                 var splits = content[i].link.Split('/');
                 var folderName = splits.Last().Split('.');
                 homeGridPanels.Add(panel);
-                panel.SetContent(content[i], folderName[0], this);
+                panel.SetContent(i, content[i], folderName[0], this);
             }
         }
     }
