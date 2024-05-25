@@ -33,6 +33,31 @@ public class DragAndDropManager : DropManager
     private int totalAudio;
 
 
+
+    private string initendAudioFile = "in_end.mp3";
+
+    private List<string> initAudioFiles = new(){
+        "in1.mp3",
+        "in2.mp3",
+        "in3.mp3"
+    };
+
+    private List<string> successAudioFiles = new(){
+        "sc1.mp3",
+        "sc2.mp3",
+        "sc3.mp3"
+    };
+
+    private List<string> failedAudioFiles = new(){
+        "fa1.mp3",
+        "fa2.mp3",
+        "fa3.mp3"
+    };
+
+
+    private int TOTAL_FILES_TO_LOAD = 0;
+    private int TOTAL_FILES_LOADED = 0;
+
     // Awake is called when the script instance is being loaded
     private void Awake()
     {
@@ -41,12 +66,82 @@ public class DragAndDropManager : DropManager
         string dragFilePath = Application.persistentDataPath + $"/googli/{panelDataSO.gamePanelData.gameTypeName}/{panelDataSO.contentTypeFolderName}/{panelDataSO.contentTypeFolderName}";
 
         string prefix = "";
+
+        // all combination audios
         var audioCombList = FileProcessor.GetSortedAudioFiles(dragCombFilePath, "aud_comb_");
+
+        // getting all audios
+        var allAudios = FileProcessor.GetSortedAudioFiles(dragCombFilePath);
+        // getting all combined content
         var combContList = FileProcessor.GetSortedImageFiles(dragCombFilePath, "comb_cont_");
+        //getting all combined item
         var combItemList = FileProcessor.GetSortedImageFiles(dragCombFilePath, "comb_itm_");
+        //getting all final combinations
         var combIMList = FileProcessor.GetSortedImageFiles(dragCombFilePath, "im_comb_");
 
 
+        // Get the current level from the player preferences
+        level = PlayerPrefs.GetInt($"{panelDataSO.gameName}", 0);
+
+
+        TOTAL_FILES_TO_LOAD++;
+        FileProcessor.GetAudioClipByFileName($"{dragCombFilePath}\\{initendAudioFile}", (clip) =>
+        {
+            dragAndDropAudioPlayer.OnsetInitEndAudio(clip);
+            LoadCheck();
+        });
+
+
+        var initPaths = FileProcessor.FetchFilePaths(allAudios, initAudioFiles);
+
+
+        foreach (var initPath in initPaths)
+        {
+            MyDebug.Log($"Init Path Audio: {initPath}");
+            TOTAL_FILES_TO_LOAD++;
+            FileProcessor.GetAudioClipByFileName(initPath, (clip) =>
+        {
+            dragAndDropAudioPlayer.OnsetInitAudio(clip);
+            LoadCheck();
+        });
+        }
+
+        var failsPaths = FileProcessor.FetchFilePaths(allAudios, failedAudioFiles);
+        foreach (var failsPath in failsPaths)
+        {
+            TOTAL_FILES_TO_LOAD++;
+            FileProcessor.GetAudioClipByFileName(failsPath, (clip) =>
+        {
+            dragAndDropAudioPlayer.OnsetFailedAudio(clip);
+            LoadCheck();
+        });
+        }
+
+
+        var successPaths = FileProcessor.FetchFilePaths(allAudios, successAudioFiles);
+        foreach (var successPath in successPaths)
+        {
+            TOTAL_FILES_TO_LOAD++;
+            FileProcessor.GetAudioClipByFileName(successPath, (clip) =>
+        {
+            dragAndDropAudioPlayer.OnsetSuccessAudio(clip);
+            LoadCheck();
+        });
+        }
+
+
+        foreach (var ac in audioCombList)
+        {
+            MyDebug.Log($"Comb: {ac}");
+        }
+
+        TOTAL_FILES_TO_LOAD++;
+        FileProcessor.GetAudioClipByFileName(audioCombList[level], (clip) =>
+        {
+            dragAndDropAudioPlayer.OnsetCombinedAudio(clip);
+            LoadCheck();
+        });
+        // getting prefix
         if (FileProcessor.DNDTypes.TryGetValue(panelDataSO.gameName, out string val))
         {
             prefix = val;
@@ -56,7 +151,7 @@ public class DragAndDropManager : DropManager
         var audioList = FileProcessor.GetSortedAudioFiles(dragFilePath, prefix);
 
 
-        MyDebug.Log($"Audio fOr prefix: {audioList.Count}");
+        MyDebug.Log($"Audio fOr prefix: {allAudios.Count}");
 
         foreach (var al in audioList)
         {
@@ -65,8 +160,6 @@ public class DragAndDropManager : DropManager
 
         totalAudio = audioList.Count;
 
-        // Get the current level from the player preferences
-        level = PlayerPrefs.GetInt($"{panelDataSO.gameName}", 0);
 
         // Play the first audio clip for the current level
         // FileProcessor.GetAudioClipByFileName(audioList[level], dragAndDropAudioPlayer.PlayFirstAudioClip);
@@ -74,9 +167,15 @@ public class DragAndDropManager : DropManager
 
 
         centerContainer.dropSide = DropSide.center;
-        Sprite combContentSprite = centerContainer.currentRenderObject.sprite = FileProcessor.GetSpriteByFileName(combContList[level]);
-        Sprite combItemSprite = centerContainer.currentRenderObject.sprite = FileProcessor.GetSpriteByFileName(combItemList[level]);
-        Sprite combIMSprite = centerContainer.currentRenderObject.sprite = FileProcessor.GetSpriteByFileName(combIMList[level]);
+        Sprite combContentSprite = centerContainer.currentRenderObject.sprite = FileProcessor.GetSpriteByFileName(combContList[level], 2);
+        Sprite combItemSprite = centerContainer.currentRenderObject.sprite = FileProcessor.GetSpriteByFileName(combItemList[level], 3);
+        Sprite combIMSprite = centerContainer.currentRenderObject.sprite = FileProcessor.GetSpriteByFileName(combIMList[level], 2);
+        TOTAL_FILES_TO_LOAD++;
+        FileProcessor.GetAudioClipByFileName(audioList[level], (clip) =>
+        {
+            dragAndDropAudioPlayer.OnsetInitLetterAudio(clip);
+            LoadCheck();
+        });
 
         List<string> alphabetList = new();
         if (AlphabetLists.AlphabetTypes.TryGetValue(panelDataSO.gameName, out List<string> strList))
@@ -97,8 +196,10 @@ public class DragAndDropManager : DropManager
         // Find all DraggableObject components in the scene and add them to the Draggables list
         Draggables = FindObjectsByType<DraggableObject>(FindObjectsSortMode.None).ToList();
 
-        List<string> storedAlphabets = new();
-        storedAlphabets.Add(alphabetList[level]);
+        List<string> storedAlphabets = new()
+        {
+            alphabetList[level]
+        };
 
         Draggables[0].spriteRenderer.sprite = combItemSprite;
         Draggables[0].dropSide = DropSide.center;
@@ -119,6 +220,18 @@ public class DragAndDropManager : DropManager
 
     }
 
+
+    public void LoadCheck()
+    {
+        TOTAL_FILES_LOADED++;
+        if (TOTAL_FILES_TO_LOAD == TOTAL_FILES_LOADED)
+        {
+            MyDebug.Log("Playing");
+            StarCounts = 3;
+            dragAndDropAudioPlayer.SetSequence();
+            dragAndDropAudioPlayer.PlayAudioClipsSequentially(0);
+        }
+    }
 
 
     private TMP_FontAsset SeTFont()
@@ -156,16 +269,16 @@ public class DragAndDropManager : DropManager
     /// <summary>
     /// This function is called when the object becomes enabled and active.
     /// </summary>
-    void OnEnable()
+    void Start()
     {
-        if (dragAndDropAudioPlayer.dragAndDropAudioPlayer.Count > 0)
-        {
-            foreach (var FlashCardAudioModel in dragAndDropAudioPlayer.dragAndDropAudioPlayer)
-            {
-                FlashCardAudioModel.audioIndex = 0;
-            }
-        }
-        dragAndDropAudioPlayer.PlayAudioClipsSequentially(0);
+        // if (dragAndDropAudioPlayer.dragAndDropAudioPlayer.Count > 0)
+        // {
+        //     foreach (var FlashCardAudioModel in dragAndDropAudioPlayer.dragAndDropAudioPlayer)
+        //     {
+        //         FlashCardAudioModel.audioIndex = 0;
+        //     }
+        // }
+        // dragAndDropAudioPlayer.PlayAudioClipsSequentially(0);
     }
 
 
@@ -191,8 +304,8 @@ public class DragAndDropManager : DropManager
         // If all objects have been placed, trigger the game win logic
         //Todo:win
         Debug.LogWarning("Won");
-        dragAndDropAudioPlayer.PlaySuccess(0);
-
+        dragAndDropAudioPlayer.PlaySuccess();
+        uIManager.OnShowGameOverPanel();
         draggableObject.gameObject.SetActive(false);
 
         centerContainer.ActivateWinScenatio();
@@ -202,7 +315,7 @@ public class DragAndDropManager : DropManager
 
     public override void PlayFailedAudio()
     {
-        dragAndDropAudioPlayer.PlayFailed(0);
+        dragAndDropAudioPlayer.PlayFailed();
     }
 
     public override void OnCancelDropObject(DraggableObject draggableObject)
@@ -210,5 +323,13 @@ public class DragAndDropManager : DropManager
         // Decrement the total number of objects placed
         draggableObject.OnSetSiteBoolEvent?.Invoke(true);
         draggableObject.OnSetSiteTargetVec3Event?.Invoke(Vector3.zero);
+    }
+
+    public override void SaveLevel()
+    {
+        MyDebug.Log("SAVING.......");
+        PlayerPrefs.SetInt($"{panelDataSO.gameName}", (level == totalAudio - 1) ? 0 : ++level);
+        MyDebug.Log("SAVING......." + level);
+        PlayerPrefs.Save();
     }
 }

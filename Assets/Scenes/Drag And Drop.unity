@@ -204,7 +204,7 @@ SpriteRenderer:
   m_Size: {x: 1.82, y: 3.53}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1001 &373177749
@@ -818,7 +818,7 @@ SpriteRenderer:
   m_Size: {x: 5, y: 5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &1301221779
@@ -831,7 +831,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -2, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 200165793}
@@ -880,7 +880,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 5, y: 3}
+  m_Size: {x: 3, y: 1.5}
   m_EdgeRadius: 0
 --- !u!50 &1301221781
 Rigidbody2D:
@@ -932,7 +932,7 @@ MonoBehaviour:
   currentRenderObject: {fileID: 1301221778}
   CombinedRenderObject: {fileID: 200165794}
   combinedSprite: {fileID: 200165792}
-  scaleTo: 2
+  scaleTo: 1.2
 --- !u!1001 &1337271371
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1161,14 +1161,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dragAndDropAudioPlayer:
-  - clips:
-    - {fileID: 8300000, guid: c65d88a2e319b3e4496a2f2ea883864d, type: 3}
-    - {fileID: 8300000, guid: 5fb64493a32b80a429c5228e1fd4763e, type: 3}
-    - {fileID: 8300000, guid: 89fdda910231b9c41860fa028cd8fa44, type: 3}
-    - {fileID: 8300000, guid: 16577608ea69e574fb3ccc381405abef, type: 3}
+    sequqnceClips: []
     audioIndex: 0
-    failed: {fileID: 8300000, guid: 37158c9b03f99104d881dd34c60a14a1, type: 3}
-    success: {fileID: 8300000, guid: f7091dac57653af48ab3937c3fdbc20e, type: 3}
+    initLetterAudio: {fileID: 0}
+    initEnd: {fileID: 0}
+    combinedAudio: {fileID: 0}
+    initStart: []
+    failed: []
+    success: []
 --- !u!4 &1377684578
 Transform:
   m_ObjectHideFlags: 0
@@ -1298,7 +1298,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4711705389022369130, guid: 9a7740afbc5d56d479afe95f0cb90923, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8479726975248011110, guid: 9a7740afbc5d56d479afe95f0cb90923, type: 3}
       propertyPath: InitialModule.startSpeed.scalar
@@ -1756,18 +1756,6 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 5a7c3ebb25bf3704485f5108bb5c227a, type: 3}
-    - target: {fileID: 4424241337643852655, guid: 91d3e9c35e8d7694295eaa8cbe67defb, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4424241337643852655, guid: 91d3e9c35e8d7694295eaa8cbe67defb, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4424241337643852655, guid: 91d3e9c35e8d7694295eaa8cbe67defb, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.6
-      objectReference: {fileID: 0}
     - target: {fileID: 8455721984515433154, guid: 91d3e9c35e8d7694295eaa8cbe67defb, type: 3}
       propertyPath: m_Name
       value: drag_and_drop_dragger

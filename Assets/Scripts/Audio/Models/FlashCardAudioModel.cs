@@ -17,12 +17,32 @@ public class FlashCardAudioModel
 public class DragAndDropAudioModel
 {
 
-    public List<AudioClip> clips;
+    public DragAndDropAudioModel()
+    {
+        sequqnceClips = new();
+        initStart = new();
+        failed = new();
+        success = new();
+    }
+
+    public List<AudioClip> sequqnceClips;
     public int audioIndex = 0;
 
-    public AudioClip failed;
-    public AudioClip success;
+    public AudioClip initLetterAudio;
+    public AudioClip initEnd;
+    public AudioClip combinedAudio;
+    public List<AudioClip> initStart;
 
+    public List<AudioClip> failed;
+    public List<AudioClip> success;
+
+    internal void SetSequence()
+    {
+        sequqnceClips.Add(initStart[UnityEngine.Random.Range(0, initStart.Count)]);
+        sequqnceClips.Add(initLetterAudio);
+        sequqnceClips.Add(initEnd);
+        sequqnceClips.Add(combinedAudio);
+    }
 }
 
 

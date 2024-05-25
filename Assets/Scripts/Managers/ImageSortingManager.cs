@@ -55,8 +55,8 @@ public class ImageSortingManager : DropManager
         leftContainer.dropSide = DropSide.left;
 
         // Set the sprite for the right and left containers
-        Sprite rightSprite = rightContainer.currentRenderObject.sprite = FileProcessor.GetSpriteByFileName(imageIndexRight);
-        Sprite leftSprite = leftContainer.currentRenderObject.sprite = FileProcessor.GetSpriteByFileName(imageIndexLeft);
+        Sprite rightSprite = rightContainer.currentRenderObject.sprite = FileProcessor.GetSpriteByFileName(imageIndexRight, 4);
+        Sprite leftSprite = leftContainer.currentRenderObject.sprite = FileProcessor.GetSpriteByFileName(imageIndexLeft, 4);
 
         // Find all DraggableObject components in the scene and add them to the Draggables list
         Draggables = FindObjectsByType<DraggableObject>(FindObjectsSortMode.None).ToList();

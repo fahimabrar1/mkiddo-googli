@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class DragAndDropAudioPlayer : MonoBehaviour
 {
-    public List<DragAndDropAudioModel> dragAndDropAudioPlayer;
+    public DragAndDropAudioModel dragAndDropAudioPlayer;
     private AudioSource audioSource;
 
     /// <summary>
@@ -14,6 +14,8 @@ public class DragAndDropAudioPlayer : MonoBehaviour
     void Awake()
     {
         audioSource = GetComponent<AudioSource>();
+
+        dragAndDropAudioPlayer = new();
     }
 
 
@@ -21,16 +23,11 @@ public class DragAndDropAudioPlayer : MonoBehaviour
     // Function to play a single audio clip
     public void PlayFirstAudioClip(int index)
     {
-        if (index >= 0 && index < dragAndDropAudioPlayer.Count)
-        {
-            audioSource.clip = dragAndDropAudioPlayer[index].clips[dragAndDropAudioPlayer[index].audioIndex];
-            audioSource.Play();
-            dragAndDropAudioPlayer[index].audioIndex++;
-        }
-        else
-        {
-            Debug.LogWarning("Invalid audio clip index.");
-        }
+
+        audioSource.clip = dragAndDropAudioPlayer.sequqnceClips[dragAndDropAudioPlayer.audioIndex];
+        audioSource.Play();
+        dragAndDropAudioPlayer.audioIndex++;
+
     }
 
     // Function to play audio clips sequentially starting from the current clip index
@@ -38,19 +35,19 @@ public class DragAndDropAudioPlayer : MonoBehaviour
     {
         IEnumerator PlayAudioClipsSequentiallyCoroutine()
         {
-            int totalAudioCount = dragAndDropAudioPlayer[currentFlashCard].clips.Count;
+            int totalAudioCount = dragAndDropAudioPlayer.sequqnceClips.Count;
 
 
             // Loop until the current index reaches the last audio clip
-            while (dragAndDropAudioPlayer[currentFlashCard].audioIndex < totalAudioCount)
+            while (dragAndDropAudioPlayer.audioIndex < totalAudioCount)
             {
                 // Check if the audio source is not playing
                 if (!audioSource.isPlaying)
                 {
                     // Set the current audio clip and play it
-                    audioSource.clip = dragAndDropAudioPlayer[currentFlashCard].clips[dragAndDropAudioPlayer[currentFlashCard].audioIndex];
+                    audioSource.clip = dragAndDropAudioPlayer.sequqnceClips[dragAndDropAudioPlayer.audioIndex];
                     // Increment the index for the next audio clip
-                    dragAndDropAudioPlayer[currentFlashCard].audioIndex++;
+                    dragAndDropAudioPlayer.audioIndex++;
                     audioSource.Play();
 
 
@@ -70,15 +67,58 @@ public class DragAndDropAudioPlayer : MonoBehaviour
     //     dragAndDropAudioPlayer[currentFlashCard].audioIndex = 0;
     // }
 
-    internal void PlayFailed(int currentFlashCard)
+    internal void PlayFailed()
     {
-        audioSource.clip = dragAndDropAudioPlayer[currentFlashCard].failed;
+
+        // Select a random audio clip from the array
+        AudioClip randomFailedClip = dragAndDropAudioPlayer.failed[UnityEngine.Random.Range(0, dragAndDropAudioPlayer.failed.Count)];
+
+        // Assign the random clip to the audio source and play it
+        audioSource.clip = randomFailedClip;
         audioSource.Play();
     }
 
-    internal void PlaySuccess(int currentFlashCard)
+    internal void PlaySuccess()
     {
-        audioSource.clip = dragAndDropAudioPlayer[currentFlashCard].success;
+        // Select a random audio clip from the array
+        AudioClip randomFailedClip = dragAndDropAudioPlayer.success[UnityEngine.Random.Range(0, dragAndDropAudioPlayer.success.Count)];
+
+        // Assign the random clip to the audio source and play it
+        audioSource.clip = randomFailedClip;
         audioSource.Play();
+    }
+
+    internal void OnsetCombinedAudio(AudioClip clip)
+    {
+        dragAndDropAudioPlayer.combinedAudio = clip;
+    }
+
+
+    internal void OnsetInitAudio(AudioClip clip)
+    {
+        dragAndDropAudioPlayer.initStart.Add(clip);
+    }
+    internal void OnsetFailedAudio(AudioClip clip)
+    {
+        dragAndDropAudioPlayer.failed.Add(clip);
+    }
+
+    internal void OnsetSuccessAudio(AudioClip clip)
+    {
+        dragAndDropAudioPlayer.success.Add(clip);
+    }
+    internal void OnsetInitEndAudio(AudioClip clip)
+    {
+        dragAndDropAudioPlayer.initEnd = clip;
+    }
+    internal void OnsetInitLetterAudio(AudioClip clip)
+    {
+        dragAndDropAudioPlayer.initLetterAudio = clip;
+    }
+
+
+    public void SetSequence()
+    {
+        dragAndDropAudioPlayer.SetSequence();
     }
 }
