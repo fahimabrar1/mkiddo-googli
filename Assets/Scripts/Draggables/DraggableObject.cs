@@ -1,6 +1,8 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using static DropManager;
 
 [Serializable]
 public class OnSetSiteBooleanEvent : UnityEvent<bool> { }
@@ -15,12 +17,13 @@ public class DraggableObject : MonoBehaviour, IDragable
     public bool CanDrag;
     public SpriteRenderer spriteRenderer;
 
-    public ImageSortingManager.DropSide dropSide;
+    public DropSide dropSide;
     public bool EnableAnimaitons;
     public float distance = 2f; // Distance to move in each direction
     public float duration = 1f; // Time to complete each movement
     private Vector3 offset;
-    public Camera mainCamera;
+    private Camera mainCamera;
+    public TextMeshProUGUI LetterText;
 
     public OnSetSiteBooleanEvent OnSetSiteBoolEvent;
     public OnSetSiteTargetVectorEvent OnSetSiteTargetVec3Event;

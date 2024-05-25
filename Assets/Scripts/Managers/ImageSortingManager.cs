@@ -6,14 +6,6 @@ using UnityEngine;
 
 public class ImageSortingManager : DropManager
 {
-    // Enumeration for the two possible drop sides
-    public enum DropSide
-    {
-        noSide,
-        center,
-        left,
-        right,
-    }
 
     // Reference to the left drop container
     public DropContainer leftContainer;
@@ -49,7 +41,7 @@ public class ImageSortingManager : DropManager
         totalAudio = audioList.Count;
 
         // Get the current level from the player preferences
-        level = PlayerPrefs.GetInt($"{panelDataSO.contentTypeFolderName}", 0);
+        level = PlayerPrefs.GetInt($"{panelDataSO.gameName}", 0);
 
         // Play the first audio clip for the current level
         FileProcessor.GetAudioClipByFileName(audioList[level], imageSortingAudioPLayer.PlayFirstAudioClip);
@@ -131,7 +123,7 @@ public class ImageSortingManager : DropManager
 
     public override void SaveLevel()
     {
-        PlayerPrefs.SetInt($"{panelDataSO.contentTypeFolderName}", (level == totalAudio - 1) ? 0 : ++level);
+        PlayerPrefs.SetInt($"{panelDataSO.gameName}", (level == totalAudio - 1) ? 0 : ++level);
         PlayerPrefs.Save();
     }
 

@@ -10,6 +10,7 @@ public class PanelDataSO : ScriptableObject
 
     [SerializeField]
     public string contentTypeFolderName;
+    public string gameName;
 
 }
 
@@ -41,5 +42,6 @@ public class GamePanelData
     /// </summary>
     [SerializeField]
     public string contentType;
+
 
 }

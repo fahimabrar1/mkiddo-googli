@@ -86,7 +86,8 @@ public class HomeGridPanelController : MonoBehaviour
 
     public void OnDownloadAllContent(Action OnPanelPress)
     {
-        totalDownloads = homeGridPanels.Count;
+
+        totalDownloads = gamePanelData.contentType.Equals("DRAG_N_DROP") ? homeGridPanels.Count + 1 : homeGridPanels.Count;
         downloadProgresses = new List<float>(new float[totalDownloads]);
 
         ProgressBarObject.SetActive(true);
@@ -94,7 +95,13 @@ public class HomeGridPanelController : MonoBehaviour
 
         for (int i = 0; i < totalDownloads; i++)
         {
+            if (gamePanelData.contentType.Equals("DRAG_N_DROP") && i == totalDownloads - 1)
+            {
+                StartCoroutine(myWebRequest.DownloadAndUnzip("https://s3.mkiddo.com//storage/Interactive_Learning/Drag_and_drop/drag_comb.zip", "drag_comb", gamePanelData.gameTypeName, i, OnUpdateDownloadProgress));
+                break;
+            }
             StartCoroutine(myWebRequest.DownloadAndUnzip(homeGridPanels[i].content.link, homeGridPanels[i].GetZipTheFileName(), gamePanelData.gameTypeName, i, OnUpdateDownloadProgress));
+
         }
         this.OnPanelPress = OnPanelPress;
     }

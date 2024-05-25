@@ -11,6 +11,7 @@ public class HomeGridPanel : MonoBehaviour
     public Image image;
     public Content content;
     public string contentTypeFolderName;
+    public string gameName;
 
     public HomeGridPanelController homeGridPanelController;
 
@@ -25,6 +26,7 @@ public class HomeGridPanel : MonoBehaviour
         this.homeGridPanelController = homeGridPanelController;
         myWebRequest = new MyWebRequest();
         contentTypeFolderName = folderName;
+        gameName = content.name.ToSnakeCase();
         this.content = content;
         myWebRequest.FetchImageAsync(content.thumbnail, image);
     }
@@ -52,6 +54,7 @@ public class HomeGridPanel : MonoBehaviour
         homeGridPanelController.PanelDataSO.gamePanelData.contentCategory = homeGridPanelController.gamePanelData.contentCategory;
         homeGridPanelController.PanelDataSO.gamePanelData.contentType = homeGridPanelController.gamePanelData.contentType;
         homeGridPanelController.PanelDataSO.contentTypeFolderName = contentTypeFolderName;
+        homeGridPanelController.PanelDataSO.gameName = content.name.ToSnakeCase();
 
         SceneManager.LoadSceneAsync(sceneID);
     }
@@ -86,7 +89,7 @@ public class HomeGridPanel : MonoBehaviour
 
     internal void SetSaveLevelByuContentFOlderName()
     {
-        PlayerPrefs.SetInt($"{contentTypeFolderName}", 0);
+        PlayerPrefs.SetInt($"{gameName}", 0);
         PlayerPrefs.Save();
     }
 }

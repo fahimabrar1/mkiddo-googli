@@ -20,7 +20,9 @@ public class DropContainer : MonoBehaviour
     [Header("For Drag And Drop Game")]
 
     public SpriteRenderer currentRenderObject;
+    public SpriteRenderer CombinedRenderObject;
     public GameObject combinedSprite;
+    public float scaleTo = 2f;
 
     /// <summary>
     /// Sent when another object enters a trigger collider attached to this
@@ -75,6 +77,6 @@ public class DropContainer : MonoBehaviour
     {
         currentRenderObject.enabled = false;
         combinedSprite.SetActive(true);
-        combinedSprite.transform.DOScale(1.2f, 1);
+        combinedSprite.transform.DOScale(scaleTo, 1);
     }
 }
