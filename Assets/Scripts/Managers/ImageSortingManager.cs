@@ -126,10 +126,4 @@ public class ImageSortingManager : DropManager
         PlayerPrefs.SetInt($"{panelDataSO.gameName}", (level == totalAudio - 1) ? 0 : ++level);
         PlayerPrefs.Save();
     }
-
-
-    public void DecrementStarCount()
-    {
-        StarCounts--;
-    }
 }

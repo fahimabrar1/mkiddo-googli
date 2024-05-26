@@ -1431,7 +1431,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3119791644985764012, guid: 7e3846bb7f202b34e8202cc53fee4e07, type: 3}
       propertyPath: gamePanelData.gameTypeName
-      value: imgmatch
+      value: twosidematching
       objectReference: {fileID: 0}
     - target: {fileID: 3119791644985764012, guid: 7e3846bb7f202b34e8202cc53fee4e07, type: 3}
       propertyPath: gamePanelData.contentCategory

@@ -29,7 +29,7 @@ public class GamePanelData
 
     /// <summary>
     /// content_category:1 is for image sort
-    /// content_category:6 is for image sort
+    /// content_category:6 is for drag and drop
     /// content_category:1 is for mathcing 2 side
     /// </summary>
     [SerializeField]

@@ -4,17 +4,34 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class ImageMatchignCardHolder : MonoBehaviour
+public class ImageMatchignCardHolder : LevelBaseManager
 {
 
     public List<ImageMatchingCard> cards;
     public List<ImageMatchingCard> cardsFormatch;
 
+    private int MAX_LEVEL = 3;
     private int toBeMatch = 0;
 
+    // Reference to the PanelDataSO scriptable object
+    public ImageMatchingAudioPlayer imageMatchingAudioPlayer;
+    public PanelDataSO panelDataSO;
+
+
+    public UIManager uIManager;
+
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+
+        // Construct the file path for the sorted image and audio files
+        string filePath = Application.persistentDataPath + $"/googli/{panelDataSO.gamePanelData.gameTypeName}/{panelDataSO.contentTypeFolderName}/{panelDataSO.contentTypeFolderName}";
+
+        // Get the sorted image and audio files from the file processor
+        var imagesList = FileProcessor.GetSortedImageFiles(filePath);
+        var audioList = FileProcessor.GetSortedAudioFiles(filePath);
+
+
         cardsFormatch = new();
         for (int i = 0; i < transform.childCount; i++)
         {
@@ -61,5 +78,14 @@ public class ImageMatchignCardHolder : MonoBehaviour
                 cardsFormatch.Clear();
             }
         }
+    }
+
+
+    public override void SaveLevel()
+    {
+        MyDebug.Log("SAVING.......");
+        PlayerPrefs.SetInt($"{panelDataSO.gameName}", (level == MAX_LEVEL - 1) ? 0 : ++level);
+        MyDebug.Log("SAVING......." + level);
+        PlayerPrefs.Save();
     }
 }

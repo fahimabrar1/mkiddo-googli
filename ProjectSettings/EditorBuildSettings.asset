@@ -15,6 +15,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Drag And Drop.unity
     guid: f3aa19c43f38a0941a167fe5d880ba84
   - enabled: 1
-    path: Assets/Scenes/Image Matching.unity
-    guid: deae992628e6fc348880cb49aacea352
+    path: Assets/Scenes/Matching 2 Sides.unity
+    guid: 513ec8dcbe6762648b8ddefb91cebd0d
   m_configObjects: {}
