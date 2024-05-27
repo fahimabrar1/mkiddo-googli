@@ -1,13 +1,36 @@
 using UnityEngine;
+using UnityEngine.Events;
 using static Matching2SidesManager;
 
 public class MatchingSide : MonoBehaviour
 {
+    public int ID;
+    public SpriteRenderer spriteRenderer;
     [SerializeField] private Camera mainCamera;
     [SerializeField] private Matching2SidesManager manager;
     [SerializeField] private bool isMatched = false;
     [SerializeField] private SpriteLineDrawer activeLineRenderer;
-    [SerializeField] private Matching2SidesManagerType matching2SidesManagerType;
+    public Matching2SidesManagerType matching2SidesManagerType;
+
+    public UnityEvent OnSideMatch;
+
+    /// <summary>
+    /// Awake is called when the script instance is being loaded.
+    /// </summary>
+    void Awake()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
+    /// <summary>
+    /// This function is called when the object becomes enabled and active.
+    /// </summary>
+    void OnEnable()
+    {
+        OnSideMatch.AddListener(() => manager.OnSideMatch());
+    }
+
+
 
     void Start()
     {
@@ -45,11 +68,12 @@ public class MatchingSide : MonoBehaviour
             if (endSprite != null && endSprite.GetComponent<MatchingSide>() != null)
             {
                 MatchingSide endSide = endSprite.GetComponent<MatchingSide>();
-                if (!endSide.isMatched && endSide.matching2SidesManagerType != matching2SidesManagerType)
+                if (!endSide.isMatched && endSide.matching2SidesManagerType != matching2SidesManagerType && ID == endSide.ID)
                 {
                     activeLineRenderer.EndLine(endSprite.transform.position);
                     isMatched = true;
                     endSide.isMatched = true;
+                    OnSideMatch?.Invoke();
                 }
                 else
                 {

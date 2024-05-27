@@ -78,6 +78,59 @@ public class FileProcessor
         }
     }
 
+
+    public static List<string> GetSortedImageFilesForMatchingSides(string directoryPath, string prefix = "")
+    {
+        if (Directory.Exists(directoryPath))
+        {
+            return Directory.GetFiles(directoryPath)
+                            .Where(file => ImageExtensions.Contains(Path.GetExtension(file).ToLower()) &&
+                                           (string.IsNullOrEmpty(prefix) || Path.GetFileName(file).StartsWith(prefix, StringComparison.OrdinalIgnoreCase)))
+                            .OrderBy(file => ExtractImageNumber(file))
+                            .ThenBy(file => ExtractImageSide(file))
+                            .ToList();
+        }
+        else
+        {
+            return new List<string>();
+        }
+    }
+
+    private static int ExtractImageNumber(string fileName)
+    {
+        // Split by '_'
+        string nameWithoutExtension = Path.GetFileNameWithoutExtension(fileName);
+        var parts = nameWithoutExtension.Split('_');
+
+        if (parts.Length > 1)
+        {
+            // Remove non-digit characters from the first part to get the number
+            string numberPart = new string(parts[0].Where(char.IsDigit).ToArray());
+
+            Debug.Log($"Extracted number part: {numberPart} from file: {fileName}");
+            return int.TryParse(numberPart, out int number) ? number : int.MaxValue;
+        }
+
+        return int.MaxValue;
+    }
+
+    private static string ExtractImageSide(string fileName)
+    {
+        // Split by '_'
+        string nameWithoutExtension = Path.GetFileNameWithoutExtension(fileName);
+        var parts = nameWithoutExtension.Split('_');
+
+        if (parts.Length > 1)
+        {
+            // Take the second part as the side
+            string sidePart = parts[1].ToLower();
+            Debug.Log($"Extracted side part: {sidePart} from file: {fileName}");
+            return sidePart;
+        }
+
+        return string.Empty;
+    }
+
     private static int ExtractId(string filePath)
     {
         string fileName = Path.GetFileNameWithoutExtension(filePath);
