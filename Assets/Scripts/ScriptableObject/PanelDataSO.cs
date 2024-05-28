@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "PanelData SO", menuName = "Game Data", order = 0)]
+[CreateAssetMenu(fileName = "PanelData SO", menuName = "Game Data/PanelData SO", order = 0)]
 public class PanelDataSO : ScriptableObject
 {
 
