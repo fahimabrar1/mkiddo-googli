@@ -8,6 +8,7 @@ public class ProfileSO : ScriptableObject
     public string day;
     public string year;
     public string avatarIndex;
+    public string countryCode;
     public string mobileNumber;
 
 
