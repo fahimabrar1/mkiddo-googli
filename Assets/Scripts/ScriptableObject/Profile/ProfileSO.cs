@@ -7,9 +7,9 @@ public class ProfileSO : ScriptableObject
     public string month;
     public string day;
     public string year;
-    public string avatarIndex;
-    public string countryCode;
-    public string mobileNumber;
+    public string avatarIndex = "0";
+    public string countryCode = "+880";
+    public string mobileNumber = "1234567890";
 
 
 }

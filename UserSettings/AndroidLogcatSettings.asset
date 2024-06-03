@@ -3,39 +3,39 @@
     "m_SelectedProcess": {
         "deviceId": "V4EMOROZPBWW6LA6",
         "name": "com.MoMagic.mkiddogoogli",
-        "processId": 22152,
+        "processId": 27836,
         "exited": false
     },
     "m_SelectedPriority": 0,
     "m_KnownProcessesForSerialization": [
         {
             "deviceId": "V4EMOROZPBWW6LA6",
-            "name": "com.mi.android.globallauncher",
-            "processId": 2520,
-            "exited": false
-        },
-        {
-            "deviceId": "V4EMOROZPBWW6LA6",
             "name": "com.MoMagic.mkiddogoogli",
-            "processId": 14611,
+            "processId": 9479,
             "exited": true
         },
         {
             "deviceId": "V4EMOROZPBWW6LA6",
             "name": "com.MoMagic.mkiddogoogli",
-            "processId": 16174,
+            "processId": 22548,
             "exited": true
         },
         {
             "deviceId": "V4EMOROZPBWW6LA6",
             "name": "com.MoMagic.mkiddogoogli",
-            "processId": 11885,
+            "processId": 23207,
             "exited": true
         },
         {
             "deviceId": "V4EMOROZPBWW6LA6",
             "name": "com.MoMagic.mkiddogoogli",
-            "processId": 22152,
+            "processId": 27240,
+            "exited": true
+        },
+        {
+            "deviceId": "V4EMOROZPBWW6LA6",
+            "name": "com.MoMagic.mkiddogoogli",
+            "processId": 27836,
             "exited": false
         }
     ],

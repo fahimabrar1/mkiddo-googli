@@ -28,7 +28,7 @@ public class UIManager : MonoBehaviour
 
     public void OnClickExit()
     {
-        gameManager.LoadScene(0);
+        gameManager.LoadSceneAsync(1);
     }
 
 

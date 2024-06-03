@@ -2,53 +2,127 @@ using UnityEngine;
 using TMPro;
 using System.Diagnostics.Tracing;
 using System.Collections.Generic;
+using System.Collections;
+using UnityEngine.UI;
 public class LoginPanelTwo : LoginPanelBase
 {
-    public TMP_Dropdown numberDropdown;
-    public TMP_InputField numberText;
-    public TMP_Text textLimitText;
-
-    private int counter = 0;
+    public TMP_Text headerText;
+    public TMP_Text resendCodeText;
+    public TMP_InputField inputField;
+    public List<TMP_Text> PinFields;
+    private int currentIndex = 0;
+    public Button resendButton;
+    public Color greyColor;
+    public int resendCooldown = 60; // Time in seconds to wait before enabling the resend button
 
 
 
     /// <summary>
-    /// Start is called on the frame when a script is enabled just before
-    /// any of the Update methods is called the first time.
+    /// This function is called when the object becomes enabled and active.
     /// </summary>
+    void OnEnable()
+    {
+        resendCodeText.text = "Resend";
+        resendButton.interactable = true;
+        resendCodeText.color = Color.black;
+    }
+
+
     void Start()
     {
-        // Create a list to hold the dropdown options
-        List<TMP_Dropdown.OptionData> options = new List<TMP_Dropdown.OptionData>();
+        headerText.text = $"Enter your four digit code that we have sent to your mobile number ({loginScreenController.profileSO.countryCode} {loginScreenController.profileSO.mobileNumber})";
 
-        // Iterate through the countryMobileCodes and create OptionData objects
-        foreach (string code in Utility.CountryDetails.countryMobileCodes)
+        // Ensure all input fields are cleared initially
+        foreach (var inputField in PinFields)
         {
-            TMP_Dropdown.OptionData option = new(code);
-            options.Add(option);
+            inputField.text = "";
         }
 
-        // Add the options to the dropdown
-        numberDropdown.AddOptions(options);
-
+        // Assign the resend button click event
+        resendButton.onClick.AddListener(OnClickResendCode);
     }
 
-
-    public void OnTapDialerButton(int num)
+    public void InputButton(int value)
     {
-        if (numberText.text.Length < 10)
+        if (currentIndex >= PinFields.Count)
         {
-            numberText.text += num.ToString();
-            counter++;
-            textLimitText.text = counter + "/10";
+            return; // All fields are filled
+        }
+
+        // Update the current input field with the value
+        PinFields[currentIndex].text = value.ToString();
+
+        // Move to the next input field
+        currentIndex++;
+        if (currentIndex < PinFields.Count)
+        {
+            // PinFields[currentIndex].Select();
+            // PinFields[currentIndex].ActivateInputField();
         }
     }
 
-    public void OnTapDialerBack()
+
+    public void OnInputValueChange(string val)
     {
-        counter = 0;
-        textLimitText.text = "0/10";
-        numberText.text = "";
+
+        // Update PinFields
+        for (int i = 0; i < PinFields.Count; i++)
+        {
+            if (i < val.Length)
+            {
+                PinFields[i].text = val[i].ToString();
+            }
+            else
+            {
+                PinFields[i].text = string.Empty; // Clear any remaining fields
+            }
+        }
     }
+
+    public void ClearAllFields()
+    {
+        foreach (var inputField in PinFields)
+        {
+            inputField.text = "";
+        }
+
+        // Reset the index and select the first input field
+        currentIndex = 0;
+        if (PinFields.Count > 0)
+        {
+            // PinFields[0].Select();
+            // PinFields[0].ActivateInputField();
+        }
+    }
+
+    public void OnClickResendCode()
+    {
+        if (!resendButton.interactable)
+        {
+            return; // If the button is already disabled, do nothing
+        }
+
+        resendCodeText.text = "Code resent!";
+        StartCoroutine(ResendCooldownCoroutine());
+    }
+
+    private IEnumerator ResendCooldownCoroutine()
+    {
+        resendButton.interactable = false;
+        resendCodeText.color = greyColor;
+        float remainingTime = resendCooldown;
+
+        while (remainingTime > 0)
+        {
+            resendCodeText.text = $"Resend ({remainingTime})";
+            yield return new WaitForSeconds(1f);
+            remainingTime--;
+        }
+
+        resendCodeText.text = "Resend";
+        resendButton.interactable = true;
+        resendCodeText.color = Color.black;
+    }
+
 
 }

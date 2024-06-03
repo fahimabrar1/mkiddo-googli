@@ -41,24 +41,27 @@ public class MyWebRequest
         }
         else
         {
-            // if (!Directory.Exists(Application.dataPath + "/googli"))
-            // {
-            //     Directory.CreateDirectory(Application.dataPath + "/googli");
-            // }
-
-            if (!Directory.Exists(Application.dataPath + $"/googli/zips/"))
+            if (!Directory.Exists(Application.temporaryCachePath + "/googli"))
             {
-                Directory.CreateDirectory(Application.dataPath + $"/googli/zips/");
+                MyDebug.LogWarning($"Creating {Application.temporaryCachePath}/googli path");
+                Directory.CreateDirectory(Application.temporaryCachePath + "/googli");
             }
-            if (!Directory.Exists(Application.persistentDataPath + $"/googli/{gameType}/"))
+
+            if (!Directory.Exists(Application.temporaryCachePath + $"/googli/zips"))
             {
-                Directory.CreateDirectory(Application.persistentDataPath + $"/googli/{gameType}/");
+                MyDebug.LogWarning("Creating /googli/zips path");
+                Directory.CreateDirectory(Application.temporaryCachePath + $"/googli/zips");
+            }
+            if (!Directory.Exists(Application.persistentDataPath + $"/googli/{gameType}"))
+            {
+                MyDebug.LogWarning($"Creating /googli/{gameType} path");
+                Directory.CreateDirectory(Application.persistentDataPath + $"/googli/{gameType}");
             }
 
             MyDebug.Log("MWR Writing File to data path");
-            File.WriteAllBytes(Application.dataPath + $"/googli/zips/{fileName}.zip", www.downloadHandler.data);
+            File.WriteAllBytes(Application.temporaryCachePath + $"/googli/zips/{fileName}.zip", www.downloadHandler.data);
             MyDebug.Log("MWR Writing File to persistant path");
-            ZipFile.ExtractToDirectory(Application.dataPath + $"/googli/zips/{fileName}.zip", Application.persistentDataPath + $"/googli/{gameType}/{fileName}", true);
+            ZipFile.ExtractToDirectory(Application.temporaryCachePath + $"/googli/zips/{fileName}.zip", Application.persistentDataPath + $"/googli/{gameType}/{fileName}", true);
 
             OnUpdateDownloadProgress?.Invoke(1, downloadID);
 

@@ -50,10 +50,10 @@ public class LoginScreenController : MonoBehaviour
 
         if (currentPanelIndex == 0)
         {
-            next.gameObject.SetActive(true);
+            next.gameObject.SetActive(false);
             back.gameObject.SetActive(false);
         }
-        else if (currentPanelIndex > 0 && currentPanelIndex < maxPanelIndex - 2)
+        else if (currentPanelIndex > 0 && currentPanelIndex < maxPanelIndex - 1)
         {
             next.gameObject.SetActive(true);
             back.gameObject.SetActive(true);
@@ -61,7 +61,7 @@ public class LoginScreenController : MonoBehaviour
         else if (currentPanelIndex == maxPanelIndex - 1)
         {
             play.gameObject.SetActive(true);
-            next.gameObject.SetActive(true);
+            next.gameObject.SetActive(false);
             back.gameObject.SetActive(true);
         }
     }
@@ -81,6 +81,6 @@ public class LoginScreenController : MonoBehaviour
     }
     public void OnClickPlay()
     {
-        SceneManager.LoadSceneAsync(0);
+        SceneManager.LoadSceneAsync(1);
     }
 }

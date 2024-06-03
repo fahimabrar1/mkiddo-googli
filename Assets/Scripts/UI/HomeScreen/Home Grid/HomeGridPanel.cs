@@ -74,15 +74,15 @@ public class HomeGridPanel : MonoBehaviour
     {
         if (content.content_type.Equals("SORT_BY_RULE"))
         {
-            sceneID = 1;
+            sceneID = 2;
         }
         else if (content.content_type.Equals("DRAG_N_DROP"))
         {
-            sceneID = 2;
+            sceneID = 3;
         }
         else
         {
-            sceneID = 3;
+            sceneID = 4;
         }
 
     }

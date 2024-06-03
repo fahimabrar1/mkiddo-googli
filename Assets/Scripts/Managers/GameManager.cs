@@ -5,12 +5,12 @@ public class GameManager : MonoBehaviour
 {
     public void RestartLevel()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
     }
 
 
-    public void LoadScene(int sceneIndex)
+    public void LoadSceneAsync(int sceneIndex)
     {
-        SceneManager.LoadScene(sceneIndex);
+        SceneManager.LoadSceneAsync(sceneIndex);
     }
 }
