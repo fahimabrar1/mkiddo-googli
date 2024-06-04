@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -209,5 +211,98 @@ public class FileProcessor
         }
     }
 
+    #region Json File Handler
+
+    protected string encryptionKey = "alpha-gamma"; // You should use a securely generated key
+    public string userFilePath = Application.persistentDataPath + "/ibuiuhad.ji"; // You should use a securely generated key
+
+    public void SaveJsonToFile(string filePath, string jsonString)
+    {
+        try
+        {
+            string encryptedJson = EncryptString(jsonString, encryptionKey);
+            File.WriteAllText(filePath, encryptedJson);
+            Debug.Log("JSON saved and encrypted to file successfully.");
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Failed to save JSON to file: " + ex.Message);
+        }
+    }
+
+    public string LoadJsonFromFile(string filePath)
+    {
+        try
+        {
+            if (File.Exists(filePath))
+            {
+                string encryptedJson = File.ReadAllText(filePath);
+                string decryptedJson = DecryptString(encryptedJson, encryptionKey);
+                Debug.Log("JSON loaded and decrypted from file successfully.");
+                return decryptedJson;
+            }
+            else
+            {
+                Debug.LogWarning("JSON file not found.");
+                return null;
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Failed to load JSON from file: " + ex.Message);
+            return null;
+        }
+    }
+
+    private string EncryptString(string plainText, string key)
+    {
+        using (Aes aesAlg = Aes.Create())
+        {
+            using (Rfc2898DeriveBytes keyGenerator = new Rfc2898DeriveBytes(key, Encoding.UTF8.GetBytes("your-salt")))
+            {
+                aesAlg.Key = keyGenerator.GetBytes(aesAlg.KeySize / 8);
+                aesAlg.IV = keyGenerator.GetBytes(aesAlg.BlockSize / 8);
+
+                ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
+                using (MemoryStream msEncrypt = new MemoryStream())
+                {
+                    using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
+                    {
+                        using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
+                        {
+                            swEncrypt.Write(plainText);
+                        }
+                        return Convert.ToBase64String(msEncrypt.ToArray());
+                    }
+                }
+            }
+        }
+    }
+
+    private string DecryptString(string cipherText, string key)
+    {
+        using (Aes aesAlg = Aes.Create())
+        {
+            using (Rfc2898DeriveBytes keyGenerator = new Rfc2898DeriveBytes(key, Encoding.UTF8.GetBytes("your-salt")))
+            {
+                aesAlg.Key = keyGenerator.GetBytes(aesAlg.KeySize / 8);
+                aesAlg.IV = keyGenerator.GetBytes(aesAlg.BlockSize / 8);
+
+                ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
+                using (MemoryStream msDecrypt = new MemoryStream(Convert.FromBase64String(cipherText)))
+                {
+                    using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
+                    {
+                        using (StreamReader srDecrypt = new StreamReader(csDecrypt))
+                        {
+                            return srDecrypt.ReadToEnd();
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+    #endregion
 
 }

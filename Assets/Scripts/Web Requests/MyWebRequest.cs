@@ -158,7 +158,7 @@ public class MyWebRequest
     }
 
     // Method to fetch the image asynchronously from the specified URL
-    public async void SendOTP(string url, string mobileNumber)
+    public async void SendOTP(string url, string mobileNumber, Action<MyWebReqSuccessCallback> OnSuccessCallback, Action<MyWebReqFailedCallback> OnFailedCallback)
     {
         // Construct the JSON payload as a string
         string jsonPayload = $"{{\"msisdn\":\"{mobileNumber}\",\"source\":\"app\",\"app_name\":\"mKiddo_v:2.0.0\",\"app_signature\":\"xjnlFYUXJq3\"}}";
@@ -186,15 +186,17 @@ public class MyWebRequest
 
         if (www.result != UnityWebRequest.Result.Success)
         {
-            Debug.LogError("Failed to send OTP: " + www.error);
+            OnFailedCallback?.Invoke(JsonUtility.FromJson<MyWebReqFailedCallback>(www.downloadHandler.text));
+            Debug.LogError("Failed to send OTP: " + www.downloadHandler.text);
         }
         else
         {
+            OnSuccessCallback?.Invoke(JsonUtility.FromJson<MyWebReqSuccessCallback>(www.downloadHandler.text));
             Debug.Log("OTP sent successfully: " + www.downloadHandler.text);
         }
     }
 
-    public async void VerifyOTP(string url, string name, string number, string otp, Action OnSuccessCallback, Action OnFailedCallback)
+    public async void VerifyOTP(string url, string name, string number, string otp, Action<MkiddOOnVerificationSuccessModel> OnSuccessCallback, Action<MyWebReqFailedCallback> OnFailedCallback)
     {
         number = number.Replace("+", "");
         // Construct the JSON payload as a string
@@ -225,12 +227,13 @@ public class MyWebRequest
 
         if (www.result != UnityWebRequest.Result.Success)
         {
-            OnFailedCallback?.Invoke();
-            Debug.LogError("Failed to verify OTP: " + www.result);
+
+            OnFailedCallback?.Invoke(JsonUtility.FromJson<MyWebReqFailedCallback>(www.downloadHandler.text));
+            Debug.LogError("Failed to verify OTP: " + www.downloadHandler.text);
         }
         else
         {
-            OnSuccessCallback?.Invoke();
+            OnSuccessCallback?.Invoke(JsonUtility.FromJson<MkiddOOnVerificationSuccessModel>(www.downloadHandler.text));
             Debug.Log("OTP verified successfully: " + www.downloadHandler.text);
         }
     }

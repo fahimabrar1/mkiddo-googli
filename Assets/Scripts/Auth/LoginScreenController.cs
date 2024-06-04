@@ -13,12 +13,8 @@ public class LoginScreenController : MonoBehaviour
     public int maxPanelIndex = 0;
     public ProfileSO profileSO;
 
-    public Button back;
-    public Button next;
     public Button play;
     public List<GameObject> panels;
-
-
 
 
 
@@ -48,22 +44,22 @@ public class LoginScreenController : MonoBehaviour
                 panels[i].SetActive(false);
         }
 
-        if (currentPanelIndex == 0)
-        {
-            next.gameObject.SetActive(false);
-            back.gameObject.SetActive(false);
-        }
-        else if (currentPanelIndex > 0 && currentPanelIndex < maxPanelIndex - 1)
-        {
-            next.gameObject.SetActive(true);
-            back.gameObject.SetActive(true);
-        }
-        else if (currentPanelIndex == maxPanelIndex - 1)
-        {
-            play.gameObject.SetActive(true);
-            next.gameObject.SetActive(false);
-            back.gameObject.SetActive(true);
-        }
+        // if (currentPanelIndex == 0)
+        // {
+        //     next.gameObject.SetActive(false);
+        //     back.gameObject.SetActive(false);
+        // }
+        // else if (currentPanelIndex > 0 && currentPanelIndex < maxPanelIndex - 1)
+        // {
+        //     next.gameObject.SetActive(true);
+        //     back.gameObject.SetActive(true);
+        // }
+        // else if (currentPanelIndex == maxPanelIndex - 1)
+        // {
+        //     play.gameObject.SetActive(true);
+        //     next.gameObject.SetActive(false);
+        //     back.gameObject.SetActive(true);
+        // }
     }
 
 
@@ -79,15 +75,15 @@ public class LoginScreenController : MonoBehaviour
         OnUpdatePanel();
     }
 
-    public void OnToggleNextButton(bool val)
-    {
-        next.gameObject.SetActive(val);
-    }
+    // public void OnToggleNextButton(bool val)
+    // {
+    //     next.gameObject.SetActive(val);
+    // }
 
-    public void OnToggleBackButton(bool val)
-    {
-        back.gameObject.SetActive(val);
-    }
+    // public void OnToggleBackButton(bool val)
+    // {
+    //     back.gameObject.SetActive(val);
+    // }
 
 
     public void OnClickPlay()

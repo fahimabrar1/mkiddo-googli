@@ -3,8 +3,12 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
 using UnityEngine.Diagnostics;
+using DG.Tweening;
 public class LoginPanelOne : LoginPanelBase
 {
+    public Button Back;
+    public Button Next;
+    public GameObject NextPanel;
 
     public List<GameObject> panels;
 
@@ -18,8 +22,9 @@ public class LoginPanelOne : LoginPanelBase
     public TMP_Dropdown numberDropdown1;
     public TMP_InputField numberText;
     public TMP_Text textLimitText;
+    public TMP_Text warningText;
 
-    private int counter = 0;
+    MyWebRequest myWebRequest;
 
 
 
@@ -29,6 +34,13 @@ public class LoginPanelOne : LoginPanelBase
     /// </summary>
     void Start()
     {
+
+
+        if (PlayerPrefs.GetInt("logged_in", 0) == 1)
+        {
+            FindObjectOfType<GameManager>().LoadSceneAsync(1);
+        }
+        myWebRequest = new();
         // Create a list to hold the dropdown options
         List<TMP_Dropdown.OptionData> options = new List<TMP_Dropdown.OptionData>();
 
@@ -52,13 +64,30 @@ public class LoginPanelOne : LoginPanelBase
     public void OnTapDialerButton(int num)
     {
 
-        if (numberText.text.Length < 10)
+        if (numberText.text.Length <= 10)
         {
             numberText.text += num.ToString();
             loginScreenController.profileSO.mobileNumber = numberText.text;
-            counter++;
-            textLimitText.text = counter + "/10";
-            loginScreenController.OnToggleNextButton(true);
+            textLimitText.text = numberText.text.Length + "/10";
+            Next.gameObject.SetActive(true);
+        }
+
+    }
+    public void OnTapDialerButton(string num)
+    {
+        Debug.Log(num);
+        if (numberText.text.Length <= 10 && num.Length > 0)
+        {
+            numberText.text = num.ToString();
+            loginScreenController.profileSO.mobileNumber = numberText.text;
+            textLimitText.text = numberText.text.Length + "/10";
+            Next.gameObject.SetActive(true);
+        }
+        else if (num.Length == 0)
+        {
+            loginScreenController.profileSO.mobileNumber = "";
+            textLimitText.text = "0/10";
+            Next.gameObject.SetActive(false);
         }
     }
 
@@ -71,11 +100,18 @@ public class LoginPanelOne : LoginPanelBase
 
     public void OnTapDialerBack()
     {
-        loginScreenController.OnToggleNextButton(false);
-        counter = 0;
+        Next.gameObject.SetActive(false);
         loginScreenController.profileSO.mobileNumber = "";
         textLimitText.text = "0/10";
         numberText.text = "";
+
+        if (warningText.gameObject.activeInHierarchy)
+        {
+            warningText.text = "";
+            warningText.color = successColor;
+            warningText.gameObject.SetActive(false);
+            warningText.gameObject.transform.DOScale(Vector3.zero, 0.2f).SetAutoKill(true);
+        }
     }
 
 
@@ -85,5 +121,42 @@ public class LoginPanelOne : LoginPanelBase
         var values = str.Split(' ');
         var code = values[1].Replace("+", "");
         loginScreenController.profileSO.countryCode = code;
+    }
+
+
+
+    public void OnTapNext()
+    {
+        myWebRequest.SendOTP("/api/v2/send-otp", loginScreenController.profileSO.countryCode + loginScreenController.profileSO.mobileNumber, OnSuccessSendNumber, OnFailedSendNumber);
+
+        // {"success":false,"status_code":402,"message":"INVALID MSISDN"}
+    }
+
+
+    public void OnSuccessSendNumber(MyWebReqSuccessCallback result)
+    {
+        if (result.status_code == 200)
+        {
+
+            NextPanel.SetActive(true);
+            gameObject.SetActive(false);
+        }
+        else if (result.status_code == 402)
+        {
+            warningText.text = "Invalid Number";
+            warningText.color = failedColor;
+            warningText.gameObject.SetActive(true);
+            warningText.gameObject.transform.DOScale(Vector3.one, 0.2f).SetAutoKill(true);
+            Next.gameObject.SetActive(false);
+        }
+
+    }
+    public void OnFailedSendNumber(MyWebReqFailedCallback result)
+    {
+        warningText.text = result.message;
+        warningText.color = successColor;
+        warningText.gameObject.SetActive(true);
+        warningText.gameObject.transform.DOScale(Vector3.one, 0.2f).SetAutoKill(true);
+        Next.gameObject.SetActive(false);
     }
 }
