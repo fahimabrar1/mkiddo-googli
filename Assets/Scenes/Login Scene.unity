@@ -11361,9 +11361,7 @@ MonoBehaviour:
   m_ItemImage: {fileID: 0}
   m_Value: 0
   m_Options:
-    m_Options:
-    - m_Text: (BD) +880
-      m_Image: {fileID: 0}
+    m_Options: []
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -20079,8 +20077,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4167bba783222d4ea2bec81eed10857, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  panelID: 5
-  loginScreenController: {fileID: 1395590295}
 --- !u!1 &2085191025
 GameObject:
   m_ObjectHideFlags: 0

@@ -77,8 +77,19 @@ public class LoginScreenController : MonoBehaviour
     {
         currentPanelIndex--;
         OnUpdatePanel();
-
     }
+
+    public void OnToggleNextButton(bool val)
+    {
+        next.gameObject.SetActive(val);
+    }
+
+    public void OnToggleBackButton(bool val)
+    {
+        back.gameObject.SetActive(val);
+    }
+
+
     public void OnClickPlay()
     {
         SceneManager.LoadSceneAsync(1);

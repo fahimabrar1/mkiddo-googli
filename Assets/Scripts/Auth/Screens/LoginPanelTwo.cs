@@ -15,6 +15,7 @@ public class LoginPanelTwo : LoginPanelBase
     public Color greyColor;
     public int resendCooldown = 60; // Time in seconds to wait before enabling the resend button
 
+    MyWebRequest myWebRequest;
 
 
     /// <summary>
@@ -22,9 +23,14 @@ public class LoginPanelTwo : LoginPanelBase
     /// </summary>
     void OnEnable()
     {
+        myWebRequest = new();
         resendCodeText.text = "Resend";
         resendButton.interactable = true;
         resendCodeText.color = Color.black;
+
+        if (inputField.text.Length > 0)
+            loginScreenController.OnToggleNextButton(false);
+
     }
 
 
@@ -40,6 +46,7 @@ public class LoginPanelTwo : LoginPanelBase
 
         // Assign the resend button click event
         resendButton.onClick.AddListener(OnClickResendCode);
+        myWebRequest.SendOTP("/api/v2/send-otp", loginScreenController.profileSO.countryCode + loginScreenController.profileSO.mobileNumber);
     }
 
     public void InputButton(int value)
@@ -54,17 +61,31 @@ public class LoginPanelTwo : LoginPanelBase
 
         // Move to the next input field
         currentIndex++;
-        if (currentIndex < PinFields.Count)
+        if (currentIndex == PinFields.Count)
         {
-            // PinFields[currentIndex].Select();
-            // PinFields[currentIndex].ActivateInputField();
+            string otp = "";
+            foreach (var text in PinFields)
+            {
+                otp += text.text;
+            }
+            myWebRequest.VerifyOTP("/api/V3/auth/sign-in", "allvee", loginScreenController.profileSO.countryCode + loginScreenController.profileSO.mobileNumber, otp, OnSuccessCallback, OnFailedCallback);
+
         }
+    }
+
+
+    public void OnSuccessCallback()
+    {
+        loginScreenController.OnToggleNextButton(true);
+    }
+    public void OnFailedCallback()
+    {
+        //Todo: error
     }
 
 
     public void OnInputValueChange(string val)
     {
-
         // Update PinFields
         for (int i = 0; i < PinFields.Count; i++)
         {
@@ -103,6 +124,12 @@ public class LoginPanelTwo : LoginPanelBase
         }
 
         resendCodeText.text = "Code resent!";
+        string otp = "";
+        foreach (var text in PinFields)
+        {
+            otp += text.text;
+        }
+        myWebRequest.VerifyOTP("/api/V3/auth/sign-in", "allvee", loginScreenController.profileSO.countryCode + loginScreenController.profileSO.mobileNumber, otp, OnSuccessCallback, OnFailedCallback);
         StartCoroutine(ResendCooldownCoroutine());
     }
 

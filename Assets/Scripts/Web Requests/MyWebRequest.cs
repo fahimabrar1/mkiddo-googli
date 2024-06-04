@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
+using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Diagnostics;
@@ -156,4 +157,81 @@ public class MyWebRequest
         }
     }
 
+    // Method to fetch the image asynchronously from the specified URL
+    public async void SendOTP(string url, string mobileNumber)
+    {
+        // Construct the JSON payload as a string
+        string jsonPayload = $"{{\"msisdn\":\"{mobileNumber}\",\"source\":\"app\",\"app_name\":\"mKiddo_v:2.0.0\",\"app_signature\":\"xjnlFYUXJq3\"}}";
+
+        // Create a UnityWebRequest for POST
+        using UnityWebRequest www = new(baseUrl + url, UnityWebRequest.kHttpVerbPOST);
+
+        // Convert the JSON string to a byte array
+        byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonPayload);
+
+        // Set the request body
+        www.uploadHandler = new UploadHandlerRaw(bodyRaw);
+        www.downloadHandler = new DownloadHandlerBuffer();
+
+        // Set the content type to application/json
+        www.SetRequestHeader("Content-Type", "application/json");
+
+        // Send the request and wait for the response
+        var requestOperation = www.SendWebRequest();
+
+        while (!requestOperation.isDone)
+        {
+            await Task.Yield(); // Yield control back to Unity until the request is done
+        }
+
+        if (www.result != UnityWebRequest.Result.Success)
+        {
+            Debug.LogError("Failed to send OTP: " + www.error);
+        }
+        else
+        {
+            Debug.Log("OTP sent successfully: " + www.downloadHandler.text);
+        }
+    }
+
+    public async void VerifyOTP(string url, string name, string number, string otp, Action OnSuccessCallback, Action OnFailedCallback)
+    {
+        number = number.Replace("+", "");
+        // Construct the JSON payload as a string
+        string jsonPayload = $"{{\"app_name\":\"mKiddo_v:2.6.1.beta\",\"source\":\"app\",\"login_by\":\"MSISDN\",\"email\":\"\",\"google_id\":\"9874563742891-30\",\"name\":\"{name}\",\"msisdn\":\"{number}\",\"otp\":\"{otp}\"}}";
+
+        MyDebug.Log(jsonPayload);
+
+        // Create a UnityWebRequest for POST
+        using UnityWebRequest www = new(baseUrl + url, UnityWebRequest.kHttpVerbPOST);
+
+        // Convert the JSON string to a byte array
+        byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonPayload);
+
+        // Set the request body
+        www.uploadHandler = new UploadHandlerRaw(bodyRaw);
+        www.downloadHandler = new DownloadHandlerBuffer();
+
+        // Set the content type to application/json
+        www.SetRequestHeader("Content-Type", "application/json");
+
+        // Send the request and wait for the response
+        var requestOperation = www.SendWebRequest();
+
+        while (!requestOperation.isDone)
+        {
+            await Task.Yield(); // Yield control back to Unity until the request is done
+        }
+
+        if (www.result != UnityWebRequest.Result.Success)
+        {
+            OnFailedCallback?.Invoke();
+            Debug.LogError("Failed to verify OTP: " + www.result);
+        }
+        else
+        {
+            OnSuccessCallback?.Invoke();
+            Debug.Log("OTP verified successfully: " + www.downloadHandler.text);
+        }
+    }
 }

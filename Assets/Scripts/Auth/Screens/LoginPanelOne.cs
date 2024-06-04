@@ -58,6 +58,7 @@ public class LoginPanelOne : LoginPanelBase
             loginScreenController.profileSO.mobileNumber = numberText.text;
             counter++;
             textLimitText.text = counter + "/10";
+            loginScreenController.OnToggleNextButton(true);
         }
     }
 
@@ -70,6 +71,7 @@ public class LoginPanelOne : LoginPanelBase
 
     public void OnTapDialerBack()
     {
+        loginScreenController.OnToggleNextButton(false);
         counter = 0;
         loginScreenController.profileSO.mobileNumber = "";
         textLimitText.text = "0/10";
@@ -81,6 +83,7 @@ public class LoginPanelOne : LoginPanelBase
     {
         var str = Utility.CountryDetails.countryMobileCodes[value];
         var values = str.Split(' ');
-        loginScreenController.profileSO.countryCode = values[1];
+        var code = values[1].Replace("+", "");
+        loginScreenController.profileSO.countryCode = code;
     }
 }
