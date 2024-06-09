@@ -43,7 +43,7 @@ public class HomeGridPanelController : MonoBehaviour
     {
         myWebRequest = new();
 
-        StartCoroutine(myWebRequest.FetchData($"/api/v3/content/content-list?content_category={gamePanelData.contentCategory}", contentType: gamePanelData.contentType, OnApiResponseSucces: OnSuccessLoadingScreen));
+        StartCoroutine(myWebRequest.FetchData($"/api/v3/content/content-list?content_category={gamePanelData.contentCategory}", blockID: gamePanelData.blockID, contentType: gamePanelData.contentType, OnApiResponseSucces: OnSuccessLoadingScreen));
     }
 
     private void OnSuccessLoadingScreen(OnApiResponseSuccess onApiResponseSuccess)

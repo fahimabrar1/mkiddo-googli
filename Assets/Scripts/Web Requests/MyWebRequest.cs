@@ -73,7 +73,7 @@ public class MyWebRequest
 
 
     // Method to fetch data from the specified URL
-    public IEnumerator FetchData(string url, string contentType = "", string access_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbl9ieSI6Ik1TSVNETiIsImdvb2dsZV9pZCI6Ijk4NzQ1NjM3NDI4OTEtMzAiLCJ1aWQiOjM4MTg4LCJtc2lzZG4iOiI4ODAxNjg3MDU2MTQwIiwiZW1haWwiOiIiLCJzb3VyY2UiOiJhcHAiLCJhcHBfbmFtZSI6Im1LaWRkb192OjIuNi4xLmJldGEiLCJpYXQiOjE3MTI0MzA1MjcsImV4cCI6MTcxMjg2MjUyN30.oFouaGLiza11cSFODgS5TjqRWLgAjvntNM0A9HAwH0c", Action<OnApiResponseSuccess> OnApiResponseSucces = null, Action<OnApiResponseFailed> OnApiResponseFailed = null)
+    public IEnumerator FetchData(string url, int blockID = -1, string contentType = "", string access_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbl9ieSI6Ik1TSVNETiIsImdvb2dsZV9pZCI6Ijk4NzQ1NjM3NDI4OTEtMzAiLCJ1aWQiOjM4MTg4LCJtc2lzZG4iOiI4ODAxNjg3MDU2MTQwIiwiZW1haWwiOiIiLCJzb3VyY2UiOiJhcHAiLCJhcHBfbmFtZSI6Im1LaWRkb192OjIuNi4xLmJldGEiLCJpYXQiOjE3MTI0MzA1MjcsImV4cCI6MTcxMjg2MjUyN30.oFouaGLiza11cSFODgS5TjqRWLgAjvntNM0A9HAwH0c", Action<OnApiResponseSuccess> OnApiResponseSucces = null, Action<OnApiResponseFailed> OnApiResponseFailed = null)
     {
         using UnityWebRequest www = UnityWebRequest.Get(baseUrl + url);
         // Add access token to request header if provided
@@ -99,16 +99,20 @@ public class MyWebRequest
             {
                 foreach (var videoBlock in response.data.Video)
                 {
-
-                    if (videoBlock.contents.Count > 0)
+                    if (videoBlock.block_id != -1 && videoBlock.block_id == blockID)
                     {
-                        if (videoBlock.contents[0].content_type.Equals(contentType))
-                        {
-                            MyDebug.Log("Content Type Name: " + videoBlock.contents[0].content_type);
-                            _videoBlock = videoBlock;
-                            break;
-                        }
+                        _videoBlock = videoBlock;
+
                     }
+
+                    // if (videoBlock.contents.Count > 0)
+                    // {
+                    //     if (videoBlock.contents[0].content_type.Equals(contentType))
+                    //     {
+                    //         MyDebug.Log("Content Type Name: " + videoBlock.contents[0].content_type);
+                    //         break;
+                    //     }
+                    // }
 
                 }
 

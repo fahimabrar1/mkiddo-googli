@@ -50,6 +50,7 @@ public class HomeGridPanel : MonoBehaviour
     {
         SetSceneID();
 
+        homeGridPanelController.PanelDataSO.gamePanelData.blockID = homeGridPanelController.gamePanelData.blockID;
         homeGridPanelController.PanelDataSO.gamePanelData.gameTypeName = homeGridPanelController.gamePanelData.gameTypeName;
         homeGridPanelController.PanelDataSO.gamePanelData.contentCategory = homeGridPanelController.gamePanelData.contentCategory;
         homeGridPanelController.PanelDataSO.gamePanelData.contentType = homeGridPanelController.gamePanelData.contentType;
