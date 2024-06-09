@@ -10,6 +10,7 @@ public class HomeGridPanel : MonoBehaviour
     public int ID;
     public Image image;
     public Content content;
+    public int VideoBlockID;
     public string contentTypeFolderName;
     public string gameName;
 
@@ -20,7 +21,7 @@ public class HomeGridPanel : MonoBehaviour
     private int sceneID;
 
 
-    internal void SetContent(int ID, Content content, string folderName, HomeGridPanelController homeGridPanelController)
+    internal void SetContent(int ID, int blockID, Content content, string folderName, HomeGridPanelController homeGridPanelController)
     {
         this.ID = ID;
         this.homeGridPanelController = homeGridPanelController;
@@ -28,6 +29,8 @@ public class HomeGridPanel : MonoBehaviour
         contentTypeFolderName = folderName;
         gameName = content.name.ToSnakeCase();
         this.content = content;
+        VideoBlockID = blockID;
+
         myWebRequest.FetchImageAsync(content.thumbnail, image);
     }
 
@@ -73,17 +76,22 @@ public class HomeGridPanel : MonoBehaviour
 
     public void SetSceneID()
     {
-        if (content.content_type.Equals("SORT_BY_RULE"))
+        if (VideoBlockID.Equals(117))
         {
             sceneID = 2;
         }
-        else if (content.content_type.Equals("DRAG_N_DROP"))
+        else if (VideoBlockID.Equals(107))
+
         {
             sceneID = 3;
         }
-        else
+        else if (VideoBlockID.Equals(137))
         {
             sceneID = 4;
+        }
+        else if (VideoBlockID.Equals(128))
+        {
+            sceneID = 5;
         }
 
     }

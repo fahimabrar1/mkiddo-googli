@@ -123,187 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &45920802
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1372975446}
-    m_Modifications:
-    - target: {fileID: 1594768368711560333, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: e8d7e3bfa2c829241b5327ee1196070d, type: 3}
-    - target: {fileID: 3258154165119278684, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 444752280}
-    - target: {fileID: 3806338333741847746, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: m_Name
-      value: Flash Card (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 3806338333741847746, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6641298621891832656, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 1642b544a88a5f847bcd42631b7467a5, type: 3}
-    - target: {fileID: 8487171408456967058, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: ID
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8487171408456967058, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: flashCardAudioPlayer
-      value: 
-      objectReference: {fileID: 2140489459}
-    - target: {fileID: 8487171408456967058, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: OnFlashClosedCompleteEvent.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8487171408456967058, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: OnFlashOpenedCompleteEvent.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8487171408456967058, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: OnFlashInitailizedCompleteEvnet.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8487171408456967058, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: OnFlashClosedCompleteEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8487171408456967058, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: OnFlashOpenedCompleteEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8487171408456967058, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: OnFlashClosedCompleteEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1372975445}
-    - target: {fileID: 8487171408456967058, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: OnFlashOpenedCompleteEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1372975445}
-    - target: {fileID: 8487171408456967058, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: OnFlashClosedCompleteEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8487171408456967058, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: OnFlashInitailizedCompleteEvnet.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8487171408456967058, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: OnFlashOpenedCompleteEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8487171408456967058, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: OnFlashClosedCompleteEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnFlashClosedComplete
-      objectReference: {fileID: 0}
-    - target: {fileID: 8487171408456967058, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: OnFlashOpenedCompleteEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnFlashOpenedComplete
-      objectReference: {fileID: 0}
-    - target: {fileID: 8487171408456967058, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: OnFlashInitailizedCompleteEvnet.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1372975445}
-    - target: {fileID: 8487171408456967058, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: OnFlashInitailizedCompleteEvnet.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8487171408456967058, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: OnFlashInitailizedCompleteEvnet.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnFlashInitailizedComplete
-      objectReference: {fileID: 0}
-    - target: {fileID: 8487171408456967058, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: OnFlashClosedCompleteEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: FlashCardManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 8487171408456967058, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: OnFlashOpenedCompleteEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: FlashCardManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 8487171408456967058, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: OnFlashInitailizedCompleteEvnet.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: FlashCardManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 8487171408456967058, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: OnFlashClosedCompleteEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 8487171408456967058, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: OnFlashOpenedCompleteEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 8487171408456967058, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: OnFlashInitailizedCompleteEvnet.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 9089281327539987878, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9089281327539987878, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9089281327539987878, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9089281327539987878, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9089281327539987878, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9089281327539987878, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9089281327539987878, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9089281327539987878, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9089281327539987878, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9089281327539987878, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
---- !u!4 &45920803 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 9089281327539987878, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-  m_PrefabInstance: {fileID: 45920802}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &45920804 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8487171408456967058, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-  m_PrefabInstance: {fileID: 45920802}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e59ae49cc6649484f8e93e706d6518df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &258145264
 GameObject:
   m_ObjectHideFlags: 0
@@ -906,22 +725,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e2302fe759336d943892b7f2529f3e7e, type: 3}
---- !u!114 &931981405 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8487171408456967058, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-  m_PrefabInstance: {fileID: 6404810292556562918}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e59ae49cc6649484f8e93e706d6518df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &931981406 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 9089281327539987878, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-  m_PrefabInstance: {fileID: 6404810292556562918}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1188192185
 GameObject:
   m_ObjectHideFlags: 0
@@ -1097,10 +900,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b47aa38f2d112244eabf396ddb062a28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flashCards:
-  - {fileID: 931981405}
-  - {fileID: 45920804}
+  StarCounts: 0
+  level: 0
+  flashCards: []
   flashCardAudioPlayer: {fileID: 2140489459}
+  flashPrefab: {fileID: 3806338333741847746, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
+  panelDataSO: {fileID: 11400000, guid: ab6a16c182d3ace4fba2751b148d44ab, type: 2}
   currentCardIndex: 0
 --- !u!4 &1372975446
 Transform:
@@ -1114,9 +919,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 931981406}
-  - {fileID: 45920803}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1642845061
@@ -1418,17 +1221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3435ef9c0214cd64b9d1d1a580bbc289, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flashCardAudioModels:
-  - clips:
-    - {fileID: 8300000, guid: 5fb64493a32b80a429c5228e1fd4763e, type: 3}
-    - {fileID: 8300000, guid: 377a3c3e367d4864f9b5aed101bbfd2c, type: 3}
-    - {fileID: 8300000, guid: 13caa04375efcbe4493f98ba092decf0, type: 3}
-    audioIndex: 0
-  - clips:
-    - {fileID: 8300000, guid: 8bf70f4fa46479348bb71541511b3de7, type: 3}
-    - {fileID: 8300000, guid: 7404a351353bdda4aa4b1eb2271a048d, type: 3}
-    - {fileID: 8300000, guid: 306d901a3623e504485f62019aea6c9b, type: 3}
-    audioIndex: 0
+  flashCardAudioModels: []
 --- !u!4 &2140489460
 Transform:
   m_ObjectHideFlags: 0
@@ -1444,167 +1237,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &6404810292556562918
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1372975446}
-    m_Modifications:
-    - target: {fileID: 1594768368711560333, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: cc34065dc4314444c91e0f8793e5b727, type: 3}
-    - target: {fileID: 3258154165119278684, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 444752280}
-    - target: {fileID: 3806338333741847746, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: m_Name
-      value: Flash Card
-      objectReference: {fileID: 0}
-    - target: {fileID: 3806338333741847746, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6641298621891832656, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 1a7eb7cd4fa789447bfd8326bb8da284, type: 3}
-    - target: {fileID: 8487171408456967058, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: flashCardAudioPlayer
-      value: 
-      objectReference: {fileID: 2140489459}
-    - target: {fileID: 8487171408456967058, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: OnFlashClosedCompleteEvent.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8487171408456967058, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: OnFlashOpenedCompleteEvent.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8487171408456967058, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: OnFlashInitailizedCompleteEvnet.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8487171408456967058, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: OnFlashClosedCompleteEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8487171408456967058, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: OnFlashOpenedCompleteEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8487171408456967058, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: OnFlashClosedCompleteEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1372975445}
-    - target: {fileID: 8487171408456967058, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: OnFlashOpenedCompleteEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1372975445}
-    - target: {fileID: 8487171408456967058, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: OnFlashClosedCompleteEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8487171408456967058, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: OnFlashInitailizedCompleteEvnet.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8487171408456967058, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: OnFlashOpenedCompleteEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8487171408456967058, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: OnFlashClosedCompleteEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnFlashClosedComplete
-      objectReference: {fileID: 0}
-    - target: {fileID: 8487171408456967058, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: OnFlashOpenedCompleteEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnFlashOpenedComplete
-      objectReference: {fileID: 0}
-    - target: {fileID: 8487171408456967058, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: OnFlashInitailizedCompleteEvnet.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1372975445}
-    - target: {fileID: 8487171408456967058, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: OnFlashInitailizedCompleteEvnet.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8487171408456967058, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: OnFlashInitailizedCompleteEvnet.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnFlashInitailizedComplete
-      objectReference: {fileID: 0}
-    - target: {fileID: 8487171408456967058, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: OnFlashClosedCompleteEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: FlashCardManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 8487171408456967058, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: OnFlashOpenedCompleteEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: FlashCardManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 8487171408456967058, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: OnFlashInitailizedCompleteEvnet.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: FlashCardManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 8487171408456967058, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: OnFlashClosedCompleteEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 8487171408456967058, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: OnFlashOpenedCompleteEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 8487171408456967058, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: OnFlashInitailizedCompleteEvnet.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 9089281327539987878, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9089281327539987878, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9089281327539987878, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9089281327539987878, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9089281327539987878, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9089281327539987878, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9089281327539987878, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9089281327539987878, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9089281327539987878, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9089281327539987878, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 408f8fa68e1b2ec4e8d25570ef91be61, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
