@@ -133,7 +133,7 @@ public class FileProcessor
         return string.Empty;
     }
 
-    private static int ExtractId(string filePath)
+    public static int ExtractId(string filePath)
     {
         string fileName = Path.GetFileNameWithoutExtension(filePath);
         string[] parts = fileName.Split('_');

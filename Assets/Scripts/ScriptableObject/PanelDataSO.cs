@@ -18,6 +18,18 @@ public class PanelDataSO : ScriptableObject
 [Serializable]
 public class GamePanelData
 {
+
+    /// <summary>
+    /// blockID for image sort: SORT_BY_RULE
+    /// blockID for image sort: SORT_BY_RULE
+    /// blockID for image sort: SORT_BY_RULE
+    /// blockID for image sort: SORT_BY_RULE
+    /// blockID for image sort: DRAG_N_DROP
+    /// blockID for image sort: TWOSIDEMATCHING
+    /// </summary>
+    [SerializeField]
+    public int blockID;
+
     /// <summary>
     /// below is the folder names, where we will keep the assets
     /// imgsort
@@ -28,17 +40,18 @@ public class GamePanelData
     public string gameTypeName;
 
     /// <summary>
-    /// content_category:1 is for image sort
+    /// content_category:1 is for Sort-by-rule
     /// content_category:6 is for drag and drop
     /// content_category:1 is for mathcing 2 side
     /// </summary>
     [SerializeField]
     public string contentCategory;
 
+
     /// <summary>
-    /// blockSlug for image sort: SORT_BY_RULE
-    /// blockSlug for image sort: DRAG_N_DROP
-    /// blockSlug for image sort: TWOSIDEMATCHING
+    /// contentType for image sort: SORT_BY_RULE
+    /// contentType for image sort: DRAG_N_DROP
+    /// contentType for image sort: TWOSIDEMATCHING
     /// </summary>
     [SerializeField]
     public string contentType;

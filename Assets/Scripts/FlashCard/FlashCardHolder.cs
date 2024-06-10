@@ -1,12 +1,16 @@
 using System;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class FlashCardHolder : MonoBehaviour
 {
     public int ID = 0;
     public FlashCard flashCardBack;
     public FlashCard flashCardFront;
+
+    public SpriteRenderer LetterImage;
+    public SpriteRenderer CharacterImage;
 
 
     public UnityEvent OnFlashInitailizedCompleteEvnet;
@@ -21,10 +25,13 @@ public class FlashCardHolder : MonoBehaviour
         Debug.Log("Enabled");
         flashCardBack.transform.rotation = Quaternion.Euler(0, 90, 0);
         flashCardFront.transform.rotation = Quaternion.Euler(0, 90, 0);
-        flashCardBack.FlashBackSide();
     }
 
 
+    public void OpenCard()
+    {
+        flashCardBack.FlashBackSide();
+    }
 
 
     public void OnFlashInitailizedComplete()

@@ -6,7 +6,13 @@ using UnityEngine;
 [Serializable]
 public class FlashCardAudioModel
 {
+    public FlashCardAudioModel()
+    {
+        clips = new();
 
+        clips = new List<AudioClip> { null, null, null };
+
+    }
     public List<AudioClip> clips;
 
     public int audioIndex = 0;

@@ -8,6 +8,7 @@ public class FlashCardAudioPlayer : MonoBehaviour
     public List<FlashCardAudioModel> flashCardAudioModels;
     private AudioSource audioSource;
 
+    private Coroutine coroutine;
     /// <summary>
     /// Awake is called when the script instance is being loaded.
     /// </summary>
@@ -21,14 +22,13 @@ public class FlashCardAudioPlayer : MonoBehaviour
     /// Start is called on the frame when a script is enabled just before
     /// any of the Update methods is called the first time.
     /// </summary>
-    void Start()
+    public void Initialize(int cards)
     {
-        if (flashCardAudioModels.Count > 0)
+        flashCardAudioModels = new();
+        for (int i = 0; i < cards; i++)
         {
-            foreach (var FlashCardAudioModel in flashCardAudioModels)
-            {
-                FlashCardAudioModel.audioIndex = 0;
-            }
+            flashCardAudioModels.Add(new());
+            flashCardAudioModels[0].audioIndex = 0;
         }
     }
 
@@ -38,7 +38,7 @@ public class FlashCardAudioPlayer : MonoBehaviour
     {
         if (index >= 0 && index < flashCardAudioModels.Count)
         {
-            audioSource.clip = flashCardAudioModels[index].clips[flashCardAudioModels[index].audioIndex];
+            audioSource.clip = flashCardAudioModels[index].clips[0];
             audioSource.Play();
             flashCardAudioModels[index].audioIndex++;
         }
@@ -75,11 +75,42 @@ public class FlashCardAudioPlayer : MonoBehaviour
             Debug.Log("All audio clips played.");
         }
 
-        StartCoroutine(PlayAudioClipsSequentiallyCoroutine());
+        coroutine = StartCoroutine(PlayAudioClipsSequentiallyCoroutine());
     }
+
+
+    public void StopAudioPLayeer()
+    {
+        if (coroutine != null)
+        {
+            StopCoroutine(coroutine);
+        }
+
+        audioSource.Stop();
+    }
+
+
 
     internal void ResetAudioIndexForcard(int currentCardIndex)
     {
         flashCardAudioModels[currentCardIndex].audioIndex = 0;
+    }
+
+    internal void OnAudioStartByLetter(AudioClip clip, int i)
+    {
+        // MyDebug.Log("Index For Letter:" + i);
+        flashCardAudioModels[i].clips[0] = clip;
+    }
+
+    internal void OnAudioStartByWord(AudioClip clip, int i)
+    {
+        // MyDebug.Log("Index For Word:" + i);
+        flashCardAudioModels[i].clips[1] = clip;
+    }
+
+    internal void OnAudioStartBySentence(AudioClip clip, int i)
+    {
+        // MyDebug.Log("Index For Sentence:" + i);
+        flashCardAudioModels[i].clips[2] = clip;
     }
 }
