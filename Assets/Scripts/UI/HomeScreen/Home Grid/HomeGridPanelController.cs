@@ -43,7 +43,7 @@ public class HomeGridPanelController : MonoBehaviour
     {
         myWebRequest = new();
 
-        StartCoroutine(myWebRequest.FetchData($"/api/v3/content/content-list?content_category={gamePanelData.contentCategory}", contentType: gamePanelData.contentType, OnApiResponseSucces: OnSuccessLoadingScreen));
+        StartCoroutine(myWebRequest.FetchData($"/api/v3/content/content-list?content_category={gamePanelData.contentCategory}", blockID: gamePanelData.blockID, contentType: gamePanelData.contentType, OnApiResponseSucces: OnSuccessLoadingScreen));
     }
 
     private void OnSuccessLoadingScreen(OnApiResponseSuccess onApiResponseSuccess)
@@ -64,21 +64,22 @@ public class HomeGridPanelController : MonoBehaviour
             MyDebug.Log("Content Link: " + content.link);
             // Access other properties as needed
         }
-        Initialize(onApiResponseSuccess.videoBlock.contents);
+        Initialize(onApiResponseSuccess.videoBlock);
     }
 
 
-    public void Initialize(List<Content> content)
+
+    public void Initialize(VideoBlock videoBlock)
     {
-        for (int i = 0; i < content.Count; i++)
+        for (int i = 0; i < videoBlock.contents.Count; i++)
         {
             GameObject gameObject = Instantiate(HomePanelPrefab, Pages[i / 6]);
             if (gameObject.TryGetComponent(out HomeGridPanel panel))
             {
-                var splits = content[i].link.Split('/');
+                var splits = videoBlock.contents[i].link.Split('/');
                 var folderName = splits.Last().Split('.');
                 homeGridPanels.Add(panel);
-                panel.SetContent(i, content[i], folderName[0], this);
+                panel.SetContent(i, videoBlock.block_id, videoBlock.contents[i], folderName[0], this);
             }
         }
     }
