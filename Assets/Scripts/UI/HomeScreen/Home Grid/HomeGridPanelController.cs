@@ -29,6 +29,7 @@ public class HomeGridPanelController : MonoBehaviour
     MyWebRequest myWebRequest;
 
     private Action OnPanelPress;
+    private bool alreadyFetched = false;
 
     /// <summary>
     /// This function is called when the object becomes enabled and active.
@@ -36,18 +37,17 @@ public class HomeGridPanelController : MonoBehaviour
     void OnEnable()
     {
         swipeSlider.GoToStart();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
         myWebRequest = new();
 
-        StartCoroutine(myWebRequest.FetchData($"/api/v3/content/content-list?content_category={gamePanelData.contentCategory}", blockID: gamePanelData.blockID, contentType: gamePanelData.contentType, OnApiResponseSucces: OnSuccessLoadingScreen));
+        if (!alreadyFetched)
+            StartCoroutine(myWebRequest.FetchData($"/api/v3/content/content-list?content_category={gamePanelData.contentCategory}", blockID: gamePanelData.blockID, contentType: gamePanelData.contentType, OnApiResponseSucces: OnSuccessLoadingScreen));
     }
+
+
 
     private void OnSuccessLoadingScreen(OnApiResponseSuccess onApiResponseSuccess)
     {
+        alreadyFetched = true;
         var res = (onApiResponseSuccess.videoBlock.contents.Count / 6) + 1;
         for (int i = 0; i < res; i++)
         {
