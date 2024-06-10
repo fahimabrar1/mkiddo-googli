@@ -27,7 +27,7 @@ namespace IndieStudio.EnglishTracingBook.Game
         /// <summary>
         /// Objects which needs to show/hide for the full screen mode
         /// </summary>
-        public Transform[] objectsActive,objectsNotActive;
+        public Transform[] objectsActive, objectsNotActive;
 
         /// <summary>
         /// Objects which needs to be in the center (x-position) when full screen mode is enabled
@@ -52,10 +52,10 @@ namespace IndieStudio.EnglishTracingBook.Game
         // Use this for initialization
         void Start()
         {
-            if(objectsCentered.Length > 0)
-            objectsInitialXPosition = new float[objectsCentered.Length];
+            if (objectsCentered.Length > 0)
+                objectsInitialXPosition = new float[objectsCentered.Length];
 
-           for(int i = 0; i< objectsCentered.Length;i++)
+            for (int i = 0; i < objectsCentered.Length; i++)
             {
                 if (objectsCentered[i] == null) continue;
 
@@ -95,6 +95,7 @@ namespace IndieStudio.EnglishTracingBook.Game
             }
             else
             {
+
                 onFullModeDisabled.Invoke();
             }
         }
@@ -127,7 +128,7 @@ namespace IndieStudio.EnglishTracingBook.Game
         private void AppObjectsCenteredStatus()
         {
             Vector3 position;
-            for(int i = 0; i< objectsCentered.Length;i++)
+            for (int i = 0; i < objectsCentered.Length; i++)
             {
                 if (objectsCentered[i] == null) continue;
 
@@ -135,7 +136,7 @@ namespace IndieStudio.EnglishTracingBook.Game
 
                 if (fullScreenEnabled)
                 {
-                    position.x = 0;   
+                    position.x = 0;
                 }
                 else
                 {

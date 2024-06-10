@@ -2,12 +2,18 @@
     "m_SelectedDeviceId": "V4EMOROZPBWW6LA6",
     "m_SelectedProcess": {
         "deviceId": "V4EMOROZPBWW6LA6",
-        "name": "com.pixeltub.ludo.crush.free.board",
-        "processId": 5684,
+        "name": "com.MoMagic.mkiddogoogli",
+        "processId": 27836,
         "exited": false
     },
     "m_SelectedPriority": 0,
     "m_KnownProcessesForSerialization": [
+        {
+            "deviceId": "V4EMOROZPBWW6LA6",
+            "name": "com.MoMagic.mkiddogoogli",
+            "processId": 9479,
+            "exited": true
+        },
         {
             "deviceId": "V4EMOROZPBWW6LA6",
             "name": "com.MoMagic.mkiddogoogli",
@@ -30,12 +36,6 @@
             "deviceId": "V4EMOROZPBWW6LA6",
             "name": "com.MoMagic.mkiddogoogli",
             "processId": 27836,
-            "exited": true
-        },
-        {
-            "deviceId": "V4EMOROZPBWW6LA6",
-            "name": "com.pixeltub.ludo.crush.free.board",
-            "processId": 5684,
             "exited": false
         }
     ],

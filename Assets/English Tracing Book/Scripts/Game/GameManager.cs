@@ -276,7 +276,7 @@ namespace IndieStudio.EnglishTracingBook.Game
                 hit2d = Physics2D.Raycast(GetCurrentPlatformClickPosition(Camera.main), Vector2.zero);
                 if (hit2d.collider != null)
                 {
-                    if(handSparkles!=null)
+                    if (handSparkles != null)
                         tempEmission.enabled = true;
 
                     if (hit2d.transform.tag == "Point")
@@ -403,7 +403,7 @@ namespace IndieStudio.EnglishTracingBook.Game
         {
             if (UserTraceInput.instance == null)
             {
-                Timer.instance.Reset();
+                // Timer.instance.Reset();
             }
 
             winEffect.gameObject.SetActive(false);
@@ -470,7 +470,7 @@ namespace IndieStudio.EnglishTracingBook.Game
                 StartAutoTracing(shape, 0.5f);
                 Spell();
             }
-            catch 
+            catch
             {
                 //Catch the exception or display an alert
             }
@@ -500,7 +500,7 @@ namespace IndieStudio.EnglishTracingBook.Game
             }
             else
             {
-                CommonUtil.FindChildByTag(resetConfirmDialog.transform, "Message").GetComponent<Text>().text = "Reset "+ shape.GetTitle() + " ?";
+                CommonUtil.FindChildByTag(resetConfirmDialog.transform, "Message").GetComponent<Text>().text = "Reset " + shape.GetTitle() + " ?";
                 writeText.text = "Write the text '" + shape.GetTitle() + "'";
             }
 
@@ -829,7 +829,7 @@ namespace IndieStudio.EnglishTracingBook.Game
                 Timer.instance.Stop();
                 BlackArea.instance.Show();
                 winDialog.Show();
-               // nextButton.GetComponent<Animator>().SetTrigger("Select");
+                // nextButton.GetComponent<Animator>().SetTrigger("Select");
                 winEffect.gameObject.SetActive(true);
                 AudioSources.instance.PlayCompletedSFX();
                 AdsManager.instance.HideAdvertisment();
@@ -857,7 +857,7 @@ namespace IndieStudio.EnglishTracingBook.Game
             }
 
             winEffect.gameObject.SetActive(false);
-           // nextButton.GetComponent<Animator>().SetBool("Select", false);
+            // nextButton.GetComponent<Animator>().SetBool("Select", false);
             BlackArea.instance.Hide();
             winDialog.Hide();
 
@@ -1064,7 +1064,7 @@ namespace IndieStudio.EnglishTracingBook.Game
         /// </summary>
         public void ReInitTracingPathCurve()
         {
-            if(handPOM != null && handPOM.curve.IsIinitialized())
+            if (handPOM != null && handPOM.curve.IsIinitialized())
             {
                 handPOM.curve.ReInit();
 

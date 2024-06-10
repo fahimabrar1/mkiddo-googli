@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
+using IndieStudio.EnglishTracingBook.Game;
 
 public class HomeGridPanel : MonoBehaviour
 {
@@ -92,6 +93,12 @@ public class HomeGridPanel : MonoBehaviour
         else if (VideoBlockID.Equals(128))
         {
             sceneID = 5;
+        }
+        else if (VideoBlockID.Equals(96))
+        {
+            sceneID = 6;
+            ShapesManager shapesManager = ShapesManager.shapesManagers["UShapesManager"];
+            ShapesManager.shapesManagerReference = "UShapesManager";
         }
 
     }

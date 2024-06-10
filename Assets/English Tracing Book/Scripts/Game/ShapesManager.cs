@@ -143,15 +143,15 @@ namespace IndieStudio.EnglishTracingBook.Game
 
         private void SetUpTracingMode()
         {
-            //Load value from PlayerPrefs
-            if (DataManager.GetTracingModeValue() == 0)
-            {
-                tracingMode = TracingMode.FILL;
-            }
-            else
-            {
-                tracingMode = TracingMode.LINE;
-            }
+            // //Load value from PlayerPrefs
+            // if (DataManager.GetTracingModeValue() == 0)
+            // {
+            tracingMode = TracingMode.FILL;
+            // }
+            // else
+            // {
+            //     tracingMode = TracingMode.LINE;
+            // }
         }
 
         /// <summary>
