@@ -45,4 +45,11 @@ public class UIManager : MonoBehaviour
         OverlayObject.SetActive(true);
         GameOverObject.SetActive(true);
     }
+
+    public void OnHideGameOverPanel()
+    {
+        ConfeittiObject.SetActive(false);
+        OverlayObject.SetActive(false);
+        GameOverObject.SetActive(false);
+    }
 }

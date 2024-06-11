@@ -152,7 +152,8 @@ namespace IndieStudio.EnglishTracingBook.Game
         /// <summary>
         /// The window dialog reference.
         /// </summary>
-        public WinDialog winDialog;
+        // public WinDialog winDialog;
+        public UIManager winDialog;
 
         /// <summary>
         /// The shape picture image reference (used to show the picture image  of the selected shape).
@@ -409,7 +410,7 @@ namespace IndieStudio.EnglishTracingBook.Game
             winEffect.gameObject.SetActive(false);
             resetConfirmDialog.Hide(true);
             BlackArea.instance.Hide();
-            winDialog.Hide();
+            winDialog.OnHideGameOverPanel();
             //nextButton.GetComponent<Animator>().SetBool("Select", false);
 
             CompoundShape currentCompoundShape = FindFirstObjectByType<CompoundShape>();
@@ -828,7 +829,7 @@ namespace IndieStudio.EnglishTracingBook.Game
 
                 Timer.instance.Stop();
                 BlackArea.instance.Show();
-                winDialog.Show();
+                winDialog.OnShowGameOverPanel();
                 // nextButton.GetComponent<Animator>().SetTrigger("Select");
                 winEffect.gameObject.SetActive(true);
                 AudioSources.instance.PlayCompletedSFX();
@@ -859,7 +860,7 @@ namespace IndieStudio.EnglishTracingBook.Game
             winEffect.gameObject.SetActive(false);
             // nextButton.GetComponent<Animator>().SetBool("Select", false);
             BlackArea.instance.Hide();
-            winDialog.Hide();
+            winDialog.OnHideGameOverPanel();
 
             DisableHandTracing();
 
