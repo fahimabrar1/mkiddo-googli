@@ -55,6 +55,8 @@ public class Matching2SidesManager : LevelBaseManager
 
     void Start()
     {
+        StarCounts = 3;
+
         // Ensure we have even sprites in both containers
         if (leftSprites.Count != rightSprites.Count)
         {

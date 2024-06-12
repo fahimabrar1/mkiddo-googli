@@ -200,6 +200,9 @@ public class FlashCardManager : LevelBaseManager
             AddAudioForIndex(letterAudioList, wordAudioList, sentenceAudioList, flashCardAlphabetsimages, filteredCharactersimages, i);
         }
 
+        StarCounts = 3;
+
+
     }
 
     private void AddAudioForIndex(List<string> letterAudioList, List<string> wordAudioList, List<string> sentenceAudioList, List<string> flashCardAlphabetsimages, List<string> filteredCharactersimages, int i)

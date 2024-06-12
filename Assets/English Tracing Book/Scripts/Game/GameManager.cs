@@ -186,6 +186,10 @@ namespace IndieStudio.EnglishTracingBook.Game
         /// </summary>
         public static GameManager instance;
 
+
+        public LevelBaseManager levelBaseManager;
+        public UnityEvent OnFinishTrachingEvent;
+
         void Awake()
         {
             //Initiate GameManager instance 
@@ -813,7 +817,9 @@ namespace IndieStudio.EnglishTracingBook.Game
 
                 if (UserTraceInput.instance == null)
                 {
-                    SaveShapesData(shapes);
+                    //Todo: Disable the default saving
+                    OnFinishTrachingEvent?.Invoke();
+                    // SaveShapesData(shapes);
                 }
 
                 DisableHandTracing();
@@ -826,12 +832,13 @@ namespace IndieStudio.EnglishTracingBook.Game
                         s.content.GetComponent<Image>().enabled = false;
                     s.animator.SetTrigger("Completed");
                 }
+                //Todo: Timer Stopped
 
-                Timer.instance.Stop();
-                BlackArea.instance.Show();
+                // Timer.instance.Stop();
+                // BlackArea.instance.Show();
                 winDialog.OnShowGameOverPanel();
                 // nextButton.GetComponent<Animator>().SetTrigger("Select");
-                winEffect.gameObject.SetActive(true);
+                // winEffect.gameObject.SetActive(true);
                 AudioSources.instance.PlayCompletedSFX();
                 AdsManager.instance.HideAdvertisment();
                 AdsManager.instance.ShowAdvertisment(AdPackage.AdEvent.Event.ON_SHOW_WIN_DIALOG, null);

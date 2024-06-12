@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -39,5 +40,10 @@ public class LetterHeaderButton : MonoBehaviour
             isSelected = false;
             backgroundOverlay.SetActive(false);
         }
+    }
+
+    internal void SetCompletedBackground()
+    {
+        ButtonImage.color = buttonBGFinishedColor;
     }
 }

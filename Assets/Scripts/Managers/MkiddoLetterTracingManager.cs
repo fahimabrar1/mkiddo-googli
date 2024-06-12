@@ -25,9 +25,10 @@ public class MkiddoLetterTracingManager : LevelBaseManager
     /// </summary>
     private void OnEnable()
     {
-        AddButtons();
         level = PlayerPrefs.GetInt($"{panelDataSO.gameName}", 0);
         ShapesManager.Shape.selectedShapeID = level;
+        AddButtons();
+        StarCounts = 3;
     }
 
 
@@ -48,29 +49,49 @@ public class MkiddoLetterTracingManager : LevelBaseManager
     {
         if (panelDataSO.gamePanelData.blockID == 96)
         {
-            // it's bangla learn_bangla_soroborno
-            if (AlphabetLists.AlphabetTypes.TryGetValue("learn_bangla_soroborno", out List<string> sorbornos))
+            if (panelDataSO.gameName == "bangla_shorborno")
             {
-                headerButtons = new();
-                for (int i = 0; i < sorbornos.Count; i++)
+                // it's bangla learn_bangla_soroborno
+                if (AlphabetLists.AlphabetTypes.TryGetValue("learn_bangla_soroborno", out List<string> sorbornos))
                 {
-                    GameObject obj = Instantiate(buttonPrefab, scrollViewContent.transform);
-                    if (obj.TryGetComponent(out LetterHeaderButton button))
-                    {
-                        headerButtons.Add(button);
-                        button.mkiddoLetterTracingManager = this;
-                        button.letterText.text = sorbornos[i];
-                        OnUpdateButtonAction += button.OnUpdateButton;
-                        button.ButtonID = i;
-                    }
+                    CreateHeaderbutton(sorbornos);
                 }
             }
-
-
+            else if (panelDataSO.gameName == "capital_letter_a_to_z")
+            {
+                // it's english uppercase  english_capital_letters
+                if (AlphabetLists.AlphabetTypes.TryGetValue("english_capital_letters", out List<string> sorbornos))
+                {
+                    CreateHeaderbutton(sorbornos);
+                }
+            }
             OnUpdateButtonAction?.Invoke(level);
-
-
         }
+    }
 
+
+
+    private void CreateHeaderbutton(List<string> letters)
+    {
+        headerButtons = new();
+        for (int i = 0; i < letters.Count; i++)
+        {
+            GameObject obj = Instantiate(buttonPrefab, scrollViewContent.transform);
+            if (obj.TryGetComponent(out LetterHeaderButton button))
+            {
+                headerButtons.Add(button);
+                button.mkiddoLetterTracingManager = this;
+                button.letterText.text = letters[i];
+                if (level > i)
+                    button.SetCompletedBackground();
+                OnUpdateButtonAction += button.OnUpdateButton;
+                button.ButtonID = i;
+            }
+        }
+    }
+    public override void SaveLevel()
+    {
+        PlayerPrefs.SetInt($"{panelDataSO.gameName}", (level == headerButtons.Count - 1) ? 0 : ++level);
+        PlayerPrefs.Save();
     }
 }
