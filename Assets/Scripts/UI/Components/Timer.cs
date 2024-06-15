@@ -9,7 +9,7 @@ public class Timer : MonoBehaviour
     public float totalTime = 20f; // Total time for the timer
     private float currentTime; // Current time left
     private float previousTime; // Current time left
-    private bool isActive; // if the timer is active
+    private bool isActive = true; // if the timer is active
     public Image progressBar; // Reference to the progress bar image
     public LevelBaseManager levelBaseManager;
     public List<Image> stars; // List of Image components representing stars
@@ -33,7 +33,6 @@ public class Timer : MonoBehaviour
         previousTime = 0; // Set previous time
         if (TimerText != null)
             TimerText.text = totalTime.ToString() + "s";
-        isActive = true;
     }
 
     void Update()

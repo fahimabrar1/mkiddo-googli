@@ -187,7 +187,7 @@ namespace IndieStudio.EnglishTracingBook.Game
         public static GameManager instance;
 
 
-        public LevelBaseManager levelBaseManager;
+        public MkiddoLetterTracingManager mkiddoLetterTracingManager;
         public UnityEvent OnFinishTrachingEvent;
 
         void Awake()
@@ -508,8 +508,10 @@ namespace IndieStudio.EnglishTracingBook.Game
                 CommonUtil.FindChildByTag(resetConfirmDialog.transform, "Message").GetComponent<Text>().text = "Reset " + shape.GetTitle() + " ?";
                 writeText.text = "Write the text '" + shape.GetTitle() + "'";
             }
-
-            EnableGameManager();
+            if (!mkiddoLetterTracingManager.GetGameEnable())
+                EnableGameManager();
+            else
+                DisableHandTracing();
         }
 
         /// <summary>

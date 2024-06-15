@@ -1,7 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using IndieStudio.EnglishTracingBook.Game;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class MkiddoLetterTracingManager : LevelBaseManager
@@ -16,8 +16,16 @@ public class MkiddoLetterTracingManager : LevelBaseManager
 
     public GameObject scrollViewContent;
     public GameObject buttonPrefab;
+    public GameObject LockObject;
+    public Timer timer;
     public List<LetterHeaderButton> headerButtons;
-    public Action<int> OnUpdateButtonAction;
+
+    public IndieStudio.EnglishTracingBook.Game.GameManager gameManager;
+    public Action<int> OnUpdateButtonUIAction;
+    public Action<int> OnTapButtonAction;
+
+
+    int tempLevel = 0;
 
     /// <summary>
     /// Start is called on the frame when a script is enabled just before
@@ -26,10 +34,16 @@ public class MkiddoLetterTracingManager : LevelBaseManager
     private void OnEnable()
     {
         level = PlayerPrefs.GetInt($"{panelDataSO.gameName}", 0);
-        ShapesManager.Shape.selectedShapeID = level;
+        tempLevel = PlayerPrefs.GetInt($"{panelDataSO.gameName}_temp", 0);
+
+        LockShapeToggle(tempLevel > level);
+
+        ShapesManager.Shape.selectedShapeID = tempLevel;
         AddButtons();
         StarCounts = 3;
     }
+
+
 
 
     /// <summary>
@@ -39,7 +53,7 @@ public class MkiddoLetterTracingManager : LevelBaseManager
     {
         foreach (var button in headerButtons)
         {
-            OnUpdateButtonAction -= button.OnUpdateButton;
+            OnUpdateButtonUIAction -= button.OnUpdateButtonUI;
         }
     }
 
@@ -65,7 +79,8 @@ public class MkiddoLetterTracingManager : LevelBaseManager
                     CreateHeaderbutton(sorbornos);
                 }
             }
-            OnUpdateButtonAction?.Invoke(level);
+
+            OnUpdateButtonUIAction?.Invoke(tempLevel);
         }
     }
 
@@ -84,7 +99,8 @@ public class MkiddoLetterTracingManager : LevelBaseManager
                 button.letterText.text = letters[i];
                 if (level > i)
                     button.SetCompletedBackground();
-                OnUpdateButtonAction += button.OnUpdateButton;
+                OnUpdateButtonUIAction += button.OnUpdateButtonUI;
+                OnTapButtonAction += button.OnTapButton;
                 button.ButtonID = i;
             }
         }
@@ -93,5 +109,31 @@ public class MkiddoLetterTracingManager : LevelBaseManager
     {
         PlayerPrefs.SetInt($"{panelDataSO.gameName}", (level == headerButtons.Count - 1) ? 0 : ++level);
         PlayerPrefs.Save();
+    }
+
+    internal void SaveTempLevel(int id)
+    {
+        PlayerPrefs.SetInt($"{panelDataSO.gameName}_temp", id);
+        PlayerPrefs.Save();
+        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
+    }
+
+
+
+    private void LockShapeToggle(bool toggle)
+    {
+        if (toggle)
+        {
+            gameManager.DisableGameManager();
+            gameManager.DisableHandTracing();
+            timer.Stop();
+        }
+
+        LockObject.SetActive(toggle);
+    }
+
+    internal bool GetGameEnable()
+    {
+        return tempLevel > level;
     }
 }

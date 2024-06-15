@@ -22,12 +22,13 @@ public class LetterHeaderButton : MonoBehaviour
 
     public void OnButtonClick()
     {
-        mkiddoLetterTracingManager.OnUpdateButtonAction?.Invoke(ButtonID);
+        mkiddoLetterTracingManager.OnUpdateButtonUIAction?.Invoke(ButtonID);
+        mkiddoLetterTracingManager.OnTapButtonAction?.Invoke(ButtonID);
     }
 
 
 
-    public void OnUpdateButton(int id)
+    public void OnUpdateButtonUI(int id)
     {
         if (id == ButtonID)
         {
@@ -40,6 +41,17 @@ public class LetterHeaderButton : MonoBehaviour
             isSelected = false;
             backgroundOverlay.SetActive(false);
         }
+    }
+
+
+    public void OnTapButton(int id)
+    {
+        if (id == ButtonID)
+        {
+
+            mkiddoLetterTracingManager.SaveTempLevel(id);
+        }
+
     }
 
     internal void SetCompletedBackground()
