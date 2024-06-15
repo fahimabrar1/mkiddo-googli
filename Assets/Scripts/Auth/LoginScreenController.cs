@@ -9,6 +9,7 @@ using static StringExtensions;
 
 public class LoginScreenController : MonoBehaviour
 {
+
     public int currentPanelIndex = 0;
     public int maxPanelIndex = 0;
     public ProfileSO profileSO;
@@ -17,6 +18,7 @@ public class LoginScreenController : MonoBehaviour
     public List<GameObject> panels;
 
 
+    int loggedIn = 0;
 
     /// <summary>
     /// Start is called on the frame when a script is enabled just before
@@ -24,6 +26,11 @@ public class LoginScreenController : MonoBehaviour
     /// </summary>
     void Start()
     {
+        loggedIn = PlayerPrefs.GetInt("is_logged_in", 0);
+        if (loggedIn == 1)
+            OnClickPlay();
+        else
+            panels[0].SetActive(true);
         maxPanelIndex = panels.Count;
         currentPanelIndex = 0;
         OnUpdatePanel();

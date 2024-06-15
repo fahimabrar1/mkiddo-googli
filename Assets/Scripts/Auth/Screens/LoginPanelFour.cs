@@ -23,7 +23,7 @@ public class LoginPanelFour : LoginPanelBase
 
     public void LoggedIn()
     {
-        PlayerPrefs.SetInt("logged_in", 1);
+        PlayerPrefs.SetInt("is_logged_in", 1);
         PlayerPrefs.Save();
     }
 }
