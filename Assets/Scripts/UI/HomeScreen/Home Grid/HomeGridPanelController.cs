@@ -21,6 +21,7 @@ public class HomeGridPanelController : MonoBehaviour
     public Slider ProgressBarSlider;
     public TextMeshProUGUI ProgressBarTexct;
     public Transform ContentParent;
+    public List<int> showByContentID;
     public List<Transform> Pages;
     public PanelDataSO PanelDataSO;
 
@@ -68,18 +69,30 @@ public class HomeGridPanelController : MonoBehaviour
     }
 
 
-
     public void Initialize(VideoBlock videoBlock)
     {
-        for (int i = 0; i < videoBlock.contents.Count; i++)
+        // Filter contents based on the condition involving showByContentID
+        List<Content> contents = new();
+        if (showByContentID.Count > 0)
         {
+            contents = videoBlock.contents.FindAll(c => showByContentID.Contains(c.content_id));
+        }
+        else
+        {
+            contents = videoBlock.contents;
+        }
+
+        // Initialize contents in pages
+        for (int i = 0; i < contents.Count; i++)
+        {
+            // Instantiate HomePanelPrefab in the correct page
             GameObject gameObject = Instantiate(HomePanelPrefab, Pages[i / 6]);
             if (gameObject.TryGetComponent(out HomeGridPanel panel))
             {
-                var splits = videoBlock.contents[i].link.Split('/');
+                var splits = contents[i].link.Split('/');
                 var folderName = splits.Last().Split('.');
                 homeGridPanels.Add(panel);
-                panel.SetContent(i, videoBlock.block_id, videoBlock.contents[i], folderName[0], this);
+                panel.SetContent(i, videoBlock.block_id, contents[i], folderName[0], this);
             }
         }
     }
