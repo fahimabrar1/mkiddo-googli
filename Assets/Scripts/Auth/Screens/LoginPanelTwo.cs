@@ -7,16 +7,15 @@ using UnityEngine.UI;
 using DG.Tweening;
 public class LoginPanelTwo : LoginPanelBase
 {
-    public Button Back;
-    public Button Next;
+
+    public Button Countinue;
+    public Image backgroundOutline;
     public TMP_Text headerText;
     public TMP_Text resultText;
-    public TMP_Text resendCodeText;
     public TMP_InputField inputField;
     public List<TMP_Text> PinFields;
     private int currentIndex = 0;
-    public Button resendButton;
-    public Color greyColor;
+    public Color blueeColor;
     public int resendCooldown = 60; // Time in seconds to wait before enabling the resend button
 
     MyWebRequest myWebRequest;
@@ -28,12 +27,6 @@ public class LoginPanelTwo : LoginPanelBase
     void OnEnable()
     {
         myWebRequest = new();
-        resendCodeText.text = "Resend";
-        resendButton.interactable = true;
-        resendCodeText.color = Color.black;
-
-        if (inputField.text.Length > 0)
-            Next.gameObject.SetActive(false);
     }
 
 
@@ -45,11 +38,9 @@ public class LoginPanelTwo : LoginPanelBase
         // Ensure all input fields are cleared initially
         foreach (var inputField in PinFields)
         {
-            inputField.text = "";
+            inputField.text = "-";
         }
-
-        // Assign the resend button click event
-        resendButton.onClick.AddListener(OnClickResendCode);
+        Countinue.interactable = false;
     }
 
     public void InputButton(int value)
@@ -88,7 +79,11 @@ public class LoginPanelTwo : LoginPanelBase
             fileProcessor.SaveJsonToFile(fileProcessor.userFilePath, JsonUtility.ToJson(result));
             PlayerPrefs.SetString("access_token", result.accessToken);
             PlayerPrefs.Save();
-            Next.gameObject.SetActive(true);
+            var col = backgroundOutline.color;
+            col = blueeColor;
+            col.a = 1;
+            backgroundOutline.color = col;
+            Countinue.interactable = true;
         }
         else
         {
@@ -143,48 +138,12 @@ public class LoginPanelTwo : LoginPanelBase
             resultText.gameObject.transform.DOScale(Vector3.zero, 0.2f).SetAutoKill(true).OnComplete(() => resultText.gameObject.SetActive(false));
         foreach (var inputField in PinFields)
         {
-            inputField.text = "";
+            inputField.text = "-";
         }
 
         // Reset the index and select the first input field
         currentIndex = 0;
 
     }
-
-    public void OnClickResendCode()
-    {
-        if (!resendButton.interactable)
-        {
-            return; // If the button is already disabled, do nothing
-        }
-
-        resendCodeText.text = "Code resent!";
-        string otp = "";
-        foreach (var text in PinFields)
-        {
-            otp += text.text;
-        }
-        myWebRequest.SendOTP("/api/v2/send-otp", loginScreenController.profileSO.countryCode + loginScreenController.profileSO.mobileNumber, null, null);
-        StartCoroutine(ResendCooldownCoroutine());
-    }
-
-    private IEnumerator ResendCooldownCoroutine()
-    {
-        resendButton.interactable = false;
-        resendCodeText.color = greyColor;
-        float remainingTime = resendCooldown;
-
-        while (remainingTime > 0)
-        {
-            resendCodeText.text = $"Resend ({remainingTime})";
-            yield return new WaitForSeconds(1f);
-            remainingTime--;
-        }
-
-        resendCodeText.text = "Resend";
-        resendButton.interactable = true;
-        resendCodeText.color = Color.black;
-    }
-
 
 }
