@@ -97,6 +97,9 @@ public class HomeGridPanel : MonoBehaviour
         else if (VideoBlockID.Equals(96))
         {
             sceneID = 6;
+            int level = PlayerPrefs.GetInt($"{content.name.ToSnakeCase()}", 0);
+            PlayerPrefs.SetInt($"{content.name.ToSnakeCase()}_temp", level);
+            PlayerPrefs.Save();
             ShapesManager shapesManager = ShapesManager.shapesManagers["UShapesManager"];
             ShapesManager.shapesManagerReference = "UShapesManager";
         }
