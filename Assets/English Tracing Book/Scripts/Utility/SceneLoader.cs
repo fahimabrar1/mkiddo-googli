@@ -30,7 +30,7 @@ namespace IndieStudio.EnglishTracingBook.Utility
         /// Loading image reference
         /// </summary>
         public Image loadingImage;
- 
+
         /// <summary>
         /// This Gameobject defined as a Singleton.
         /// </summary>
@@ -70,12 +70,20 @@ namespace IndieStudio.EnglishTracingBook.Utility
         /// </summary>
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
-        
-            if (canvasGroup != null)
+            try
             {
-                canvasGroup.alpha = 1;
-                StartCoroutine(CanvasFade(FadeType.FADE_OUT));
+                if (canvasGroup != null)
+                {
+                    canvasGroup.alpha = 1;
+                    StartCoroutine(CanvasFade(FadeType.FADE_OUT));
+                }
             }
+            catch (System.Exception)
+            {
+
+
+            }
+
         }
 
         /// <summary>
@@ -95,8 +103,8 @@ namespace IndieStudio.EnglishTracingBook.Utility
                     canvasGroup.alpha = 0;
                     yield return StartCoroutine(CanvasFade(FadeType.FADE_IN));
                 }
-                if (loadingImage!=null)
-                 loadingImage.gameObject.SetActive(true);
+                if (loadingImage != null)
+                    loadingImage.gameObject.SetActive(true);
                 SceneManager.LoadScene(sceneName);
             }
         }

@@ -19,7 +19,7 @@ public class HomeGridPanel : MonoBehaviour
 
     private MyWebRequest myWebRequest;
 
-    private int sceneID;
+    private int sceneID = 1;
 
 
     internal void SetContent(int ID, int blockID, Content content, string folderName, HomeGridPanelController homeGridPanelController)
@@ -102,6 +102,19 @@ public class HomeGridPanel : MonoBehaviour
             PlayerPrefs.Save();
             ShapesManager shapesManager = ShapesManager.shapesManagers["UShapesManager"];
             ShapesManager.shapesManagerReference = "UShapesManager";
+        }
+        else if (VideoBlockID.Equals(97))
+        {
+            sceneID = 6;
+            int level = PlayerPrefs.GetInt($"{content.name.ToSnakeCase()}", 0);
+            PlayerPrefs.SetInt($"{content.name.ToSnakeCase()}_temp", level);
+            PlayerPrefs.Save();
+            ShapesManager shapesManager = ShapesManager.shapesManagers["NShapesManager"];
+            ShapesManager.shapesManagerReference = "NShapesManager";
+        }
+        else
+        {
+            sceneID = 1;
         }
 
     }

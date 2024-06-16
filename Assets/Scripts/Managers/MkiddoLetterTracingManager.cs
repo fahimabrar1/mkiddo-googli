@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using IndieStudio.EnglishTracingBook.Game;
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using System.Threading.Tasks;
 
 public class MkiddoLetterTracingManager : LevelBaseManager
 {
@@ -19,6 +20,7 @@ public class MkiddoLetterTracingManager : LevelBaseManager
     public GameObject LockObject;
     public Timer timer;
     public List<LetterHeaderButton> headerButtons;
+    public LetterTracingAudioManager letterTracingAudioManager;
 
     public IndieStudio.EnglishTracingBook.Game.GameManager gameManager;
     public Action<int> OnUpdateButtonUIAction;
@@ -80,8 +82,23 @@ public class MkiddoLetterTracingManager : LevelBaseManager
                 }
             }
 
-            OnUpdateButtonUIAction?.Invoke(tempLevel);
         }
+        else
+        {
+
+            if (panelDataSO.gameName == "english_number_tracing")
+            {
+                // it's english uppercase  english_capital_letters
+                if (AlphabetLists.AlphabetTypes.TryGetValue("english_number", out List<string> sorbornos))
+                {
+                    CreateHeaderbutton(sorbornos);
+                }
+            }
+
+        }
+
+        OnUpdateButtonUIAction?.Invoke(tempLevel);
+
     }
 
 
@@ -107,8 +124,13 @@ public class MkiddoLetterTracingManager : LevelBaseManager
     }
     public override void SaveLevel()
     {
-        PlayerPrefs.SetInt($"{panelDataSO.gameName}", (level == headerButtons.Count - 1) ? 0 : ++level);
+        if (tempLevel == level)
+            level++;
+        PlayerPrefs.SetInt($"{panelDataSO.gameName}", (level == headerButtons.Count - 1) ? 0 : level);
+        PlayerPrefs.SetInt($"{panelDataSO.gameName}_temp", level);
+
         PlayerPrefs.Save();
+
     }
 
     internal void SaveTempLevel(int id)
@@ -135,5 +157,11 @@ public class MkiddoLetterTracingManager : LevelBaseManager
     internal bool GetGameEnable()
     {
         return tempLevel > level;
+    }
+
+    internal void PlayCompleteSfx()
+    {
+        letterTracingAudioManager.PlayOnSuccessClip();
+
     }
 }

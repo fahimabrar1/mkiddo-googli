@@ -188,6 +188,7 @@ namespace IndieStudio.EnglishTracingBook.Game
 
 
         public MkiddoLetterTracingManager mkiddoLetterTracingManager;
+        public LetterTracingAudioManager letterTracingAudioManager;
         public UnityEvent OnFinishTrachingEvent;
 
         void Awake()
@@ -412,7 +413,8 @@ namespace IndieStudio.EnglishTracingBook.Game
             }
 
             winEffect.gameObject.SetActive(false);
-            resetConfirmDialog.Hide(true);
+            //Todo:
+            // resetConfirmDialog.Hide(true);
             BlackArea.instance.Hide();
             winDialog.OnHideGameOverPanel();
             //nextButton.GetComponent<Animator>().SetBool("Select", false);
@@ -841,7 +843,7 @@ namespace IndieStudio.EnglishTracingBook.Game
                 winDialog.OnShowGameOverPanel();
                 // nextButton.GetComponent<Animator>().SetTrigger("Select");
                 // winEffect.gameObject.SetActive(true);
-                AudioSources.instance.PlayCompletedSFX();
+                // AudioSources.instance.PlayCompletedSFX();
                 AdsManager.instance.HideAdvertisment();
                 AdsManager.instance.ShowAdvertisment(AdPackage.AdEvent.Event.ON_SHOW_WIN_DIALOG, null);
             }
@@ -1009,7 +1011,10 @@ namespace IndieStudio.EnglishTracingBook.Game
                 return;
             }
 
-            AudioSources.instance.PlaySFXClip(ShapesManager.GetCurrentShapesManager().GetCurrentShape().clip, false);
+            if (!mkiddoLetterTracingManager.GetGameEnable())
+                letterTracingAudioManager.PlaySequence();
+
+            // AudioSources.instance.PlaySFXClip(ShapesManager.GetCurrentShapesManager().GetCurrentShape().clip, false);
         }
 
         /// <summary>
