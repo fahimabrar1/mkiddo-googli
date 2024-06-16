@@ -844,6 +844,7 @@ namespace IndieStudio.EnglishTracingBook.Game
                 // nextButton.GetComponent<Animator>().SetTrigger("Select");
                 // winEffect.gameObject.SetActive(true);
                 // AudioSources.instance.PlayCompletedSFX();
+                mkiddoLetterTracingManager.PlayCompleteSfx();
                 AdsManager.instance.HideAdvertisment();
                 AdsManager.instance.ShowAdvertisment(AdPackage.AdEvent.Event.ON_SHOW_WIN_DIALOG, null);
             }
