@@ -14,7 +14,7 @@ public class LoginScreenController : MonoBehaviour
     public int maxPanelIndex = 0;
     public ProfileSO profileSO;
 
-    public Button play;
+    // public Button play;
     public List<GameObject> panels;
 
 

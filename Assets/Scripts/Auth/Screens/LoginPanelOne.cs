@@ -6,20 +6,13 @@ using UnityEngine.Diagnostics;
 using DG.Tweening;
 public class LoginPanelOne : LoginPanelBase
 {
-    public Button Back;
-    public Button Next;
-    public GameObject NextPanel;
 
-    public List<GameObject> panels;
 
-    [Header("Panel One")]
     public TMP_Dropdown numberDropdown;
     public int numberDropdownIndex = 0;
-    public Button TypeHereButton;
+    public Button Continuee;
     public Button SignInWithGoogle;
-    [Header("Panel Two")]
 
-    public TMP_Dropdown numberDropdown1;
     public TMP_InputField numberText;
     public TMP_Text textLimitText;
     public TMP_Text warningText;
@@ -54,25 +47,13 @@ public class LoginPanelOne : LoginPanelBase
 
         // Add the options to the dropdown
         numberDropdown.AddOptions(options);
-        numberDropdown1.AddOptions(options);
         numberDropdown.value = 11;
-        numberDropdown1.value = 11;
         OnUpdateCountryCode(11);
+        Continuee.interactable = false;
     }
 
 
-    public void OnTapDialerButton(int num)
-    {
 
-        if (numberText.text.Length <= 10)
-        {
-            numberText.text += num.ToString();
-            loginScreenController.profileSO.mobileNumber = numberText.text;
-            textLimitText.text = numberText.text.Length + "/10";
-            Next.gameObject.SetActive(true);
-        }
-
-    }
     public void OnTapDialerButton(string num)
     {
         Debug.Log(num);
@@ -81,36 +62,20 @@ public class LoginPanelOne : LoginPanelBase
             numberText.text = num.ToString();
             loginScreenController.profileSO.mobileNumber = numberText.text;
             textLimitText.text = numberText.text.Length + "/10";
-            Next.gameObject.SetActive(true);
         }
         else if (num.Length == 0)
         {
             loginScreenController.profileSO.mobileNumber = "";
             textLimitText.text = "0/10";
-            Next.gameObject.SetActive(false);
         }
-    }
 
-    public void OnTapNumberPanel()
-    {
-        panels[0].SetActive(false);
-        panels[1].SetActive(true);
-    }
-
-
-    public void OnTapDialerBack()
-    {
-        Next.gameObject.SetActive(false);
-        loginScreenController.profileSO.mobileNumber = "";
-        textLimitText.text = "0/10";
-        numberText.text = "";
-
-        if (warningText.gameObject.activeInHierarchy)
+        if (num.Length == 10)
         {
-            warningText.text = "";
-            warningText.color = successColor;
-            warningText.gameObject.SetActive(false);
-            warningText.gameObject.transform.DOScale(Vector3.zero, 0.2f).SetAutoKill(true);
+            Continuee.interactable = true;
+        }
+        else
+        {
+            Continuee.interactable = false;
         }
     }
 
@@ -138,8 +103,9 @@ public class LoginPanelOne : LoginPanelBase
         if (result.status_code == 200)
         {
 
-            NextPanel.SetActive(true);
+            loginScreenController.OnClickNext();
             gameObject.SetActive(false);
+
         }
         else if (result.status_code == 402)
         {
@@ -147,7 +113,6 @@ public class LoginPanelOne : LoginPanelBase
             warningText.color = failedColor;
             warningText.gameObject.SetActive(true);
             warningText.gameObject.transform.DOScale(Vector3.one, 0.2f).SetAutoKill(true);
-            Next.gameObject.SetActive(false);
         }
 
     }
@@ -157,6 +122,5 @@ public class LoginPanelOne : LoginPanelBase
         warningText.color = successColor;
         warningText.gameObject.SetActive(true);
         warningText.gameObject.transform.DOScale(Vector3.one, 0.2f).SetAutoKill(true);
-        Next.gameObject.SetActive(false);
     }
 }
