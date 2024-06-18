@@ -127,6 +127,43 @@ public class MyWebRequest
     }
 
 
+    // Method to fetch data from the specified URL
+    public IEnumerator FetchDhadharuData(string url, string access_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbl9ieSI6Ik1TSVNETiIsImdvb2dsZV9pZCI6Ijk4NzQ1NjM3NDI4OTEtMzAiLCJ1aWQiOjM4MTg4LCJtc2lzZG4iOiI4ODAxNjg3MDU2MTQwIiwiZW1haWwiOiIiLCJzb3VyY2UiOiJhcHAiLCJhcHBfbmFtZSI6Im1LaWRkb192OjIuNi4xLmJldGEiLCJpYXQiOjE3MTI0MzA1MjcsImV4cCI6MTcxMjg2MjUyN30.oFouaGLiza11cSFODgS5TjqRWLgAjvntNM0A9HAwH0c", Action<OnDhadharuApiResponseSuccess> OnApiResponseSucces = null, Action<OnApiResponseFailed> OnApiResponseFailed = null)
+    {
+        using UnityWebRequest www = UnityWebRequest.Get(baseUrl + url);
+        // Add access token to request header if provided
+        if (!string.IsNullOrEmpty(access_token))
+        {
+            www.SetRequestHeader("Authorization", "Bearer " + access_token);
+        }
+        yield return www.SendWebRequest();
+
+        if (www.result != UnityWebRequest.Result.Success)
+        {
+            Debug.LogError("Failed to fetch data: " + www.error);
+
+            OnApiResponseFailed?.Invoke(new(www.error, www.responseCode));
+        }
+        else
+        {
+            // Deserialize the JSON response
+            ApiDhadharuResponse response = JsonUtility.FromJson<ApiDhadharuResponse>(www.downloadHandler.text);
+            DhadharuData dhadharuData = new();
+            // Access the fetched data
+            if (response != null && response.data != null && response.data != null)
+            {
+                dhadharuData = response.data;
+
+                OnApiResponseSucces?.Invoke(new(dhadharuData, "Success", www.responseCode));
+            }
+            else
+            {
+                MyDebug.LogWarning("No data found in the response.");
+            }
+        }
+    }
+
+
 
 
     // Method to fetch the image asynchronously from the specified URL

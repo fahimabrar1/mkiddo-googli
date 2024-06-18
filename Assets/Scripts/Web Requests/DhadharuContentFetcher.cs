@@ -1,0 +1,65 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+
+public class DhadharuContentFetcher : MonoBehaviour
+{
+    MyWebRequest myWebRequest;
+
+    public List<GameObject> panels;
+
+    public DhadharuDataSo dhadharuDataSo;
+
+    public GameManager gameManager;
+
+    [SerializeField]
+    private DhadharuData dhadharuData;
+
+
+    /// <summary>
+    /// This function is called when the object becomes enabled and active.
+    /// </summary>
+    void OnEnable()
+    {
+        myWebRequest = new();
+        gameManager = FindAnyObjectByType<GameManager>();
+        StartCoroutine(myWebRequest.FetchDhadharuData($"/api/v3/content/questions", OnApiResponseSucces: OnSuccessLoadingScreen));
+    }
+    private void OnSuccessLoadingScreen(OnDhadharuApiResponseSuccess onApiResponseSuccess)
+    {
+
+
+        dhadharuData = onApiResponseSuccess.dhadharuData;
+        Initialize();
+    }
+
+
+    public void Initialize()
+    {
+        panels.ForEach((p) => p.SetActive(true));
+    }
+
+
+
+    public void OnClickWorldRiddle()
+    {
+        dhadharuDataSo.gameName = dhadharuData.puzzle[0].game_type;
+        dhadharuDataSo.questions = dhadharuData.puzzle;
+        gameManager.LoadSceneAsync(2);
+
+    }
+    public void OnClickTriviaQuiz()
+    {
+        dhadharuDataSo.gameName = dhadharuData.trivia_quiz[0].game_type;
+        dhadharuDataSo.questions = dhadharuData.trivia_quiz;
+        gameManager.LoadSceneAsync(3);
+
+
+    }
+    public void OnClickMathQuiz()
+    {
+        dhadharuDataSo.gameName = dhadharuData.math_quiz[0].game_type;
+        dhadharuDataSo.questions = dhadharuData.math_quiz;
+        gameManager.LoadSceneAsync(4);
+    }
+}

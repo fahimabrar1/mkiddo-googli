@@ -50,6 +50,7 @@ public class ApiResponse
 }
 
 
+
 [Serializable]
 public class OnApiResponseSuccess
 {
@@ -64,6 +65,24 @@ public class OnApiResponseSuccess
         this.responseCode = responseCode;
     }
 }
+
+
+[Serializable]
+public class OnDhadharuApiResponseSuccess
+{
+    public DhadharuData dhadharuData;
+    public string v;
+    public long responseCode;
+
+    public OnDhadharuApiResponseSuccess(DhadharuData dhadharuData, string v, long responseCode)
+    {
+        this.dhadharuData = dhadharuData;
+        this.v = v;
+        this.responseCode = responseCode;
+    }
+}
+
+
 [Serializable]
 public class OnApiResponseFailed
 {
