@@ -13,8 +13,10 @@ public class ProgressBarTimer : MonoBehaviour
     private bool isActive = true; // if the timer is active
     public Image progressBar; // Reference to the progress bar image
     public LevelBaseManager levelBaseManager;
-    public List<Image> stars; // List of Image components representing stars
+    public List<GameObject> activeStars; // List of Image components representing stars
+    public List<GameObject> inactiveStars; // List of Image components representing stars
     public UnityEvent OnTimeUp;
+
 
 
     /// <summary>
@@ -31,6 +33,7 @@ public class ProgressBarTimer : MonoBehaviour
         progressBar.fillAmount = 0f;
         currentTime = 0; // Set current time to total time at the start
         previousTime = 0; // Set previous time
+        levelBaseManager.StarCounts = 2;
     }
 
     void Update()
@@ -41,7 +44,7 @@ public class ProgressBarTimer : MonoBehaviour
         currentTime += Time.deltaTime;
 
         // Calculate fill amount for progress bar
-        float fillAmount = currentTime / totalTime;
+        float fillAmount = 1 - (currentTime / totalTime);
         UpdateTimerText();
         // Update progress bar fill amount
         progressBar.fillAmount = fillAmount;
@@ -69,32 +72,40 @@ public class ProgressBarTimer : MonoBehaviour
             previousTime = newCurTime;
         }
     }
-
     void ChangeStarColors(float fillAmount)
     {
-        // Calculate the index of the stars to change color
-        int index1 = Mathf.FloorToInt(stars.Count * 0.25f);
-        int index2 = Mathf.FloorToInt(stars.Count * 0.5f);
-        int index3 = Mathf.FloorToInt(stars.Count * 0.75f);
-
-        // Change the color of stars at the specified intervals
-        if (fillAmount >= 0.75f && index3 >= 0 && index3 < stars.Count)
+        // Define the thresholds for star color changes
+        float threshold1 = 0.66f;
+        float threshold2 = 0.33f;
+        if (fillAmount <= 0)
         {
-            stars[index3].color = Color.grey;
+
+            activeStars[0].SetActive(false);
+            inactiveStars[0].SetActive(true);
 
             levelBaseManager.StarCounts = 0;
         }
-        else if (fillAmount >= 0.5f && index2 >= 0 && index2 < stars.Count)
+        else if (fillAmount <= threshold2)
         {
-            stars[index2].color = Color.grey;
+
+            activeStars[1].SetActive(false);
+            inactiveStars[1].SetActive(true);
+
             levelBaseManager.StarCounts = 1;
         }
-        else if (fillAmount >= 0.25f && index1 >= 0 && index1 < stars.Count)
+        else if (fillAmount <= threshold1)
         {
-            stars[index1].color = Color.grey;
+
+            activeStars[2].SetActive(false);
+            inactiveStars[2].SetActive(true);
+
             levelBaseManager.StarCounts = 2;
         }
+        else
+        {
+            levelBaseManager.StarCounts = 3;
 
+        }
     }
 
     public void Stop()

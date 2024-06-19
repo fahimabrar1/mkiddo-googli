@@ -40,6 +40,6 @@ public class ObjectRotator : MonoBehaviour
         );
 
         // Set the sequence to loop indefinitely
-        rotationSequence.SetLoops(-1, LoopType.Restart);
+        rotationSequence.SetLoops(-1, LoopType.Incremental);
     }
 }

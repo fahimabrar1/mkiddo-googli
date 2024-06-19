@@ -45,6 +45,10 @@ public class DhadharuContentFetcher : MonoBehaviour
     {
         dhadharuDataSo.gameName = dhadharuData.puzzle[0].game_type;
         dhadharuDataSo.questions = dhadharuData.puzzle;
+        PlayerPrefs.SetInt($"{dhadharuDataSo.gameName}_temp", -1);
+        PlayerPrefs.Save();
+
+
         gameManager.LoadSceneAsync(2);
 
     }
@@ -52,6 +56,9 @@ public class DhadharuContentFetcher : MonoBehaviour
     {
         dhadharuDataSo.gameName = dhadharuData.trivia_quiz[0].game_type;
         dhadharuDataSo.questions = dhadharuData.trivia_quiz;
+        PlayerPrefs.SetInt($"{dhadharuDataSo.gameName}_temp", -1);
+        PlayerPrefs.Save();
+
         gameManager.LoadSceneAsync(3);
 
 
@@ -60,6 +67,8 @@ public class DhadharuContentFetcher : MonoBehaviour
     {
         dhadharuDataSo.gameName = dhadharuData.math_quiz[0].game_type;
         dhadharuDataSo.questions = dhadharuData.math_quiz;
+        PlayerPrefs.SetInt($"{dhadharuDataSo.gameName}_temp", -1);
+        PlayerPrefs.Save();
         gameManager.LoadSceneAsync(4);
     }
 }

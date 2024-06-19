@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,14 +13,19 @@ public class WorldPuzzleManager : LevelBaseManager
     public ButtonSelector buttonSelector;
     public TMP_Text questionText;
 
+    public DhadahruLevelAudioManahger dhadahruLevelAudioManahger;
+    public GameObject Body;
     public GameObject buttonContainerPrefab;
     public Transform buttonContainerParent;
+    public Transform GameEndbuttonContainerParent;
     public DhadharuDataSo dhadharuDataSo;
 
     public Image OutlineBackgorund;
     public Image Backgorund;
+    public GameManager gameManager;
     public Stack<LetterButton> buttons;
     public List<LetterContainer> containers;
+    public List<LetterContainer> GameEndContainers;
     public List<Color> containerColors;
 
     public Color failed;
@@ -28,6 +34,13 @@ public class WorldPuzzleManager : LevelBaseManager
     public Color SuccessLowOp;
     public int TOTAL_BUTTONS_TO_BE_SELECTED = 0;
     public int CURRENT_SELECTED_BUTTONS = 0;
+
+    public int tempLevel = -1;
+    [Header("Game Over Panels")]
+    public ProgressBarTimer timer;
+    public GameObject ContentPanel;
+    public GameObject GameOverPanel;
+
 
     public Action<int> OnTapLetterButtonAction;
 
@@ -39,9 +52,15 @@ public class WorldPuzzleManager : LevelBaseManager
     {
         buttons = new();
         containers = new();
+        level = 3;
+        gameManager = FindAnyObjectByType<GameManager>();
         level = PlayerPrefs.GetInt($"{dhadharuDataSo.gameName}", 0);
-        var question = dhadharuDataSo.questions[level];
-        buttonSelector.SetButtons(question.question_ans);
+        tempLevel = PlayerPrefs.GetInt($"{dhadharuDataSo.gameName}_temp", 0);
+        if (tempLevel == -1)
+        {
+            tempLevel = level;
+        }
+        var question = dhadharuDataSo.questions[tempLevel];
         TOTAL_BUTTONS_TO_BE_SELECTED = question.question_ans.Length;
         for (int i = 0; i < TOTAL_BUTTONS_TO_BE_SELECTED; i++)
         {
@@ -51,16 +70,21 @@ public class WorldPuzzleManager : LevelBaseManager
                 component.ID = i;
                 containers.Add(component);
             }
+
+            GameObject buttonContainer1 = Instantiate(buttonContainerPrefab, GameEndbuttonContainerParent);
+            if (buttonContainer1.TryGetComponent(out LetterContainer component1))
+            {
+                component1.ID = i;
+                GameEndContainers.Add(component1);
+            }
         }
+        buttonSelector.SetButtons(question.question_ans);
+
         questionText.text = question.question_text;
     }
 
 
-    public override void SaveLevel()
-    {
-        PlayerPrefs.SetInt($"{dhadharuDataSo.gameName}", (level == dhadharuDataSo.questions.Count - 1) ? 0 : ++level);
-        PlayerPrefs.Save();
-    }
+
 
     internal void AddLetterContianer(LetterButton letterButton)
     {
@@ -69,23 +93,60 @@ public class WorldPuzzleManager : LevelBaseManager
         CURRENT_SELECTED_BUTTONS++;
         if (CURRENT_SELECTED_BUTTONS == TOTAL_BUTTONS_TO_BE_SELECTED)
         {
-            //Todo: Check for game
+
             string containerText = "";
             foreach (var item in containers)
             {
                 containerText += item.letter.text;
             }
-            if (containerText == dhadharuDataSo.questions[level].question_ans)
+
+            // Win
+            if (containerText == dhadharuDataSo.questions[tempLevel].question_ans)
             {
+                timer.Stop();
+
                 OutlineBackgorund.color = Success;
                 Backgorund.color = SuccessLowOp;
+                OnGameOver();
             }
             else
             {
+                // Lose
                 OutlineBackgorund.color = failed;
                 Backgorund.color = failedLowOp;
             }
+
+
         }
+    }
+
+
+
+    public async void OnGameOver(bool isTimeUp = false)
+    {
+        await Task.Delay(1000);
+        if (!isTimeUp)
+            dhadahruLevelAudioManahger.PlayRandomPraise();
+        Body.SetActive(false);
+        ContentPanel.SetActive(true);
+        UpdateGameEndContent(buttonSelector.letterButtons);
+        await Task.Delay(2000);
+        ContentPanel.SetActive(false);
+        GameOverPanel.SetActive(true);
+    }
+
+
+    public void UpdateGameEndContent(List<LetterButton> letterButtons)
+    {
+
+        for (int i = 0; i < dhadharuDataSo.questions[tempLevel].question_ans.Length; i++)
+        {
+            var character = dhadharuDataSo.questions[tempLevel].question_ans[i];
+            var letter = letterButtons.FirstOrDefault((l) => l.letter.text == character.ToString());
+            GameEndContainers[i].EnableButton();
+            GameEndContainers[i].SetButton(letter.id, GetColorByType(letter.letterButtonColorType), letter.letter.text, letter.letterButtonColorType);
+        }
+
     }
     internal void RemoveContainer(int id)
     {
@@ -110,5 +171,43 @@ public class WorldPuzzleManager : LevelBaseManager
         }
     }
 
+
+
+    public void OnClickBack()
+    {
+        tempLevel--;
+        if (tempLevel >= 0)
+        {
+            PlayerPrefs.SetInt($"{dhadharuDataSo.gameName}_temp", tempLevel);
+            PlayerPrefs.Save();
+
+            gameManager.RestartLevel();
+        }
+    }
+
+    public void OnClickNext()
+    {
+        SaveLevel();
+        gameManager.RestartLevel();
+    }
+
+
+
+    public override void SaveLevel()
+    {
+        if (tempLevel == level)
+        {
+            level++;
+            PlayerPrefs.SetInt($"{dhadharuDataSo.gameName}", (level == dhadharuDataSo.questions.Count - 1) ? 0 : level);
+            PlayerPrefs.SetInt($"{dhadharuDataSo.gameName}_temp", -1);
+        }
+        else
+        {
+            tempLevel++;
+            PlayerPrefs.SetInt($"{dhadharuDataSo.gameName}_temp", tempLevel);
+        }
+
+        PlayerPrefs.Save();
+    }
 
 }
