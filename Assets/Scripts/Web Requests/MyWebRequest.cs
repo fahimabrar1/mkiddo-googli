@@ -5,6 +5,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Diagnostics;
 using UnityEngine.Networking;
@@ -140,20 +141,31 @@ public class MyWebRequest
 
         if (www.result != UnityWebRequest.Result.Success)
         {
-            Debug.LogError("Failed to fetch data: " + www.error);
+            MyDebug.LogError("Failed to fetch data: " + www.error);
 
             OnApiResponseFailed?.Invoke(new(www.error, www.responseCode));
         }
         else
         {
-            // Deserialize the JSON response
-            ApiDhadharuResponse response = JsonUtility.FromJson<ApiDhadharuResponse>(www.downloadHandler.text);
+            // Ensure the text is read as UTF-8
+            byte[] responseBytes = www.downloadHandler.data;
+
+            Debug.Log("Response Bytes: " + BitConverter.ToString(responseBytes));
+            string utf8Text = Encoding.UTF8.GetString(responseBytes);
+            Debug.Log("UTF-8 Text: " + utf8Text);
+            byte[] utf8Bytes = Encoding.UTF8.GetBytes(utf8Text);
+            Debug.Log("Re-encoded UTF-8 Bytes: " + BitConverter.ToString(utf8Bytes));
+
+
+            // In the fetch method
+            var response = JsonConvert.DeserializeObject<ApiDhadharuResponse>(utf8Text); // Deserialize the JSON response
+            // ApiDhadharuResponse response = JsonUtility.FromJson<ApiDhadharuResponse>(responseText);
             DhadharuData dhadharuData = new();
             // Access the fetched data
             if (response != null && response.data != null && response.data != null)
             {
                 dhadharuData = response.data;
-
+                MyDebug.Log(dhadharuData.trivia_quiz[0].question_text);
                 OnApiResponseSucces?.Invoke(new(dhadharuData, "Success", www.responseCode));
             }
             else
