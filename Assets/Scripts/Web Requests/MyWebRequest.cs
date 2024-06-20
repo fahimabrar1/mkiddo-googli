@@ -202,11 +202,38 @@ public class MyWebRequest
             if (image != null)
             {
                 image.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
+                var col = image.color;
+                col.a = 1f;
+                image.color = col;
             }
             else
             {
                 MyDebug.LogWarning("Image component not assigned.");
             }
+        }
+    } // Method to fetch the image asynchronously from the specified URL
+    public async Task<Sprite> FetchImageAsync(string url)
+    {
+        using UnityWebRequest www = UnityWebRequestTexture.GetTexture(url);
+        var requestOperation = www.SendWebRequest();
+
+        while (!requestOperation.isDone)
+        {
+            await Task.Yield(); // Yield control back to Unity until the request is done
+        }
+
+        if (www.result != UnityWebRequest.Result.Success)
+        {
+            MyDebug.LogError("Failed to fetch image: " + www.error);
+            return null; // Return null if the request failed
+        }
+        else
+        {
+            // Get the downloaded texture
+            Texture2D texture = DownloadHandlerTexture.GetContent(www);
+
+            // Create a sprite from the texture and return it
+            return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
         }
     }
 
