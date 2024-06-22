@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using System;
 
 public class LineGenerator : MonoBehaviour
 {
@@ -11,8 +12,10 @@ public class LineGenerator : MonoBehaviour
     public Camera renderCam;
     public RenderTexture renderTexture;
     private Texture2D texture2D;
-    private RectTransform rectTransform;
     private BoxCollider2D drawingAreaCollider;
+
+    private Color lineColor;
+    private int order;
 
     void Start()
     {
@@ -21,16 +24,9 @@ public class LineGenerator : MonoBehaviour
         // Create a Texture2D to store the final image
         texture2D = new Texture2D(renderTexture.width, renderTexture.height, TextureFormat.RGBA32, false);
 
-        // Get the RectTransform of the RawImage
-        rectTransform = drawingArea.GetComponent<RectTransform>();
-
         // Add a BoxCollider2D to the RawImage GameObject if it doesn't have one
         drawingAreaCollider = drawingArea.gameObject.GetComponent<BoxCollider2D>();
-        if (drawingAreaCollider == null)
-        {
-            drawingAreaCollider = drawingArea.gameObject.AddComponent<BoxCollider2D>();
-            UpdateColliderSize();
-        }
+
     }
 
     void Update()
@@ -45,44 +41,62 @@ public class LineGenerator : MonoBehaviour
                 if (newLine.TryGetComponent(out OpenCanvasLine line))
                 {
                     activeLine = line;
+                    activeLine.SetColor(lineColor);
+                    activeLine.SetSortingOrder(order++);
                 }
             }
         }
 
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButton(0) && !IsRaycastHitTargetWithTag("CanvasBoard"))
+        {
+            activeLine = null;
+        }
+        if (Input.GetMouseButtonUp(0) || !IsRaycastHitTargetWithTag("CanvasBoard"))
         {
             activeLine = null;
         }
 
         if (activeLine != null)
         {
-            Vector2 mousePos = renderCam.ScreenToWorldPoint(Input.mousePosition);
-            activeLine.Updateline(mousePos);
+            Vector2 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 mousePos = new(pos.x + 100, pos.y);
+            activeLine.UpdateLine(mousePos);
         }
     }
-
     bool IsRaycastHitTargetWithTag(string targetTag)
     {
         // Get the mouse position in world coordinates
-        Vector3 mousePos = renderCam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, renderCam.nearClipPlane));
+        Vector3 pos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z));
+        Vector3 mousePos = new(pos.x + 100, pos.y, pos.z);
+        // MyDebug.Log($"Mouse Pos: {mousePos}");
+
+        // Create a ray from the mouse position in the forward direction of the camera
+        Ray ray = new(mousePos, Vector3.forward);
+
+        // Debugging line to visualize the raycast direction
+        Debug.DrawLine(ray.origin, ray.origin + ray.direction * 30, Color.green, 2f);
 
         // Perform the raycast
-        RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector3.forward, Mathf.Infinity);
+        var hits = Physics.RaycastAll(ray.origin, ray.direction, 30);
 
-        // Debugging line to visualize the raycast
-        if (hit.collider != null)
+        // Check if any hit has the specified tag
+        foreach (var hit in hits)
         {
-            Debug.DrawLine(mousePos, hit.point, Color.red, 2f);
+            Debug.DrawLine(ray.origin, hit.point, Color.red, 2f);
             MyDebug.Log($"Hit: {hit.transform.name}");
-        }
-        else
-        {
-            MyDebug.Log("No hit detected");
+
+            if (hit.collider != null && hit.collider.CompareTag(targetTag))
+            {
+                return true;
+            }
         }
 
-        // Return true if the hit object has the specified tag
-        return hit.collider != null && hit.collider.CompareTag(targetTag);
+        // No hit detected with the specified tag
+        MyDebug.Log("No hit detected");
+        return false;
     }
+
+
 
 
     void UpdateColliderSize()
@@ -105,5 +119,10 @@ public class LineGenerator : MonoBehaviour
         string path = Application.persistentDataPath + "/SavedImage.png";
         File.WriteAllBytes(path, bytes);
         Debug.Log("Saved image to " + path);
+    }
+
+    public void SetPenColor(Color color)
+    {
+        lineColor = color;
     }
 }
