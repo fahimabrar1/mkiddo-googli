@@ -4,6 +4,8 @@ using TMPro;
 using System.Collections.Generic;
 using UnityEngine.Diagnostics;
 using DG.Tweening;
+using Google;
+using System.Threading.Tasks;
 public class LoginPanelOne : LoginPanelBase
 {
 
@@ -123,4 +125,98 @@ public class LoginPanelOne : LoginPanelBase
         warningText.gameObject.SetActive(true);
         warningText.gameObject.transform.DOScale(Vector3.one, 0.2f).SetAutoKill(true);
     }
+
+    #region Google
+
+
+    public string webClientId = "160760181826-5lupkrn266m01qd1u4jqtnlm251hhobu.apps.googleusercontent.com";
+
+    private GoogleSignInConfiguration configuration;
+    // Defer the configuration creation until Awake so the web Client ID
+    // Can be set via the property inspector in the Editor.
+    void Awake()
+    {
+        configuration = new GoogleSignInConfiguration
+        {
+            WebClientId = webClientId,
+            RequestIdToken = true,
+            RequestEmail = true,
+
+        };
+    }
+    public void OnSignIn()
+    {
+        GoogleSignIn.Configuration = configuration;
+        GoogleSignIn.Configuration.UseGameSignIn = false;
+        GoogleSignIn.Configuration.RequestIdToken = true;
+        GoogleSignIn.Configuration.RequestEmail = true;
+        AddStatusText("Calling SignIn");
+
+        GoogleSignIn.DefaultInstance.SignIn().ContinueWith(
+          OnAuthenticationFinished);
+    }
+
+    public void OnSignOut()
+    {
+        AddStatusText("Calling SignOut");
+        GoogleSignIn.DefaultInstance.SignOut();
+    }
+
+    public void OnDisconnect()
+    {
+        AddStatusText("Calling Disconnect");
+        GoogleSignIn.DefaultInstance.Disconnect();
+    }
+
+    internal void OnAuthenticationFinished(Task<GoogleSignInUser> task)
+    {
+        if (task.IsFaulted)
+        {
+            using (IEnumerator<System.Exception> enumerator =
+                    task.Exception.InnerExceptions.GetEnumerator())
+            {
+                if (enumerator.MoveNext())
+                {
+                    GoogleSignIn.SignInException error =
+                            (GoogleSignIn.SignInException)enumerator.Current;
+                    AddStatusText("Got Error: " + error.Status + " " + error.Message);
+                }
+                else
+                {
+                    AddStatusText("Got Unexpected Exception?!?" + task.Exception);
+                }
+            }
+        }
+        else if (task.IsCanceled)
+        {
+            AddStatusText("Canceled");
+        }
+        else
+        {
+
+            loginScreenController.profileSO.childName = task.Result.DisplayName;
+            loginScreenController.profileSO.isSignUsingGoogle = true;
+            loginScreenController.profileSO.ImageURI = task.Result.ImageUrl;
+
+            loginScreenController.OnJumpTo(3);
+            AddStatusText("Welcome: " + task.Result.DisplayName + "!");
+            AddStatusText("TokenID: " + task.Result.IdToken + "!");
+        }
+    }
+    private List<string> messages = new List<string>();
+    void AddStatusText(string text)
+    {
+        if (messages.Count == 5)
+        {
+            messages.RemoveAt(0);
+        }
+        messages.Add(text);
+        string txt = "";
+        foreach (string s in messages)
+        {
+            txt += "\n" + s;
+        }
+    }
+
+    #endregion
 }

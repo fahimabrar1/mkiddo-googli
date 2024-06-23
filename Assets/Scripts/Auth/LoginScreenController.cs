@@ -76,6 +76,14 @@ public class LoginScreenController : MonoBehaviour
         currentPanelIndex++;
         OnUpdatePanel();
     }
+
+
+    public void OnJumpTo(int index)
+    {
+        MyDebug.Log("On Change Panel");
+        currentPanelIndex = index;
+        OnUpdatePanel();
+    }
     public void OnClickBack()
     {
         currentPanelIndex--;
