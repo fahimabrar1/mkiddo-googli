@@ -12,6 +12,7 @@ public class LineGenerator : MonoBehaviour
     public Camera renderCam;
     public RenderTexture renderTexture;
     private Texture2D texture2D;
+    public Transform parent;
 
     private Color lineColor;
     private float lineWidth;
@@ -35,7 +36,7 @@ public class LineGenerator : MonoBehaviour
             if (IsRaycastHitTargetWithTag("CanvasBoard"))
             {
                 MyDebug.Log("On Instantiate");
-                GameObject newLine = Instantiate(linePrefab);
+                GameObject newLine = Instantiate(linePrefab, parent);
                 if (newLine.TryGetComponent(out OpenCanvasLine line))
                 {
                     activeLine = line;
