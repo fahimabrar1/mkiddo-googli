@@ -122,7 +122,8 @@ public class LineGenerator : MonoBehaviour
         RenderTexture.active = null;
 
         byte[] bytes = texture2D.EncodeToPNG();
-        string path = Application.persistentDataPath + "/SavedImage.png";
+        string fileName = "SavedImage_" + DateTime.Now.ToString("yyyyMMdd_HHmmssfff") + ".png";
+        string path = Path.Combine(Application.persistentDataPath, fileName);
         File.WriteAllBytes(path, bytes);
         Debug.Log("Saved image to " + path);
     }
