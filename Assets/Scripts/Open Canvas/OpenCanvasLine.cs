@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -85,5 +86,11 @@ public class OpenCanvasLine : MonoBehaviour
     {
         sortingOrder = order;
         lineRenderer.sortingOrder = sortingOrder;
+    }
+
+    internal void SetLineWidthStartAndEnd(float lineWidth)
+    {
+        lineRenderer.startWidth = lineWidth;
+        lineRenderer.endWidth = lineWidth;
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class AkibukiManager : MonoBehaviour
@@ -8,5 +9,10 @@ public class AkibukiManager : MonoBehaviour
     public void SetPenColor(Color color)
     {
         lineGenerator.SetPenColor(color);
+    }
+
+    internal void SetLineWidth(float val)
+    {
+        lineGenerator.SetLineWidth(val);
     }
 }

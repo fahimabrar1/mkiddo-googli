@@ -12,9 +12,9 @@ public class LineGenerator : MonoBehaviour
     public Camera renderCam;
     public RenderTexture renderTexture;
     private Texture2D texture2D;
-    private BoxCollider2D drawingAreaCollider;
 
     private Color lineColor;
+    private float lineWidth;
     private int order;
 
     void Start()
@@ -24,8 +24,6 @@ public class LineGenerator : MonoBehaviour
         // Create a Texture2D to store the final image
         texture2D = new Texture2D(renderTexture.width, renderTexture.height, TextureFormat.RGBA32, false);
 
-        // Add a BoxCollider2D to the RawImage GameObject if it doesn't have one
-        drawingAreaCollider = drawingArea.gameObject.GetComponent<BoxCollider2D>();
 
     }
 
@@ -42,6 +40,7 @@ public class LineGenerator : MonoBehaviour
                 {
                     activeLine = line;
                     activeLine.SetColor(lineColor);
+                    activeLine.SetLineWidthStartAndEnd(lineWidth);
                     activeLine.SetSortingOrder(order++);
                 }
             }
@@ -63,15 +62,25 @@ public class LineGenerator : MonoBehaviour
             activeLine.UpdateLine(mousePos);
         }
     }
+
+
     bool IsRaycastHitTargetWithTag(string targetTag)
     {
+        Vector3 mousePos = Input.mousePosition;
+
+        // Ensure mouse position is within screen bounds
+        if (mousePos.x < 0 || mousePos.x > Screen.width || mousePos.y < 0 || mousePos.y > Screen.height)
+        {
+            MyDebug.Log("Mouse position out of screen bounds");
+            return false;
+        }
+
         // Get the mouse position in world coordinates
         Vector3 pos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z));
-        Vector3 mousePos = new(pos.x + 100, pos.y, pos.z);
-        // MyDebug.Log($"Mouse Pos: {mousePos}");
+        Vector3 mouseNewPos = new(pos.x + 100, pos.y, pos.z);
 
         // Create a ray from the mouse position in the forward direction of the camera
-        Ray ray = new(mousePos, Vector3.forward);
+        Ray ray = new(mouseNewPos, Vector3.forward);
 
         // Debugging line to visualize the raycast direction
         Debug.DrawLine(ray.origin, ray.origin + ray.direction * 30, Color.green, 2f);
@@ -96,18 +105,6 @@ public class LineGenerator : MonoBehaviour
         return false;
     }
 
-
-
-
-    void UpdateColliderSize()
-    {
-        if (drawingArea != null && drawingAreaCollider != null)
-        {
-            RectTransform rectTransform = drawingArea.GetComponent<RectTransform>();
-            Vector2 size = rectTransform.rect.size;
-            drawingAreaCollider.size = size;
-        }
-    }
     public void SaveRenderTextureToFile()
     {
         RenderTexture.active = renderTexture;
@@ -124,5 +121,10 @@ public class LineGenerator : MonoBehaviour
     public void SetPenColor(Color color)
     {
         lineColor = color;
+    }
+
+    internal void SetLineWidth(float val)
+    {
+        lineWidth = val;
     }
 }

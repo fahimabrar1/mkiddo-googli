@@ -56,6 +56,11 @@ public class ColorLayoutManager : MonoBehaviour
     }
 
 
+    public void SetLineWidth(float val)
+    {
+        akibukiManager.SetLineWidth(val);
+    }
+
 
 
 }

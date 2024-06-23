@@ -17,7 +17,11 @@ public class ColorButton : MonoBehaviour
         colorLayoutManager.SetPenColor(id, color);
     }
 
-    internal void UpdateButton(int ID) => image.enabled = id == ID;
+    internal void UpdateButton(int ID)
+    {
+        if (image != null)
+            image.enabled = id == ID;
+    }
 
 
 }
