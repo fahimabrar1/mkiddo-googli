@@ -5,6 +5,7 @@ public class AkibukiManager : MonoBehaviour
 {
     public LineGenerator lineGenerator;
     public CanvasStickerManager canvasStickerManager;
+    public CanvasAudioManager canvasAudioManager;
 
     public Transform Holder;
 
@@ -47,5 +48,11 @@ public class AkibukiManager : MonoBehaviour
     internal Sprite GetCurrentSticker()
     {
         return canvasStickerManager.GetCurrentSticker();
+    }
+
+
+    public void OnImageCapture()
+    {
+        canvasAudioManager.OnCaptureImage();
     }
 }
