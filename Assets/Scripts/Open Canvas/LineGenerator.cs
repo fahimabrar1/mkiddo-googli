@@ -5,6 +5,7 @@ using System;
 
 public class LineGenerator : MonoBehaviour
 {
+    public AkibukiManager akibukiManager;
     public GameObject linePrefab;
     public OpenCanvasLine activeLine;
     public RawImage drawingArea;
@@ -13,36 +14,44 @@ public class LineGenerator : MonoBehaviour
     public RenderTexture renderTexture;
     private Texture2D texture2D;
     public Transform parent;
+    public SpritesContainerSO spritesContainerSO;
 
     private Color lineColor;
     private float lineWidth;
     private int order;
 
+
+    private bool isStickerMode;
+    private GameObject selectedSticker;
+
     void Start()
     {
-
-
         // Create a Texture2D to store the final image
         texture2D = new Texture2D(renderTexture.width, renderTexture.height, TextureFormat.RGBA32, false);
-
-
     }
 
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            MyDebug.Log("On Click");
-            if (IsRaycastHitTargetWithTag("CanvasBoard"))
+            if (isStickerMode && IsRaycastHitTargetWithTag("CanvasBoard"))
             {
-                MyDebug.Log("On Instantiate");
-                GameObject newLine = Instantiate(linePrefab, parent);
-                if (newLine.TryGetComponent(out OpenCanvasLine line))
+                PlaceSticker();
+            }
+            else
+            {
+                MyDebug.Log("On Click");
+                if (IsRaycastHitTargetWithTag("CanvasBoard"))
                 {
-                    activeLine = line;
-                    activeLine.SetColor(lineColor);
-                    activeLine.SetLineWidthStartAndEnd(lineWidth);
-                    activeLine.SetSortingOrder(order++);
+                    MyDebug.Log("On Instantiate");
+                    GameObject newLine = Instantiate(linePrefab, parent);
+                    if (newLine.TryGetComponent(out OpenCanvasLine line))
+                    {
+                        activeLine = line;
+                        activeLine.SetColor(lineColor);
+                        activeLine.SetLineWidthStartAndEnd(lineWidth);
+                        activeLine.SetSortingOrder(order++);
+                    }
                 }
             }
         }
@@ -63,7 +72,6 @@ public class LineGenerator : MonoBehaviour
             activeLine.UpdateLine(mousePos);
         }
     }
-
 
     bool IsRaycastHitTargetWithTag(string targetTag)
     {
@@ -127,5 +135,65 @@ public class LineGenerator : MonoBehaviour
     internal void SetLineWidth(float val)
     {
         lineWidth = val;
+    }
+
+    // New method to handle sticker mode
+    public void SelectSticker(GameObject sticker)
+    {
+        isStickerMode = true;
+        selectedSticker = sticker;
+        activeLine = null; // Deselect any active line
+    }
+
+    // New method to handle pen mode
+    public void SelectPen()
+    {
+        isStickerMode = false;
+        selectedSticker = null;
+    }
+
+    // New method to handle pen mode
+    public void SwitchToStickerMode(bool toggle)
+    {
+        isStickerMode = toggle;
+    }
+
+
+
+
+    private void PlaceSticker()
+    {
+
+        Vector3 mousePos = Input.mousePosition;
+
+
+        if (mousePos.x < 0 || mousePos.x > Screen.width || mousePos.y < 0 || mousePos.y > Screen.height)
+        {
+            MyDebug.Log("Mouse position out of screen bounds");
+            return;
+        }
+
+        // Get the mouse position in world coordinates
+        Vector3 pos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z));
+        Vector3 mouseNewPos = new(pos.x + 100, pos.y, pos.z);
+
+        var obj = new GameObject("Sticker");
+        obj.transform.parent = parent;
+        obj.transform.position = mouseNewPos;
+        obj.AddComponent(typeof(SpriteRenderer));
+        if (obj.TryGetComponent(out SpriteRenderer spriteRenderer))
+        {
+            spriteRenderer.sprite = akibukiManager.GetCurrentSticker();
+            spriteRenderer.sortingOrder = order++;
+        }
+        // }
+        // GameObject newSticker = Instantiate(selectedSticker, mousePos, Quaternion.identity, parent);
+        // // Adjust sorting order
+        // var spriteRenderer = newSticker.GetComponent<SpriteRenderer>();
+        // if (spriteRenderer != null)
+        // {
+        //     spriteRenderer.sortingOrder = order++;
+        // }
+
     }
 }

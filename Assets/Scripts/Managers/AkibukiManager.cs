@@ -4,6 +4,7 @@ using UnityEngine;
 public class AkibukiManager : MonoBehaviour
 {
     public LineGenerator lineGenerator;
+    public CanvasStickerManager canvasStickerManager;
 
     public Transform Holder;
 
@@ -28,5 +29,23 @@ public class AkibukiManager : MonoBehaviour
                 Destroy(Holder.GetChild(i).gameObject);
             }
         }
+    }
+
+
+    public void OnToggleStickeMode(bool toggle)
+    {
+        lineGenerator.SwitchToStickerMode(toggle);
+    }
+
+    internal void OnResetStickers()
+    {
+        canvasStickerManager.OnStickerButtonResetAction?.Invoke();
+    }
+
+
+
+    internal Sprite GetCurrentSticker()
+    {
+        return canvasStickerManager.GetCurrentSticker();
     }
 }

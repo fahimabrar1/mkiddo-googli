@@ -51,6 +51,8 @@ public class ButtonSelector : MonoBehaviour
 
     public void OnBrushSelect(int brush)
     {
+        akibukiManager.OnToggleStickeMode(false);
+        akibukiManager.OnResetStickers();
         OnBrushSelectAction?.Invoke(brush);
         float width = .4f;
         if (brush == 1)
