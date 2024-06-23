@@ -9,6 +9,18 @@ public class AkibukiManager : MonoBehaviour
 
     public Transform Holder;
 
+
+    /// <summary>
+    /// Start is called on the frame when a script is enabled just before
+    /// any of the Update methods is called the first time.
+    /// </summary>
+    void Start()
+    {
+        CanDraw(true);
+    }
+
+
+
     public void SetPenColor(Color color)
     {
         lineGenerator.SetPenColor(color);
