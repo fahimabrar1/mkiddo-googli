@@ -55,4 +55,8 @@ public class AkibukiManager : MonoBehaviour
     {
         canvasAudioManager.OnCaptureImage();
     }
+
+
+    public void CanDraw(bool val) => lineGenerator.CanDraw(val);
+
 }

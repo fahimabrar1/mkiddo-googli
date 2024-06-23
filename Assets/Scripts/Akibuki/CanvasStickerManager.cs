@@ -47,6 +47,7 @@ public class CanvasStickerManager : MonoBehaviour
                 stickerContainerButton.button.onClick.AddListener(() =>
                 {
                     strickerContainerParent.parent.transform.gameObject.SetActive(false);
+                    akibukiManager.CanDraw(true);
                 });
             }
         }

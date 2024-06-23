@@ -22,6 +22,7 @@ public class LineGenerator : MonoBehaviour
 
 
     private bool isStickerMode;
+    private bool canDraw;
     private GameObject selectedSticker;
 
     void Start()
@@ -32,6 +33,8 @@ public class LineGenerator : MonoBehaviour
 
     void Update()
     {
+        if (!canDraw)
+            return;
         if (Input.GetMouseButtonDown(0))
         {
             if (isStickerMode && IsRaycastHitTargetWithTag("CanvasBoard"))
@@ -187,14 +190,10 @@ public class LineGenerator : MonoBehaviour
             spriteRenderer.sprite = akibukiManager.GetCurrentSticker();
             spriteRenderer.sortingOrder = order++;
         }
-        // }
-        // GameObject newSticker = Instantiate(selectedSticker, mousePos, Quaternion.identity, parent);
-        // // Adjust sorting order
-        // var spriteRenderer = newSticker.GetComponent<SpriteRenderer>();
-        // if (spriteRenderer != null)
-        // {
-        //     spriteRenderer.sortingOrder = order++;
-        // }
-
     }
+
+
+
+    public void CanDraw(bool val) => canDraw = val;
+
 }

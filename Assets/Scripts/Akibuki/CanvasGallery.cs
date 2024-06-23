@@ -22,9 +22,9 @@ public class CanvasGallery : MonoBehaviour
     void OnDisable()
     {
         // Clear existing images
-        foreach (Transform child in contentPanel)
+        foreach (var child in images)
         {
-            Destroy(child.gameObject);
+            Destroy(child);
         }
         images.Clear();
     }

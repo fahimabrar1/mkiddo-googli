@@ -21,6 +21,7 @@ public class CanvasAudioManager : MonoBehaviour
     public void OnCaptureImage()
     {
         audioSource.clip = clip;
+        OnPlay();
     }
 
 
