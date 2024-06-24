@@ -2,10 +2,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
-using UnityEngine.Diagnostics;
 using DG.Tweening;
 using Google;
+using System.Collections;
 using System.Threading.Tasks;
+
 public class LoginPanelOne : LoginPanelBase
 {
 
@@ -129,7 +130,7 @@ public class LoginPanelOne : LoginPanelBase
     #region Google
 
 
-    public string webClientId = "160760181826-5lupkrn266m01qd1u4jqtnlm251hhobu.apps.googleusercontent.com";
+    public string webClientId = "794416134528-8l6qfs5vg5om3v8q9c9reqel25ovj2ck.apps.googleusercontent.com";
 
     private GoogleSignInConfiguration configuration;
     // Defer the configuration creation until Awake so the web Client ID
@@ -194,15 +195,22 @@ public class LoginPanelOne : LoginPanelBase
         else
         {
 
-            loginScreenController.profileSO.childName = task.Result.DisplayName;
-            loginScreenController.profileSO.isSignUsingGoogle = true;
-            loginScreenController.profileSO.ImageURI = task.Result.ImageUrl;
-
-            loginScreenController.OnJumpTo(3);
+            StartCoroutine(SetUserData(task));
             AddStatusText("Welcome: " + task.Result.DisplayName + "!");
             AddStatusText("TokenID: " + task.Result.IdToken + "!");
         }
     }
+
+    public IEnumerator SetUserData(Task<GoogleSignInUser> task)
+    {
+        yield return new WaitForSeconds(1);
+        loginScreenController.profileSO.childName = task.Result.DisplayName;
+        loginScreenController.profileSO.isSignUsingGoogle = true;
+        loginScreenController.profileSO.ImageURI = task.Result.ImageUrl;
+
+        loginScreenController.OnJumpTo(3);
+    }
+
     private List<string> messages = new List<string>();
     void AddStatusText(string text)
     {
