@@ -176,6 +176,11 @@ public class FlashCardManager : LevelBaseManager
         MyDebug.Log($"{filteredCharactersimages[level]}");
         component.LetterImage.sprite = FileProcessor.GetSpriteByFileName($"{flashCardAlphabetsimages[level]}", targetCells: 4);
         component.CharacterImage.sprite = FileProcessor.GetSpriteByFileName($"{filteredCharactersimages[level]}", targetCells: 6);
+        if (FlashCardsNames.CardNames.TryGetValue(panelDataSO.gameName, out List<string> strs))
+        {
+            component.Word.text = strs[level];
+        }
+
 
         FileProcessor.GetAudioClipByFileName($"{letterAudioList[level]}", (clip) =>
                        {
@@ -220,7 +225,10 @@ public class FlashCardManager : LevelBaseManager
         component.LetterImage.sprite = FileProcessor.GetSpriteByFileName($"{flashCardAlphabetsimages[i]}", targetCells: 4);
         component.CharacterImage.sprite = FileProcessor.GetSpriteByFileName($"{filteredCharactersimages[i]}", targetCells: 6);
 
-
+        if (FlashCardsNames.CardNames.TryGetValue(panelDataSO.gameName, out List<string> strs))
+        {
+            component.Word.text = strs[i];
+        }
 
         FileProcessor.GetAudioClipByFileName($"{letterAudioList[i]}", (clip) =>
        {
