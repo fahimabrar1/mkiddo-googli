@@ -145,13 +145,13 @@ public class LoginPanelThree : LoginPanelBase
     {
         ProfileImage.sprite = avatars[index];
         ProfileImage1.sprite = avatars[index];
-        loginScreenController.profileSO.avatarIndex = index.ToString();
+        loginScreenController.profileSO.avatarPath = index.ToString();
     }
 
 
 
     public void AllVerification()
     {
-        Next.gameObject.SetActive(loginScreenController.profileSO.avatarIndex != null && loginScreenController.profileSO.childName != null && loginScreenController.profileSO.day != null && loginScreenController.profileSO.month != null && loginScreenController.profileSO.year != null);
+        Next.gameObject.SetActive(loginScreenController.profileSO.avatarPath != null && loginScreenController.profileSO.childName != null && loginScreenController.profileSO.day != null && loginScreenController.profileSO.month != null && loginScreenController.profileSO.year != null);
     }
 }
