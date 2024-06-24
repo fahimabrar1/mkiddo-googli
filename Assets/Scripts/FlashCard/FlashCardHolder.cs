@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -11,6 +12,7 @@ public class FlashCardHolder : MonoBehaviour
 
     public SpriteRenderer LetterImage;
     public SpriteRenderer CharacterImage;
+    public TMP_Text Word;
 
 
     public UnityEvent OnFlashInitailizedCompleteEvnet;
