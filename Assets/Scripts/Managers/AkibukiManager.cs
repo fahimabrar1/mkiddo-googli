@@ -23,9 +23,10 @@ public class AkibukiManager : MonoBehaviour
     void Start()
     {
         CanDraw(true);
-
+        stickerImage.gameObject.SetActive(!akibukiConfigSO.isOpenCanbas);
         if (!akibukiConfigSO.isOpenCanbas)
         {
+
             stickerImage.sprite = akibukiConfigSO.sprite;
             stickerImage.SetNativeSize();
             // Calculate and set new size based on the desired height

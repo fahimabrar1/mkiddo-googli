@@ -29,6 +29,7 @@ public class LineGenerator : MonoBehaviour
     {
         // Create a Texture2D to store the final image
         texture2D = new Texture2D(renderTexture.width, renderTexture.height, TextureFormat.RGBA32, false);
+        canDraw = true;
     }
 
     void Update()
