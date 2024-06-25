@@ -52,7 +52,7 @@ public class CanvasStickerManager : MonoBehaviour
             }
         }
         stickerSelectorBtn.anchoredPosition = Vector3.zero;
-        stickerSelectorBtn.sizeDelta = new(170, 170);
+        stickerSelectorBtn.sizeDelta = new(150, 150);
     }
 
     private void SpawnStickersOnIndex(int index)
