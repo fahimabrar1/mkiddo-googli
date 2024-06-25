@@ -1,13 +1,11 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Google;
 using UnityEngine;
-using UnityEngine.Diagnostics;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using static StringExtensions;
 
 public class LoginScreenController : MonoBehaviour
 {
@@ -149,19 +147,24 @@ public class LoginScreenController : MonoBehaviour
         }
         else
         {
-            profileSO.childName = task.Result.DisplayName;
-            profileSO.isSignUsingGoogle = true;
-            profileSO.ImageURI = task.Result.ImageUrl;
-            PlayerPrefs.SetString("access_token", task.Result.IdToken);
-            PlayerPrefs.Save();
             AddStatusText("Welcome: " + task.Result.DisplayName + "!");
 
 
             MyDebug.Log("Welcome: " + task.Result.DisplayName + "!");
-
-            OnJumpTo(3);
-
+            StartCoroutine(SetUserData(task));
         }
+    }
+
+    private IEnumerator SetUserData(Task<GoogleSignInUser> task)
+    {
+        yield return new WaitForSeconds(1);
+        profileSO.childName = task.Result.DisplayName;
+        profileSO.isSignUsingGoogle = true;
+        profileSO.ImageURI = task.Result.ImageUrl;
+        PlayerPrefs.SetString("access_token", task.Result.IdToken);
+        PlayerPrefs.Save();
+
+        OnJumpTo(3);
     }
 
     private void OnJumpTo(int v)

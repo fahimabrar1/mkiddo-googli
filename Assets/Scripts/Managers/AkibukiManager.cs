@@ -1,5 +1,7 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class AkibukiManager : MonoBehaviour
 {
@@ -9,6 +11,10 @@ public class AkibukiManager : MonoBehaviour
 
     public Transform Holder;
 
+    public AkibukiConfigSO akibukiConfigSO;
+    public Image stickerImage;
+    public RectTransform stickerRect;
+
 
     /// <summary>
     /// Start is called on the frame when a script is enabled just before
@@ -17,6 +23,32 @@ public class AkibukiManager : MonoBehaviour
     void Start()
     {
         CanDraw(true);
+
+        if (!akibukiConfigSO.isOpenCanbas)
+        {
+            stickerImage.sprite = akibukiConfigSO.sprite;
+            stickerImage.SetNativeSize();
+            // Calculate and set new size based on the desired height
+            AdjustImageSize(stickerImage.sprite, 720);
+        }
+    }
+
+    void AdjustImageSize(Sprite sprite, float fixedHeight)
+    {
+        if (sprite == null)
+        {
+            Debug.LogWarning("Sprite is null");
+            return;
+        }
+
+        float aspectRatio = (float)sprite.texture.width / sprite.texture.height;
+        float newWidth = fixedHeight * aspectRatio;
+
+        // Set the size of the RectTransform
+        stickerRect.sizeDelta = new Vector2(newWidth, fixedHeight);
+
+        // Optionally, log the new size for debugging purposes
+        Debug.Log($"Adjusted image size to: {newWidth}x{fixedHeight}");
     }
 
 
@@ -70,5 +102,6 @@ public class AkibukiManager : MonoBehaviour
 
 
     public void CanDraw(bool val) => lineGenerator.CanDraw(val);
+    public void OnGoToHome() => SceneManager.LoadSceneAsync(1);
 
 }
