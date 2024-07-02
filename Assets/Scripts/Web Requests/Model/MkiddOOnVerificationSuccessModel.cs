@@ -39,5 +39,17 @@ public class UserInfo
 [Serializable]
 public class ChildInfo
 {
-    // Define fields as per the structure of child_info objects if they exist
+    public int child_id;
+    public string name;
+    public string birth_date;
+    public string profile_path;
+    public AgeRange age_range;
+    public int age_range_id;
+}
+
+[Serializable]
+public class AgeRange
+{
+    public int key;
+    public string value;
 }

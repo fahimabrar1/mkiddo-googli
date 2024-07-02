@@ -276,11 +276,11 @@ public class MyWebRequest
         }
     }
 
-    public async void VerifyOTP(string url, string name, string number, string otp, Action<MkiddOOnVerificationSuccessModel> OnSuccessCallback, Action<MyWebReqFailedCallback> OnFailedCallback)
+    public async void VerifyOTP(string url, string number, string otp, Action<MkiddOOnVerificationSuccessModel> OnSuccessCallback, Action<MyWebReqFailedCallback> OnFailedCallback)
     {
         number = number.Replace("+", "");
         // Construct the JSON payload as a string
-        string jsonPayload = $"{{\"app_name\":\"mKiddo_v:2.6.1.beta\",\"source\":\"app\",\"login_by\":\"MSISDN\",\"email\":\"\",\"google_id\":\"9874563742891-30\",\"name\":\"{name}\",\"msisdn\":\"{number}\",\"otp\":\"{otp}\"}}";
+        string jsonPayload = $"{{\"app_name\":\"mKiddo_v:2.6.1.beta\",\"source\":\"app\",\"login_by\":\"MSISDN\",\"msisdn\":\"{number}\",\"otp\":\"{otp}\"}}";
 
         MyDebug.Log(jsonPayload);
 

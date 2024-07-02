@@ -59,8 +59,8 @@ public class LoginPanelFour : LoginPanelBase
                 if (texture != null)
                 {
                     // Create a sprite from the texture
-                    Rect rect = new Rect(0, 0, texture.width, texture.height);
-                    Vector2 pivot = new Vector2(0.5f, 0.5f);
+                    Rect rect = new(0, 0, 240, 208);
+                    Vector2 pivot = new(0.5f, 0.5f);
                     Sprite sprite = Sprite.Create(texture, rect, pivot);
 
                     // Display the sprite in a UI Image and set to fill the avatar rect

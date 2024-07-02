@@ -27,7 +27,18 @@ public class LoginPanelThree : LoginPanelBase
         DayDropdown.onValueChanged.AddListener(delegate { UpdateData(); });
         MonthDropdown.onValueChanged.AddListener(delegate { UpdateDaysDropdown(); });
         YearDropdown.onValueChanged.AddListener(delegate { UpdateDaysDropdown(); });
-        Continue.interactable = false;
+
+        if (loginScreenController.profileSO.id != -1)
+        {
+            nameField.text = loginScreenController.profileSO.name;
+            Continue.interactable = true;
+            StartCoroutine(LoadImageFromUrl(loginScreenController.profileSO.avatarPath));
+        }
+        else
+        {
+            Continue.interactable = false;
+        }
+
         UpdateDaysDropdown();
     }
 
@@ -43,6 +54,13 @@ public class LoginPanelThree : LoginPanelBase
         List<string> years = new();
         int currentYear = DateTime.Now.Year;
         years.Add("Year");
+        int yearVal = -1;
+        if (loginScreenController.profileSO.id != -1)
+        {
+            int val = int.Parse(loginScreenController.profileSO.year);
+            yearVal = currentYear - val + 1;
+        }
+
 
         for (int i = currentYear; i >= currentYear - 50; i--)
         {
@@ -51,14 +69,25 @@ public class LoginPanelThree : LoginPanelBase
 
         YearDropdown.ClearOptions();
         YearDropdown.AddOptions(years);
+        YearDropdown.value = yearVal;
     }
 
     void UpdateDaysDropdown()
     {
+        int dayVal = -1;
+        int monthVal = -1;
+        if (loginScreenController.profileSO.id != -1)
+        {
+            dayVal = int.Parse(loginScreenController.profileSO.day);
+            monthVal = int.Parse(loginScreenController.profileSO.month);
+        }
+
+
         int selectedYearIndex = YearDropdown.value;
 
-        int selectedMonthIndex = MonthDropdown.value;
+        int selectedMonthIndex = monthVal == -1 ? MonthDropdown.value : monthVal;
         if (selectedMonthIndex == 0 || selectedYearIndex == 0) return;
+
 
         int selectedMonth = int.Parse(MonthDropdown.options[selectedMonthIndex].text);
         int selectedYear = int.Parse(YearDropdown.options[YearDropdown.value].text);
@@ -72,6 +101,9 @@ public class LoginPanelThree : LoginPanelBase
         {
             "Day"
         };
+
+
+
         for (int i = 1; i <= daysInMonth; i++)
         {
             days.Add(i.ToString());
@@ -79,6 +111,8 @@ public class LoginPanelThree : LoginPanelBase
 
         DayDropdown.ClearOptions();
         DayDropdown.AddOptions(days);
+        DayDropdown.value = dayVal;
+        MonthDropdown.value = monthVal;
         AllVerification();
     }
 
@@ -125,7 +159,7 @@ public class LoginPanelThree : LoginPanelBase
 
     public void AllVerification()
     {
-        Continue.interactable = loginScreenController.profileSO.avatarPath != null && loginScreenController.profileSO.childName != null && loginScreenController.profileSO.day != null && loginScreenController.profileSO.month != null && loginScreenController.profileSO.year != null;
+        Continue.interactable = loginScreenController.profileSO.avatarPath.Length > 0 && loginScreenController.profileSO.childName.Length > 0 && loginScreenController.profileSO.day.Length > 0 && loginScreenController.profileSO.month.Length > 0 && loginScreenController.profileSO.year.Length > 0;
     }
 
 
@@ -174,6 +208,40 @@ public class LoginPanelThree : LoginPanelBase
             else
             {
                 Debug.LogError("Failed to load texture from " + path);
+            }
+        }
+        else
+        {
+            Debug.LogError("UnityWebRequest error: " + uwr.error);
+        }
+    }
+
+
+
+    private IEnumerator LoadImageFromUrl(string url)
+    {
+        using UnityWebRequest uwr = UnityWebRequestTexture.GetTexture(url);
+        yield return uwr.SendWebRequest();
+
+        if (uwr.result == UnityWebRequest.Result.Success)
+        {
+            Texture2D texture = DownloadHandlerTexture.GetContent(uwr);
+            if (texture != null)
+            {
+                // Create a sprite from the texture
+                Rect rect = new Rect(0, 0, texture.width, texture.height);
+                Vector2 pivot = new Vector2(0.5f, 0.5f);
+                Sprite sprite = Sprite.Create(texture, rect, pivot);
+
+                // Display the sprite in a UI Image and set to fill the avatar rect
+                ProfileImage.sprite = sprite;
+                ProfileImage.type = Image.Type.Simple;
+                ProfileImage.preserveAspect = false;
+                ProfileImage.SetNativeSize();
+            }
+            else
+            {
+                Debug.LogError("Failed to load texture from " + url);
             }
         }
         else

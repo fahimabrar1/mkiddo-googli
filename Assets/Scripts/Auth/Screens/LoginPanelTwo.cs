@@ -5,6 +5,10 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.UI;
 using DG.Tweening;
+using System.Threading.Tasks;
+using System;
+using System.Linq;
+using Unity.VisualScripting;
 public class LoginPanelTwo : LoginPanelBase
 {
 
@@ -19,7 +23,7 @@ public class LoginPanelTwo : LoginPanelBase
     public int resendCooldown = 60; // Time in seconds to wait before enabling the resend button
 
     MyWebRequest myWebRequest;
-
+    private string otp = "";
 
     /// <summary>
     /// This function is called when the object becomes enabled and active.
@@ -57,17 +61,24 @@ public class LoginPanelTwo : LoginPanelBase
         currentIndex++;
         if (currentIndex == PinFields.Count)
         {
-            string otp = "";
+            otp = "";
             foreach (var text in PinFields)
             {
                 otp += text.text;
             }
-            myWebRequest.VerifyOTP("/api/V3/auth/sign-in", "allvee", loginScreenController.profileSO.countryCode + loginScreenController.profileSO.mobileNumber, otp, OnSuccessCallback, OnFailedCallback);
+            Countinue.interactable = true;
         }
     }
 
 
-    public void OnSuccessCallback(MkiddOOnVerificationSuccessModel result)
+
+    public void OnVerifyOTP()
+    {
+        myWebRequest.VerifyOTP("/api/V3/auth/sign-in", loginScreenController.profileSO.countryCode + loginScreenController.profileSO.mobileNumber, otp, OnSuccessCallback, OnFailedCallback);
+    }
+
+
+    public async void OnSuccessCallback(MkiddOOnVerificationSuccessModel result)
     {
         if (result.status_code == 200)
         {
@@ -76,6 +87,7 @@ public class LoginPanelTwo : LoginPanelBase
             resultText.gameObject.SetActive(true);
             resultText.gameObject.transform.DOScale(Vector3.one, 0.2f).SetAutoKill(true);
             FileProcessor fileProcessor = new();
+            UpdateUserData(result);
             fileProcessor.SaveJsonToFile(fileProcessor.userFilePath, JsonUtility.ToJson(result));
             PlayerPrefs.SetString("access_token", result.accessToken);
             PlayerPrefs.Save();
@@ -83,10 +95,13 @@ public class LoginPanelTwo : LoginPanelBase
             col = blueeColor;
             col.a = 1;
             backgroundOutline.color = col;
-            Countinue.interactable = true;
+
+            await Task.Delay(2000);
+            loginScreenController.OnClickNext();
         }
         else
         {
+            Countinue.interactable = false;
             resultText.text = "Invalid OTP, Try Again";
             resultText.color = failedColor;
             resultText.gameObject.SetActive(true);
@@ -94,9 +109,24 @@ public class LoginPanelTwo : LoginPanelBase
         }
     }
 
+    private void UpdateUserData(MkiddOOnVerificationSuccessModel result)
+    {
+        var dates = result.child_info[0].birth_date.Split('-');
+
+        loginScreenController.profileSO.id = result.uid;
+        loginScreenController.profileSO.child_id = result.child_info[0].child_id;
+
+        loginScreenController.profileSO.year = dates[0];
+        loginScreenController.profileSO.month = dates[1].StartsWith("0") == true ? dates[1][1..] : dates[1];
+        loginScreenController.profileSO.day = dates[2].StartsWith("0") == true ? dates[2][1..] : dates[2];
+
+        loginScreenController.profileSO.childName = result.child_info[0].name;
+        loginScreenController.profileSO.avatarPath = result.child_info[0].profile_path;
+    }
 
     public void OnFailedCallback(MyWebReqFailedCallback result)
     {
+        Countinue.interactable = false;
         resultText.text = result.message;
         resultText.color = failedColor;
         resultText.gameObject.SetActive(true);
@@ -127,7 +157,7 @@ public class LoginPanelTwo : LoginPanelBase
             {
                 otp += text.text;
             }
-            myWebRequest.VerifyOTP("/api/V3/auth/sign-in", "allvee", loginScreenController.profileSO.countryCode + loginScreenController.profileSO.mobileNumber, otp, OnSuccessCallback, OnFailedCallback);
+            Countinue.interactable = true;
         }
     }
 

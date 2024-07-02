@@ -60,6 +60,12 @@ public class LoginPanelOne : LoginPanelBase
     public void OnTapDialerButton(string num)
     {
         Debug.Log(num);
+
+        if (num.Length > 0 && num[0] == '0')
+        {
+            numberText.text = "";
+            return;
+        }
         if (numberText.text.Length <= 10 && num.Length > 0)
         {
             numberText.text = num.ToString();
@@ -108,7 +114,6 @@ public class LoginPanelOne : LoginPanelBase
 
             loginScreenController.OnClickNext();
             gameObject.SetActive(false);
-
         }
         else if (result.status_code == 402)
         {

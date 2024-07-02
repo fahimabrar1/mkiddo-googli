@@ -13,4 +13,17 @@ public class LoginPanelBase : MonoBehaviour
     {
         loginScreenController.OnClickPlay();
     }
+
+
+    /// <summary>
+    /// Update is called every frame, if the MonoBehaviour is enabled.
+    /// </summary>
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            loginScreenController.OnClickBack();
+        }
+    }
+
 }

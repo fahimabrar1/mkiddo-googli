@@ -86,6 +86,7 @@ public class LoginScreenController : MonoBehaviour
     }
     public void OnClickBack()
     {
+        if (currentPanelIndex == 0) return;
         currentPanelIndex--;
         OnUpdatePanel();
     }
