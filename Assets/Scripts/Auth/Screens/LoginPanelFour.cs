@@ -29,7 +29,9 @@ public class LoginPanelFour : LoginPanelBase
             string savedAvatarPath = loginScreenController.profileSO.avatarPath;
             if (!string.IsNullOrEmpty(savedAvatarPath) && System.IO.File.Exists(savedAvatarPath))
             {
-                StartCoroutine(LoadImageFromAppDir(savedAvatarPath));
+                avatar.sprite = loginScreenController.profileSO.childImageSprite;
+                avatar.type = Image.Type.Simple;
+                avatar.preserveAspect = false;
             }
         }
 
@@ -67,7 +69,6 @@ public class LoginPanelFour : LoginPanelBase
                     avatar.sprite = sprite;
                     avatar.type = Image.Type.Simple;
                     avatar.preserveAspect = false;
-                    avatar.SetNativeSize();
                 }
                 else
                 {
@@ -92,7 +93,7 @@ public class LoginPanelFour : LoginPanelBase
             if (texture != null)
             {
                 // Create a sprite from the texture
-                Rect rect = new Rect(0, 0, texture.width, texture.height);
+                Rect rect = new Rect(0, 0, 2540, 240);
                 Vector2 pivot = new Vector2(0.5f, 0.5f);
                 Sprite sprite = Sprite.Create(texture, rect, pivot);
 
@@ -100,7 +101,6 @@ public class LoginPanelFour : LoginPanelBase
                 avatar.sprite = sprite;
                 avatar.type = Image.Type.Simple;
                 avatar.preserveAspect = false;
-                avatar.SetNativeSize();
             }
             else
             {

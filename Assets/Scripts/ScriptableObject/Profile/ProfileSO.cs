@@ -19,4 +19,7 @@ public class ProfileSO : ScriptableObject
     public Uri ImageURI;
 
 
+    public Sprite childImageSprite;
+
+
 }

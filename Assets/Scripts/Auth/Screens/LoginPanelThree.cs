@@ -209,7 +209,7 @@ public class LoginPanelThree : LoginPanelBase
                 ProfileImage.sprite = sprite;
                 ProfileImage.type = Image.Type.Simple;
                 ProfileImage.preserveAspect = false;
-                ProfileImage.SetNativeSize();
+                loginScreenController.profileSO.childImageSprite = sprite;
                 // Save the texture to the app's directory
                 SaveTextureToFile(texture, "profile_picture.png");
             }
@@ -237,15 +237,16 @@ public class LoginPanelThree : LoginPanelBase
             if (texture != null)
             {
                 // Create a sprite from the texture
-                Rect rect = new Rect(0, 0, texture.width, texture.height);
-                Vector2 pivot = new Vector2(0.5f, 0.5f);
+                Rect rect = new(0, 0, 240, 240);
+                Vector2 pivot = new(0.5f, 0.5f);
                 Sprite sprite = Sprite.Create(texture, rect, pivot);
 
                 // Display the sprite in a UI Image and set to fill the avatar rect
                 ProfileImage.sprite = sprite;
                 ProfileImage.type = Image.Type.Simple;
                 ProfileImage.preserveAspect = false;
-                ProfileImage.SetNativeSize();
+                loginScreenController.profileSO.childImageSprite = sprite;
+                humanImage.SetActive(false);
             }
             else
             {

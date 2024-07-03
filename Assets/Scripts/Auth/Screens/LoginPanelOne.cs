@@ -122,6 +122,13 @@ public class LoginPanelOne : LoginPanelBase
             warningText.gameObject.SetActive(true);
             warningText.gameObject.transform.DOScale(Vector3.one, 0.2f).SetAutoKill(true);
         }
+        else if (result.status_code == 403)
+        {
+
+            warningText.text = result.message;
+            warningText.color = failedColor;
+            warningText.gameObject.SetActive(true);
+        }
 
     }
     public void OnFailedSendNumber(MyWebReqFailedCallback result)

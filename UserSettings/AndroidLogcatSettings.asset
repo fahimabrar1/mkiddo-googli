@@ -3,7 +3,7 @@
     "m_SelectedProcess": {
         "deviceId": "V4EMOROZPBWW6LA6",
         "name": "com.MoMagic.Dhadharu",
-        "processId": 9389,
+        "processId": 12513,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -13,18 +13,6 @@
             "name": "com.mi.android.globallauncher",
             "processId": 2835,
             "exited": false
-        },
-        {
-            "deviceId": "V4EMOROZPBWW6LA6",
-            "name": "com.MoMagic.Dhadharu",
-            "processId": 6251,
-            "exited": true
-        },
-        {
-            "deviceId": "V4EMOROZPBWW6LA6",
-            "name": "com.MoMagic.Dhadharu",
-            "processId": 6610,
-            "exited": true
         },
         {
             "deviceId": "V4EMOROZPBWW6LA6",
@@ -42,6 +30,18 @@
             "deviceId": "V4EMOROZPBWW6LA6",
             "name": "com.MoMagic.Dhadharu",
             "processId": 9389,
+            "exited": true
+        },
+        {
+            "deviceId": "V4EMOROZPBWW6LA6",
+            "name": "com.MoMagic.Dhadharu",
+            "processId": 11223,
+            "exited": true
+        },
+        {
+            "deviceId": "V4EMOROZPBWW6LA6",
+            "name": "com.MoMagic.Dhadharu",
+            "processId": 12513,
             "exited": false
         }
     ],
@@ -99,7 +99,7 @@
         "AutoCapture": true
     },
     "m_FilterOptions": {
-        "m_Filter": "",
+        "m_Filter": "htt",
         "m_UseRegularExpressions": false,
         "m_MatchCase": false
     },
