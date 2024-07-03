@@ -41,7 +41,7 @@ public class HomeGridPanelController : MonoBehaviour
         myWebRequest = new();
 
         if (!alreadyFetched)
-            StartCoroutine(myWebRequest.FetchData($"/api/v3/content/content-list?content_category={gamePanelData.contentCategory}", blockID: gamePanelData.blockID, contentType: gamePanelData.contentType, OnApiResponseSucces: OnSuccessLoadingScreen));
+            StartCoroutine(myWebRequest.FetchData($"/api/v3/content/content-list?content_category={gamePanelData.contentCategory}", access_token: PlayerPrefs.GetString("access_token"), blockID: gamePanelData.blockID, contentType: gamePanelData.contentType, OnApiResponseSucces: OnSuccessLoadingScreen));
     }
 
 
@@ -111,10 +111,10 @@ public class HomeGridPanelController : MonoBehaviour
         {
             if (gamePanelData.contentType.Equals("DRAG_N_DROP") && i == totalDownloads - 1)
             {
-                StartCoroutine(myWebRequest.DownloadAndUnzip("https://s3.mkiddo.com//storage/Interactive_Learning/Drag_and_drop/drag_comb.zip", "drag_comb", gamePanelData.gameTypeName, i, OnUpdateDownloadProgress));
+                StartCoroutine(myWebRequest.DownloadAndUnzip("https://s3.mkiddo.com//storage/Interactive_Learning/Drag_and_drop/drag_comb.zip", "drag_comb", gamePanelData.gameTypeName, i, OnUpdateDownloadProgress, PlayerPrefs.GetString("access_token")));
                 break;
             }
-            StartCoroutine(myWebRequest.DownloadAndUnzip(homeGridPanels[i].content.link, homeGridPanels[i].GetZipTheFileName(), gamePanelData.gameTypeName, i, OnUpdateDownloadProgress));
+            StartCoroutine(myWebRequest.DownloadAndUnzip(homeGridPanels[i].content.link, homeGridPanels[i].GetZipTheFileName(), gamePanelData.gameTypeName, i, OnUpdateDownloadProgress, PlayerPrefs.GetString("access_token")));
 
         }
         this.OnPanelPress = OnPanelPress;

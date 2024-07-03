@@ -31,11 +31,16 @@ public class LoginPanelTwo : LoginPanelBase
     void OnEnable()
     {
         myWebRequest = new();
-    }
+
+        otp = "";
+        loginScreenController.profileSO.id = -1;
+        loginScreenController.profileSO.name = "";
+        loginScreenController.profileSO.day = "";
+        loginScreenController.profileSO.month = "";
+        loginScreenController.profileSO.year = "";
+        loginScreenController.profileSO.avatarPath = "";
 
 
-    void Start()
-    {
         headerText.text = $"Enter your four digit code that we have sent to your mobile number ({loginScreenController.profileSO.countryCode} {loginScreenController.profileSO.mobileNumber})";
         resultText.gameObject.transform.localScale = Vector3.zero;
         resultText.gameObject.SetActive(false);
@@ -66,6 +71,7 @@ public class LoginPanelTwo : LoginPanelBase
             {
                 otp += text.text;
             }
+            MyDebug.Log($"My OTP: {otp}");
             Countinue.interactable = true;
         }
     }
@@ -152,11 +158,13 @@ public class LoginPanelTwo : LoginPanelBase
 
         if (currentIndex == PinFields.Count)
         {
-            string otp = "";
+            otp = "";
             foreach (var text in PinFields)
             {
                 otp += text.text;
             }
+            MyDebug.Log($"My OTP: {otp}");
+
             Countinue.interactable = true;
         }
     }
@@ -170,7 +178,7 @@ public class LoginPanelTwo : LoginPanelBase
         {
             inputField.text = "-";
         }
-
+        otp = "";
         // Reset the index and select the first input field
         currentIndex = 0;
 

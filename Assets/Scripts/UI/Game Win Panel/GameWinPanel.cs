@@ -16,6 +16,9 @@ public class GameWinPanel : MonoBehaviour
 
     public LevelBaseManager levelBaseManager;
 
+    public Button backButton;
+    public Button nextButton;
+
 
     /// <summary>
     /// This function is called when the object becomes enabled and active.
@@ -31,6 +34,9 @@ public class GameWinPanel : MonoBehaviour
         {
             Stars[i].sprite = levelBaseManager.StarCounts == 0 ? EmptyStar : levelBaseManager.StarCounts > i ? FileldStart : EmptyStar;
         }
+
+
+        nextButton.gameObject.SetActive(levelBaseManager.StarCounts > 0);
     }
 
 }

@@ -23,7 +23,7 @@ public class DhadharuContentFetcher : MonoBehaviour
     {
         myWebRequest = new();
         gameManager = FindAnyObjectByType<GameManager>();
-        StartCoroutine(myWebRequest.FetchDhadharuData($"/api/v3/content/questions", OnApiResponseSucces: OnSuccessLoadingScreen));
+        StartCoroutine(myWebRequest.FetchDhadharuData($"/api/v3/content/questions", PlayerPrefs.GetString("access_token"), OnApiResponseSucces: OnSuccessLoadingScreen));
     }
     private void OnSuccessLoadingScreen(OnDhadharuApiResponseSuccess onApiResponseSuccess)
     {

@@ -21,8 +21,10 @@ public class LoginPanelThree : LoginPanelBase
     public TMP_Dropdown MonthDropdown;
     public TMP_Dropdown YearDropdown;
 
-    void Start()
+    void OnEnable()
     {
+
+
         InitializeYearDropdown();
         DayDropdown.onValueChanged.AddListener(delegate { UpdateData(); });
         MonthDropdown.onValueChanged.AddListener(delegate { UpdateDaysDropdown(); });
@@ -30,7 +32,13 @@ public class LoginPanelThree : LoginPanelBase
 
         if (loginScreenController.profileSO.id != -1)
         {
-            nameField.text = loginScreenController.profileSO.name;
+
+            MyDebug.Log($"Name: {loginScreenController.profileSO.childName}");
+            MyDebug.Log($"Day: {loginScreenController.profileSO.day}");
+            MyDebug.Log($"Month: {loginScreenController.profileSO.month}");
+            MyDebug.Log($"Year: {loginScreenController.profileSO.year}");
+            MyDebug.Log($"Avatar Path: {loginScreenController.profileSO.avatarPath}");
+            nameField.text = loginScreenController.profileSO.childName;
             Continue.interactable = true;
             StartCoroutine(LoadImageFromUrl(loginScreenController.profileSO.avatarPath));
         }

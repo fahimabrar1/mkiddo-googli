@@ -22,7 +22,8 @@ public class MathQuizManager : LevelBaseManager
     public GameObject GameOverPanel;
     private MyWebRequest myWebRequest;
 
-
+    public Button nextButton;
+    public Button backButton;
 
     /// <summary>
     /// Start is called on the frame when a script is enabled just before
@@ -40,6 +41,11 @@ public class MathQuizManager : LevelBaseManager
         {
             tempLevel = level;
         }
+
+
+        nextButton.gameObject.SetActive(tempLevel < level);
+        backButton.gameObject.SetActive(tempLevel > 0 && tempLevel <= level);
+
         var question = dhadharuDataSo.questions[tempLevel];
         Sprite sprite = await myWebRequest.FetchImageAsync(dhadharuDataSo.questions[tempLevel].question_image);
 

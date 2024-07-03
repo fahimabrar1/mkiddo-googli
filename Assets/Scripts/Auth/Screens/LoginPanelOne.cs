@@ -147,7 +147,6 @@ public class LoginPanelOne : LoginPanelBase
             WebClientId = webClientId,
             RequestIdToken = true,
             RequestEmail = true,
-
         };
     }
     public void OnSignIn()

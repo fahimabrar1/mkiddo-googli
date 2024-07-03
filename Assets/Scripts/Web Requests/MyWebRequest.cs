@@ -24,11 +24,15 @@ public class MyWebRequest
         }
     }
 
-    public IEnumerator DownloadAndUnzip(string url, string fileName, string gameType, int downloadID, Action<float, int> OnUpdateDownloadProgress, string access_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbl9ieSI6Ik1TSVNETiIsImdvb2dsZV9pZCI6Ijk4NzQ1NjM3NDI4OTEtMzAiLCJ1aWQiOjM4MTg4LCJtc2lzZG4iOiI4ODAxNjg3MDU2MTQwIiwiZW1haWwiOiIiLCJzb3VyY2UiOiJhcHAiLCJhcHBfbmFtZSI6Im1LaWRkb192OjIuNi4xLmJldGEiLCJpYXQiOjE3MTI0MzA1MjcsImV4cCI6MTcxMjg2MjUyN30.oFouaGLiza11cSFODgS5TjqRWLgAjvntNM0A9HAwH0c")
+    public IEnumerator DownloadAndUnzip(string url, string fileName, string gameType, int downloadID, Action<float, int> OnUpdateDownloadProgress, string access_token = "")
     {
         UnityWebRequest www = UnityWebRequest.Get(url);
 
-
+        // Add access token to request header if provided
+        if (!string.IsNullOrEmpty(access_token))
+        {
+            www.SetRequestHeader("Authorization", "Bearer " + access_token);
+        }
         www.SendWebRequest();
 
         while (!www.isDone)
@@ -74,7 +78,7 @@ public class MyWebRequest
 
 
     // Method to fetch data from the specified URL
-    public IEnumerator FetchData(string url, int blockID = -1, string contentType = "", string access_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbl9ieSI6Ik1TSVNETiIsImdvb2dsZV9pZCI6Ijk4NzQ1NjM3NDI4OTEtMzAiLCJ1aWQiOjM4MTg4LCJtc2lzZG4iOiI4ODAxNjg3MDU2MTQwIiwiZW1haWwiOiIiLCJzb3VyY2UiOiJhcHAiLCJhcHBfbmFtZSI6Im1LaWRkb192OjIuNi4xLmJldGEiLCJpYXQiOjE3MTI0MzA1MjcsImV4cCI6MTcxMjg2MjUyN30.oFouaGLiza11cSFODgS5TjqRWLgAjvntNM0A9HAwH0c", Action<OnApiResponseSuccess> OnApiResponseSucces = null, Action<OnApiResponseFailed> OnApiResponseFailed = null)
+    public IEnumerator FetchData(string url, int blockID = -1, string contentType = "", string access_token = "", Action<OnApiResponseSuccess> OnApiResponseSucces = null, Action<OnApiResponseFailed> OnApiResponseFailed = null)
     {
         using UnityWebRequest www = UnityWebRequest.Get(baseUrl + url);
         // Add access token to request header if provided
@@ -129,7 +133,7 @@ public class MyWebRequest
 
 
     // Method to fetch data from the specified URL
-    public IEnumerator FetchDhadharuData(string url, string access_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbl9ieSI6Ik1TSVNETiIsImdvb2dsZV9pZCI6Ijk4NzQ1NjM3NDI4OTEtMzAiLCJ1aWQiOjM4MTg4LCJtc2lzZG4iOiI4ODAxNjg3MDU2MTQwIiwiZW1haWwiOiIiLCJzb3VyY2UiOiJhcHAiLCJhcHBfbmFtZSI6Im1LaWRkb192OjIuNi4xLmJldGEiLCJpYXQiOjE3MTI0MzA1MjcsImV4cCI6MTcxMjg2MjUyN30.oFouaGLiza11cSFODgS5TjqRWLgAjvntNM0A9HAwH0c", Action<OnDhadharuApiResponseSuccess> OnApiResponseSucces = null, Action<OnApiResponseFailed> OnApiResponseFailed = null)
+    public IEnumerator FetchDhadharuData(string url, string access_token = "", Action<OnDhadharuApiResponseSuccess> OnApiResponseSucces = null, Action<OnApiResponseFailed> OnApiResponseFailed = null)
     {
         using UnityWebRequest www = UnityWebRequest.Get(baseUrl + url);
         // Add access token to request header if provided
