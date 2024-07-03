@@ -41,6 +41,8 @@ public class WorldPuzzleManager : LevelBaseManager
     public GameObject ContentPanel;
     public GameObject GameOverPanel;
 
+    public Button nextButton;
+    public Button backButton;
 
     public Action<int> OnTapLetterButtonAction;
 
@@ -60,6 +62,11 @@ public class WorldPuzzleManager : LevelBaseManager
         {
             tempLevel = level;
         }
+        MyDebug.Log($"Temp Level: {tempLevel}");
+        MyDebug.Log($" Level: {level}");
+        nextButton.gameObject.SetActive(tempLevel != -1 && tempLevel < level);
+        backButton.gameObject.SetActive(level > 0 && level < dhadharuDataSo.questions.Count);
+
         var question = dhadharuDataSo.questions[tempLevel];
         TOTAL_BUTTONS_TO_BE_SELECTED = question.question_ans.Length;
         for (int i = 0; i < TOTAL_BUTTONS_TO_BE_SELECTED; i++)

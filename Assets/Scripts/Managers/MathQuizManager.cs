@@ -43,9 +43,10 @@ public class MathQuizManager : LevelBaseManager
         }
 
 
-        nextButton.gameObject.SetActive(tempLevel < level);
-        backButton.gameObject.SetActive(tempLevel > 0 && tempLevel <= level);
-
+        MyDebug.Log($"Temp Level: {tempLevel}");
+        MyDebug.Log($" Level: {level}");
+        nextButton.gameObject.SetActive(tempLevel != -1 && tempLevel < level);
+        backButton.gameObject.SetActive(level > 0 && level < dhadharuDataSo.questions.Count);
         var question = dhadharuDataSo.questions[tempLevel];
         Sprite sprite = await myWebRequest.FetchImageAsync(dhadharuDataSo.questions[tempLevel].question_image);
 

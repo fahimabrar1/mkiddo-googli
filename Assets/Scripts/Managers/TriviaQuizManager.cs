@@ -20,7 +20,8 @@ public class TriviaQuizManager : LevelBaseManager
     public ProgressBarTimer timer;
     public GameObject GameOverPanel;
 
-
+    public Button nextButton;
+    public Button backButton;
 
 
     /// <summary>
@@ -38,6 +39,12 @@ public class TriviaQuizManager : LevelBaseManager
         {
             tempLevel = level;
         }
+
+        MyDebug.Log($"Temp Level: {tempLevel}");
+        MyDebug.Log($" Level: {level}");
+        nextButton.gameObject.SetActive(tempLevel != -1 && tempLevel < level);
+        backButton.gameObject.SetActive(level > 0 && level < dhadharuDataSo.questions.Count);
+
         var question = dhadharuDataSo.questions[tempLevel];
         questionText.text = dhadharuDataSo.questions[tempLevel].question_text;
         buttonSelector.SetOptionButtons(question.question_ans, question.question_option);

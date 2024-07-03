@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 
@@ -54,8 +55,11 @@ public class DhadharuContentFetcher : MonoBehaviour
     }
     public void OnClickTriviaQuiz()
     {
+
         dhadharuDataSo.gameName = dhadharuData.trivia_quiz[0].game_type;
-        dhadharuDataSo.questions = dhadharuData.trivia_quiz;
+        //Todo: only keep english quizes
+
+        dhadharuDataSo.questions = dhadharuData.trivia_quiz.Skip(20).ToList();
         PlayerPrefs.SetInt($"{dhadharuDataSo.gameName}_temp", -1);
         PlayerPrefs.Save();
 
