@@ -13,13 +13,16 @@ public class LoginPanelTwo : LoginPanelBase
 {
 
     public Button Countinue;
+    public Button resendButton;
     public Image backgroundOutline;
     public TMP_Text headerText;
     public TMP_Text resultText;
+    public TMP_Text resendCodeText;
     public TMP_InputField inputField;
     public List<TMP_Text> PinFields;
     private int currentIndex = 0;
     public Color blueeColor;
+    public Color greyColor;
     public int resendCooldown = 60; // Time in seconds to wait before enabling the resend button
 
     MyWebRequest myWebRequest;
@@ -31,6 +34,9 @@ public class LoginPanelTwo : LoginPanelBase
     void OnEnable()
     {
         myWebRequest = new();
+        resendCodeText.text = "Resend";
+        resendButton.interactable = true;
+        resendCodeText.color = Color.black;
 
         otp = "";
         loginScreenController.profileSO.id = -1;
@@ -50,6 +56,19 @@ public class LoginPanelTwo : LoginPanelBase
             inputField.text = "-";
         }
         Countinue.interactable = false;
+
+        resendButton.onClick.AddListener(OnClickResendCode);
+
+    }
+
+
+
+    /// <summary>
+    /// This function is called when the behaviour becomes disabled or inactive.
+    /// </summary>
+    void OnDisable()
+    {
+        resendButton.onClick.RemoveAllListeners();
     }
 
     public void InputButton(int value)
@@ -183,5 +202,38 @@ public class LoginPanelTwo : LoginPanelBase
         currentIndex = 0;
 
     }
+    public void OnClickResendCode()
+    {
+        if (!resendButton.interactable)
+        {
+            return; // If the button is already disabled, do nothing
+        }
 
+        resendCodeText.text = "Code resent!";
+        string otp = "";
+        foreach (var text in PinFields)
+        {
+            otp += text.text;
+        }
+        myWebRequest.SendOTP("/api/v2/send-otp", loginScreenController.profileSO.countryCode + loginScreenController.profileSO.mobileNumber, null, null);
+        StartCoroutine(ResendCooldownCoroutine());
+    }
+
+    private IEnumerator ResendCooldownCoroutine()
+    {
+        resendButton.interactable = false;
+        resendCodeText.color = greyColor;
+        float remainingTime = resendCooldown;
+
+        while (remainingTime > 0)
+        {
+            resendCodeText.text = $"Resend ({remainingTime})";
+            yield return new WaitForSeconds(1f);
+            remainingTime--;
+        }
+
+        resendCodeText.text = "Resend";
+        resendButton.interactable = true;
+        resendCodeText.color = Color.black;
+    }
 }

@@ -58,7 +58,6 @@ public class DhadharuContentFetcher : MonoBehaviour
 
         dhadharuDataSo.gameName = dhadharuData.trivia_quiz[0].game_type;
         //Todo: only keep english quizes
-
         dhadharuDataSo.questions = dhadharuData.trivia_quiz.Skip(20).ToList();
         PlayerPrefs.SetInt($"{dhadharuDataSo.gameName}_temp", -1);
         PlayerPrefs.Save();

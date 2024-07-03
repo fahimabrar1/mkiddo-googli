@@ -51,6 +51,18 @@ public class LoginPanelThree : LoginPanelBase
     }
 
 
+
+    /// <summary>
+    /// This function is called when the behaviour becomes disabled or inactive.
+    /// </summary>
+    void OnDisable()
+    {
+        DayDropdown.onValueChanged.RemoveAllListeners();
+        MonthDropdown.onValueChanged.RemoveAllListeners();
+        YearDropdown.onValueChanged.RemoveAllListeners();
+    }
+
+
     public void OnChangeName(string val)
     {
         loginScreenController.profileSO.childName = val;
