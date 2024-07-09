@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.UI;
 using DG.Tweening;
+using System.Threading.Tasks;
 public class LoginPanelTwo : LoginPanelBase
 {
     public Button Back;
@@ -20,6 +21,8 @@ public class LoginPanelTwo : LoginPanelBase
     public int resendCooldown = 60; // Time in seconds to wait before enabling the resend button
 
     MyWebRequest myWebRequest;
+    private string otp = "";
+
 
 
     /// <summary>
@@ -32,10 +35,31 @@ public class LoginPanelTwo : LoginPanelBase
         resendButton.interactable = true;
         resendCodeText.color = Color.black;
 
+        otp = "";
+        loginScreenController.profileSO.id = -1;
+        loginScreenController.profileSO.name = "";
+        loginScreenController.profileSO.day = "";
+        loginScreenController.profileSO.month = "";
+        loginScreenController.profileSO.year = "";
+        loginScreenController.profileSO.avatarPath = "";
+
         if (inputField.text.Length > 0)
             Next.gameObject.SetActive(false);
+        Back.gameObject.SetActive(true);
+
+
+        resendButton.onClick.AddListener(OnClickResendCode);
+
     }
 
+
+    /// <summary>
+    /// This function is called when the behaviour becomes disabled or inactive.
+    /// </summary>
+    void OnDisable()
+    {
+        resendButton.onClick.RemoveAllListeners();
+    }
 
     void Start()
     {
@@ -50,48 +74,31 @@ public class LoginPanelTwo : LoginPanelBase
 
         // Assign the resend button click event
         resendButton.onClick.AddListener(OnClickResendCode);
-    }
-
-    public void InputButton(int value)
-    {
-        if (currentIndex >= PinFields.Count)
-        {
-            return; // All fields are filled
-        }
-
-        // Update the current input field with the value
-        PinFields[currentIndex].text = value.ToString();
-
-        // Move to the next input field
-        currentIndex++;
-        if (currentIndex == PinFields.Count)
-        {
-            string otp = "";
-            foreach (var text in PinFields)
-            {
-                otp += text.text;
-            }
-            myWebRequest.VerifyOTP("/api/V3/auth/sign-in", "allvee", loginScreenController.profileSO.countryCode + loginScreenController.profileSO.mobileNumber, otp, OnSuccessCallback, OnFailedCallback);
-        }
+        Next.gameObject.SetActive(false);
     }
 
 
-    public void OnSuccessCallback(MkiddOOnVerificationSuccessModel result)
+    public async void OnSuccessCallback(MkiddOOnVerificationSuccessModel result)
     {
         if (result.status_code == 200)
         {
+            Next.gameObject.SetActive(false);
             resultText.text = "Success";
             resultText.color = successColor;
             resultText.gameObject.SetActive(true);
             resultText.gameObject.transform.DOScale(Vector3.one, 0.2f).SetAutoKill(true);
             FileProcessor fileProcessor = new();
+            UpdateUserData(result);
             fileProcessor.SaveJsonToFile(fileProcessor.userFilePath, JsonUtility.ToJson(result));
             PlayerPrefs.SetString("access_token", result.accessToken);
             PlayerPrefs.Save();
-            Next.gameObject.SetActive(true);
+
+            await Task.Delay(2000);
+            loginScreenController.OnClickNext();
         }
         else
         {
+            Next.gameObject.SetActive(false);
             resultText.text = "Invalid OTP, Try Again";
             resultText.color = failedColor;
             resultText.gameObject.SetActive(true);
@@ -99,7 +106,20 @@ public class LoginPanelTwo : LoginPanelBase
         }
     }
 
+    private void UpdateUserData(MkiddOOnVerificationSuccessModel result)
+    {
+        var dates = result.child_info[0].birth_date.Split('-');
 
+        loginScreenController.profileSO.id = result.uid;
+        loginScreenController.profileSO.child_id = result.child_info[0].child_id;
+
+        loginScreenController.profileSO.year = dates[0];
+        loginScreenController.profileSO.month = dates[1].StartsWith("0") == true ? dates[1][1..] : dates[1];
+        loginScreenController.profileSO.day = dates[2].StartsWith("0") == true ? dates[2][1..] : dates[2];
+
+        loginScreenController.profileSO.childName = result.child_info[0].name;
+        loginScreenController.profileSO.avatarPath = result.child_info[0].profile_path;
+    }
     public void OnFailedCallback(MyWebReqFailedCallback result)
     {
         resultText.text = result.message;
@@ -127,14 +147,28 @@ public class LoginPanelTwo : LoginPanelBase
 
         if (currentIndex == PinFields.Count)
         {
-            string otp = "";
+            otp = "";
             foreach (var text in PinFields)
             {
                 otp += text.text;
             }
-            myWebRequest.VerifyOTP("/api/V3/auth/sign-in", "allvee", loginScreenController.profileSO.countryCode + loginScreenController.profileSO.mobileNumber, otp, OnSuccessCallback, OnFailedCallback);
+
+            Next.gameObject.SetActive(true);
+        }
+        else
+        {
+            if (Next.gameObject.activeInHierarchy)
+                Next.gameObject.SetActive(true);
         }
     }
+
+
+
+    public void OnTapNext()
+    {
+        myWebRequest.VerifyOTP("/api/V3/auth/sign-in", loginScreenController.profileSO.countryCode + loginScreenController.profileSO.mobileNumber, otp, OnSuccessCallback, OnFailedCallback);
+    }
+
 
     public void ClearAllFields()
     {

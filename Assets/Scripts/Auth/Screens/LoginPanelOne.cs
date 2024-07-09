@@ -6,7 +6,6 @@ using UnityEngine.Diagnostics;
 using DG.Tweening;
 public class LoginPanelOne : LoginPanelBase
 {
-    public Button Back;
     public Button Next;
     public GameObject NextPanel;
 
@@ -44,7 +43,7 @@ public class LoginPanelOne : LoginPanelBase
         }
         myWebRequest = new();
         // Create a list to hold the dropdown options
-        List<TMP_Dropdown.OptionData> options = new List<TMP_Dropdown.OptionData>();
+        List<TMP_Dropdown.OptionData> options = new();
 
         // Iterate through the countryMobileCodes and create OptionData objects
         foreach (string code in Utility.CountryDetails.countryMobileCodes)
@@ -58,6 +57,8 @@ public class LoginPanelOne : LoginPanelBase
         numberDropdown1.AddOptions(options);
         numberDropdown1.value = 11;
         OnUpdateCountryCode(11);
+
+        Next.gameObject.SetActive(false);
     }
 
 
@@ -136,6 +137,7 @@ public class LoginPanelOne : LoginPanelBase
     {
         if (result.status_code == 200)
         {
+            Next.gameObject.SetActive(false);
             loginScreenController.OnClickNext();
         }
         else if (result.status_code == 402)

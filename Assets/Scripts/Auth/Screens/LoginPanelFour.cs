@@ -11,7 +11,7 @@ public class LoginPanelFour : LoginPanelBase
 {
 
     public Image avatar;
-    public GameObject button;
+    public GameObject back;
     public GameObject playBtn;
     public TMP_Text childName;
 
@@ -19,13 +19,11 @@ public class LoginPanelFour : LoginPanelBase
 
     void OnEnable()
     {
-        button.SetActive(!loginScreenController.profileSO.isSignUsingGoogle);
+        back.SetActive(!loginScreenController.profileSO.isSignUsingGoogle);
         playBtn.SetActive(loginScreenController.profileSO.isSignUsingGoogle);
         // Check if signed in using Google
         if (loginScreenController.profileSO.isSignUsingGoogle)
         {
-
-
             // Load avatar from the URI
             if (loginScreenController.profileSO.ImageURI != null)
             {

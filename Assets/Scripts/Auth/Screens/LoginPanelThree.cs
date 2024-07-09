@@ -3,6 +3,8 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using UnityEngine.Networking;
+using System.Collections;
 
 public class LoginPanelThree : LoginPanelBase
 {
@@ -31,16 +33,43 @@ public class LoginPanelThree : LoginPanelBase
 
     public List<Sprite> avatars;
 
+    /// <summary>
+    /// This function is called when the object becomes enabled and active.
+    /// </summary>
+    void OnEnable()
+    {
+        Back.gameObject.SetActive(true);
+    }
+
 
     void Start()
     {
         InitializeYearDropdown();
         DayDropdown.onValueChanged.AddListener(delegate { UpdateData(); });
-        DayDropdown1.onValueChanged.AddListener(delegate { UpdateData(); });
         MonthDropdown.onValueChanged.AddListener(delegate { UpdateDaysDropdown(); });
+        YearDropdown.onValueChanged.AddListener(delegate { UpdateDaysDropdown(); });
+
         YearDropdown.onValueChanged.AddListener(delegate { UpdateDaysDropdown(); });
         MonthDropdown1.onValueChanged.AddListener(delegate { UpdateDaysDropdown(); });
         YearDropdown1.onValueChanged.AddListener(delegate { UpdateDaysDropdown(); });
+
+        if (loginScreenController.profileSO.id != -1)
+        {
+
+            MyDebug.Log($"Name: {loginScreenController.profileSO.childName}");
+            MyDebug.Log($"Day: {loginScreenController.profileSO.day}");
+            MyDebug.Log($"Month: {loginScreenController.profileSO.month}");
+            MyDebug.Log($"Year: {loginScreenController.profileSO.year}");
+            MyDebug.Log($"Avatar Path: {loginScreenController.profileSO.avatarPath}");
+            nameField.text = loginScreenController.profileSO.childName;
+            Next.gameObject.SetActive(true);
+            StartCoroutine(LoadImageFromUrl(loginScreenController.profileSO.avatarPath));
+        }
+        else
+        {
+            Next.gameObject.SetActive(false);
+        }
+
         UpdateDaysDropdown();
     }
 
@@ -70,9 +99,20 @@ public class LoginPanelThree : LoginPanelBase
 
     void UpdateDaysDropdown()
     {
+        int dayVal = -1;
+        int monthVal = -1;
+        if (loginScreenController.profileSO.id != -1)
+        {
+            dayVal = int.Parse(loginScreenController.profileSO.day);
+            monthVal = int.Parse(loginScreenController.profileSO.month);
+        }
+
+
         int selectedYearIndex = (panel == 0) ? YearDropdown.value : YearDropdown1.value;
 
-        int selectedMonthIndex = (panel == 0) ? MonthDropdown.value : MonthDropdown1.value;
+
+        int selectedMonthIndex = monthVal == -1 ? (panel == 0) ? MonthDropdown.value : MonthDropdown1.value : monthVal;
+
         if (selectedMonthIndex == 0 || selectedYearIndex == 0) return;
 
         int selectedMonth = int.Parse((panel == 0) ? MonthDropdown.options[selectedMonthIndex].text : MonthDropdown1.options[selectedMonthIndex].text);
@@ -94,8 +134,16 @@ public class LoginPanelThree : LoginPanelBase
 
         DayDropdown.ClearOptions();
         DayDropdown1.ClearOptions();
+
         DayDropdown.AddOptions(days);
         DayDropdown1.AddOptions(days);
+
+        DayDropdown.value = dayVal;
+        DayDropdown1.value = dayVal;
+
+        MonthDropdown.value = monthVal;
+        MonthDropdown1.value = monthVal;
+
         AllVerification();
     }
 
@@ -153,5 +201,41 @@ public class LoginPanelThree : LoginPanelBase
     public void AllVerification()
     {
         Next.gameObject.SetActive(loginScreenController.profileSO.avatarPath != null && loginScreenController.profileSO.childName != null && loginScreenController.profileSO.day != null && loginScreenController.profileSO.month != null && loginScreenController.profileSO.year != null);
+    }
+
+
+    private IEnumerator LoadImageFromUrl(string url)
+    {
+        using UnityWebRequest uwr = UnityWebRequestTexture.GetTexture(url);
+        yield return uwr.SendWebRequest();
+
+        if (uwr.result == UnityWebRequest.Result.Success)
+        {
+            Texture2D texture = DownloadHandlerTexture.GetContent(uwr);
+            if (texture != null)
+            {
+                // Create a sprite from the texture
+                Rect rect = new(0, 0, 240, 240);
+                Vector2 pivot = new(0.5f, 0.5f);
+                Sprite sprite = Sprite.Create(texture, rect, pivot);
+
+                // Display the sprite in a UI Image and set to fill the avatar rect
+                ProfileImage.sprite = sprite;
+                ProfileImage1.sprite = sprite;
+                ProfileImage.type = Image.Type.Simple;
+                ProfileImage1.type = Image.Type.Simple;
+                ProfileImage.preserveAspect = false;
+                ProfileImage1.preserveAspect = false;
+                loginScreenController.profileSO.childImageSprite = sprite;
+            }
+            else
+            {
+                Debug.LogError("Failed to load texture from " + url);
+            }
+        }
+        else
+        {
+            Debug.LogError("UnityWebRequest error: " + uwr.error);
+        }
     }
 }
