@@ -34,6 +34,13 @@ public class FlashCardHolder : MonoBehaviour
     }
 
 
+
+    internal void InitailizedCard()
+    {
+        flashCardFront.Initialize();
+        flashCardBack.Initialize();
+    }
+
     public void OnFlashInitailizedComplete()
     {
         //Todo: Play Audio
@@ -52,4 +59,5 @@ public class FlashCardHolder : MonoBehaviour
         OnFlashOpenedCompleteEvent?.Invoke();
 
     }
+
 }

@@ -34,13 +34,17 @@ public class FlashCard : MonoBehaviour
     }
 
 
+    internal void Initialize()
+    {
+        spriteRenderer.sprite = isBack ? backFace : frontFace;
+    }
+
     /// <summary>
     /// Start is called on the frame when a script is enabled just before
     /// any of the Update methods is called the first time.
     /// </summary>
     void Start()
     {
-        spriteRenderer.sprite = backFace;
         coroutineAllowed = true;
     }
 
@@ -97,4 +101,5 @@ public class FlashCard : MonoBehaviour
         StartCoroutine(InitializeRotate90To0());
         //Todo: now flash the card
     }
+
 }

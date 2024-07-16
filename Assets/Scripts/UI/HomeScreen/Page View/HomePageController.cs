@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class HomePageController : MonoBehaviour
 {
     public Image header;
+    public Image background;
+    public List<Sprite> pagesImages = new();
     public List<GameObject> pages = new();
     public List<Image> ButtomOutlines = new();
     public List<int> headerXOffset = new();
@@ -23,6 +25,9 @@ public class HomePageController : MonoBehaviour
         }
         pages[pageIndex].SetActive(true);
         ButtomOutlines[pageIndex].enabled = true;
+
+        background.sprite = (pageIndex == pages.Count - 1) ? pagesImages[1] : pagesImages[0];
+
         // Move the header to the selected button position
         MoveHeaderToButton(pageIndex);
     }
