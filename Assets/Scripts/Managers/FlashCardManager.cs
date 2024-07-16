@@ -9,7 +9,7 @@ public class FlashCardManager : LevelBaseManager
 {
     public List<FlashCardHolder> flashCards = new();
     public List<Sprite> flashcardSprites = new();
-    public List<Sprite> backGGround = new();
+    public List<Sprite> backGroundSprites = new();
     public Image background;
     public FlashCardAudioPlayer flashCardAudioPlayer;
     public GameObject flashPrefab;
@@ -24,8 +24,9 @@ public class FlashCardManager : LevelBaseManager
         string flashCardFilePath = Application.persistentDataPath + $"/googli/{panelDataSO.gamePanelData.gameTypeName}/{panelDataSO.contentTypeFolderName}/{panelDataSO.contentTypeFolderName}";
 
         string prefix = (panelDataSO.gameName == "shoroborno") ? "BSB" : (panelDataSO.gameName == "banjonborno") ? "BNG" : "C_";
-        Sprite frontCardImage = (panelDataSO.gameName == "banjonborno") ? flashcardSprites[0] : (panelDataSO.gameName == "shoroborno") ? flashcardSprites[2] : flashcardSprites[4];
-        Sprite backCardImage = (panelDataSO.gameName == "banjonborno") ? flashcardSprites[1] : (panelDataSO.gameName == "shoroborno") ? flashcardSprites[3] : flashcardSprites[5];
+        Sprite backCardImage = (panelDataSO.gameName == "banjonborno") ? flashcardSprites[0] : (panelDataSO.gameName == "shoroborno") ? flashcardSprites[2] : flashcardSprites[4];
+        Sprite frontCardImage = (panelDataSO.gameName == "banjonborno") ? flashcardSprites[1] : (panelDataSO.gameName == "shoroborno") ? flashcardSprites[3] : flashcardSprites[5];
+        background.sprite = (panelDataSO.gameName == "banjonborno") ? backGroundSprites[0] : (panelDataSO.gameName == "shoroborno") ? backGroundSprites[1] : backGroundSprites[2];
 
         List<string> allImages = FileProcessor.GetSortedImageFiles(flashCardFilePath);
         List<string> flashCardAlphabetsimages = new();
