@@ -2,46 +2,40 @@
     "m_SelectedDeviceId": "V4EMOROZPBWW6LA6",
     "m_SelectedProcess": {
         "deviceId": "V4EMOROZPBWW6LA6",
-        "name": "com.MoMagic.Dhadharu",
-        "processId": 12513,
+        "name": "com.DefaultCompany.EnglishTracingBook",
+        "processId": 17883,
         "exited": false
     },
     "m_SelectedPriority": 0,
     "m_KnownProcessesForSerialization": [
         {
             "deviceId": "V4EMOROZPBWW6LA6",
-            "name": "com.mi.android.globallauncher",
-            "processId": 2835,
-            "exited": false
-        },
-        {
-            "deviceId": "V4EMOROZPBWW6LA6",
-            "name": "com.MoMagic.Dhadharu",
-            "processId": 7390,
+            "name": "com.MoMagic.mkiddogoogli",
+            "processId": 22548,
             "exited": true
         },
         {
             "deviceId": "V4EMOROZPBWW6LA6",
-            "name": "com.MoMagic.Dhadharu",
-            "processId": 8979,
+            "name": "com.MoMagic.mkiddogoogli",
+            "processId": 23207,
             "exited": true
         },
         {
             "deviceId": "V4EMOROZPBWW6LA6",
-            "name": "com.MoMagic.Dhadharu",
-            "processId": 9389,
+            "name": "com.MoMagic.mkiddogoogli",
+            "processId": 27240,
             "exited": true
         },
         {
             "deviceId": "V4EMOROZPBWW6LA6",
-            "name": "com.MoMagic.Dhadharu",
-            "processId": 11223,
+            "name": "com.MoMagic.mkiddogoogli",
+            "processId": 27836,
             "exited": true
         },
         {
             "deviceId": "V4EMOROZPBWW6LA6",
-            "name": "com.MoMagic.Dhadharu",
-            "processId": 12513,
+            "name": "com.DefaultCompany.EnglishTracingBook",
+            "processId": 17883,
             "exited": false
         }
     ],
@@ -99,7 +93,7 @@
         "AutoCapture": true
     },
     "m_FilterOptions": {
-        "m_Filter": "htt",
+        "m_Filter": "",
         "m_UseRegularExpressions": false,
         "m_MatchCase": false
     },
