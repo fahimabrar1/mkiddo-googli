@@ -2,52 +2,40 @@
     "m_SelectedDeviceId": "V4EMOROZPBWW6LA6",
     "m_SelectedProcess": {
         "deviceId": "V4EMOROZPBWW6LA6",
-        "name": "com.MoMagic.ApppEKhori",
-        "processId": 21222,
+        "name": "com.momagic.appekhori",
+        "processId": 16040,
         "exited": false
     },
     "m_SelectedPriority": 0,
     "m_KnownProcessesForSerialization": [
         {
             "deviceId": "V4EMOROZPBWW6LA6",
-            "name": "com.mi.android.globallauncher",
-            "processId": 2835,
-            "exited": false
-        },
-        {
-            "deviceId": "V4EMOROZPBWW6LA6",
-            "name": "com.google.android.gms.ui",
-            "processId": 22196,
-            "exited": false
-        },
-        {
-            "deviceId": "V4EMOROZPBWW6LA6",
-            "name": "com.MoMagic.ApppEKhori",
-            "processId": 12293,
+            "name": "com.MoMagic.mkiddogoogli",
+            "processId": 27240,
             "exited": true
         },
         {
             "deviceId": "V4EMOROZPBWW6LA6",
-            "name": "com.MoMagic.ApppEKhori",
-            "processId": 13758,
+            "name": "com.MoMagic.mkiddogoogli",
+            "processId": 27836,
             "exited": true
         },
         {
             "deviceId": "V4EMOROZPBWW6LA6",
-            "name": "com.MoMagic.ApppEKhori",
-            "processId": 17143,
+            "name": "com.DefaultCompany.EnglishTracingBook",
+            "processId": 17883,
             "exited": true
         },
         {
             "deviceId": "V4EMOROZPBWW6LA6",
-            "name": "com.MoMagic.ApppEKhori",
-            "processId": 20820,
+            "name": "com.momagic.appekhori",
+            "processId": 32684,
             "exited": true
         },
         {
             "deviceId": "V4EMOROZPBWW6LA6",
-            "name": "com.MoMagic.ApppEKhori",
-            "processId": 21222,
+            "name": "com.momagic.appekhori",
+            "processId": 16040,
             "exited": false
         }
     ],
