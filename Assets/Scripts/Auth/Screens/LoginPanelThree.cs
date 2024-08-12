@@ -3,6 +3,9 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using System.IO;
+using UnityEngine.Networking;
+using System.Collections;
 
 public class LoginPanelThree : LoginPanelBase
 {
@@ -13,6 +16,8 @@ public class LoginPanelThree : LoginPanelBase
     [Header("Panel One")]
     public Button ProfilePictureButton;
     public Image ProfileImage;
+    public GameObject humanImage;
+
     public TMP_InputField nameField;
 
     public TMP_Dropdown DayDropdown;
@@ -145,13 +150,123 @@ public class LoginPanelThree : LoginPanelBase
     {
         ProfileImage.sprite = avatars[index];
         ProfileImage1.sprite = avatars[index];
-        loginScreenController.profileSO.avatarIndex = index.ToString();
+        // loginScreenController.profileSO.avatarIndex = index.ToString();
     }
 
 
 
+    // public void AllVerification()
+    // {
+    //     Next.gameObject.SetActive(loginScreenController.profileSO.avatarIndex != null && loginScreenController.profileSO.childName != null && loginScreenController.profileSO.day != null && loginScreenController.profileSO.month != null && loginScreenController.profileSO.year != null);
+    // }
+
+
     public void AllVerification()
     {
-        Next.gameObject.SetActive(loginScreenController.profileSO.avatarIndex != null && loginScreenController.profileSO.childName != null && loginScreenController.profileSO.day != null && loginScreenController.profileSO.month != null && loginScreenController.profileSO.year != null);
+        Next.interactable = loginScreenController.profileSO.avatarPath.Length > 0 && loginScreenController.profileSO.childName.Length > 0 && loginScreenController.profileSO.day.Length > 0 && loginScreenController.profileSO.month.Length > 0 && loginScreenController.profileSO.year.Length > 0;
+    }
+
+
+
+    public void PickImageFromGallery()
+    {
+        NativeGallery.Permission permission = NativeGallery.GetImageFromGallery((path) =>
+        {
+            if (path != null)
+            {
+                // Path points to a valid image file
+                StartCoroutine(LoadImage(path));
+            }
+        });
+
+        Debug.Log("Permission result: " + permission);
+    }
+
+
+
+    private IEnumerator LoadImage(string path)
+    {
+        string url = "file://" + path;
+
+        using UnityWebRequest uwr = UnityWebRequestTexture.GetTexture(url);
+        yield return uwr.SendWebRequest();
+
+        if (uwr.result == UnityWebRequest.Result.Success)
+        {
+            Texture2D texture = DownloadHandlerTexture.GetContent(uwr);
+            if (texture != null)
+            {
+                // Create a sprite from the texture
+                Rect rect = new Rect(0, 0, texture.width, texture.height);
+                Vector2 pivot = new Vector2(0.5f, 0.5f);
+                Sprite sprite = Sprite.Create(texture, rect, pivot);
+
+                // Display the sprite in a UI Image and set to fill the avatar rect
+                ProfileImage.sprite = sprite;
+                ProfileImage.type = Image.Type.Simple;
+                ProfileImage.preserveAspect = false;
+                loginScreenController.profileSO.childImageSprite = sprite;
+                // Save the texture to the app's directory
+                SaveTextureToFile(texture, "profile_picture.png");
+            }
+            else
+            {
+                Debug.LogError("Failed to load texture from " + path);
+            }
+        }
+        else
+        {
+            Debug.LogError("UnityWebRequest error: " + uwr.error);
+        }
+    }
+
+
+
+    private IEnumerator LoadImageFromUrl(string url)
+    {
+        using UnityWebRequest uwr = UnityWebRequestTexture.GetTexture(url);
+        yield return uwr.SendWebRequest();
+
+        if (uwr.result == UnityWebRequest.Result.Success)
+        {
+            Texture2D texture = DownloadHandlerTexture.GetContent(uwr);
+            if (texture != null)
+            {
+                // Create a sprite from the texture
+                Rect rect = new(0, 0, 240, 240);
+                Vector2 pivot = new(0.5f, 0.5f);
+                Sprite sprite = Sprite.Create(texture, rect, pivot);
+
+                // Display the sprite in a UI Image and set to fill the avatar rect
+                ProfileImage.sprite = sprite;
+                ProfileImage.type = Image.Type.Simple;
+                ProfileImage.preserveAspect = false;
+                loginScreenController.profileSO.childImageSprite = sprite;
+                humanImage.SetActive(false);
+            }
+            else
+            {
+                Debug.LogError("Failed to load texture from " + url);
+            }
+        }
+        else
+        {
+            Debug.LogError("UnityWebRequest error: " + uwr.error);
+        }
+    }
+
+
+    private void SaveTextureToFile(Texture2D texture, string fileName)
+    {
+        // Encode texture to PNG
+        byte[] bytes = texture.EncodeToPNG();
+
+        // Get the path to save the file
+        string path = Path.Combine(Application.persistentDataPath, fileName);
+
+        // Save the encoded PNG to the specified path
+        File.WriteAllBytes(path, bytes);
+
+        Debug.Log("Saved image to: " + path);
     }
 }
