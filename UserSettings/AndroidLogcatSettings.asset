@@ -1,9 +1,9 @@
 {
     "m_SelectedDeviceId": "V4EMOROZPBWW6LA6",
     "m_SelectedProcess": {
-        "deviceId": "",
-        "name": "",
-        "processId": 0,
+        "deviceId": "V4EMOROZPBWW6LA6",
+        "name": "com.momagic.akibuki",
+        "processId": 16991,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -36,6 +36,24 @@
             "deviceId": "V4EMOROZPBWW6LA6",
             "name": "com.mi.android.globallauncher",
             "processId": 2955,
+            "exited": false
+        },
+        {
+            "deviceId": "V4EMOROZPBWW6LA6",
+            "name": "com.facebook.katana",
+            "processId": 15010,
+            "exited": false
+        },
+        {
+            "deviceId": "V4EMOROZPBWW6LA6",
+            "name": "com.momagic.akibuki",
+            "processId": 13186,
+            "exited": false
+        },
+        {
+            "deviceId": "V4EMOROZPBWW6LA6",
+            "name": "com.momagic.akibuki",
+            "processId": 16991,
             "exited": false
         }
     ],
