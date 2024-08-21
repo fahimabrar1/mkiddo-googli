@@ -38,6 +38,11 @@ public class LoginPanelFour : LoginPanelBase
             {
                 StartCoroutine(LoadImageFromAppDir(savedAvatarPath));
             }
+            else
+            {
+                StartCoroutine(LoadImageFromUrl(savedAvatarPath));
+
+            }
         }
 
         // Set the child's name
@@ -75,7 +80,7 @@ public class LoginPanelFour : LoginPanelBase
                     avatar.sprite = sprite;
                     avatar.type = Image.Type.Simple;
                     avatar.SetNativeSize();
-                    loginScreenController.FitImageWithinBounds(avatar, 266, 266);
+                    loginScreenController.FitImageWithinBounds(avatar, 268, 266);
                 }
                 else
                 {
@@ -109,6 +114,8 @@ public class LoginPanelFour : LoginPanelBase
                 avatar.type = Image.Type.Simple;
                 avatar.preserveAspect = false;
                 avatar.SetNativeSize();
+                loginScreenController.FitImageWithinBounds(avatar, 268, 266);
+
             }
             else
             {
@@ -119,5 +126,52 @@ public class LoginPanelFour : LoginPanelBase
         {
             Debug.LogError("UnityWebRequest error: " + uwr.error);
         }
+    }
+
+
+    private IEnumerator LoadImageFromUrl(string url)
+    {
+        using UnityWebRequest uwr = UnityWebRequestTexture.GetTexture(url);
+        yield return uwr.SendWebRequest();
+
+        if (uwr.result == UnityWebRequest.Result.Success)
+        {
+            Texture2D texture = DownloadHandlerTexture.GetContent(uwr);
+            if (texture != null)
+            {
+                // Create a sprite from the texture
+                Rect rect = new(0, 0, texture.width, texture.height);
+                Vector2 pivot = new(0.5f, 0.5f);
+                Sprite sprite = Sprite.Create(texture, rect, pivot);
+
+                // Display the sprite in a UI Image and set to fill the avatar rect
+                // Display the sprite in a UI Image and set to fill the avatar rect
+                avatar.sprite = sprite;
+                avatar.type = Image.Type.Simple;
+                avatar.preserveAspect = false;
+                avatar.SetNativeSize();
+                loginScreenController.FitImageWithinBounds(avatar, 268, 265);
+            }
+            else
+            {
+                Debug.LogError("Failed to load texture from " + url);
+            }
+        }
+        else
+        {
+            Debug.LogError("UnityWebRequest error: " + uwr.error);
+        }
+    }
+
+
+
+    public void OnClickNext()
+    {
+        loginScreenController.OnClickNext();
+    }
+
+    public void OnClickBack()
+    {
+        loginScreenController.OnClickBack();
     }
 }

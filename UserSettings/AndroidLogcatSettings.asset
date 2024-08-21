@@ -3,7 +3,7 @@
     "m_SelectedProcess": {
         "deviceId": "V4EMOROZPBWW6LA6",
         "name": "com.momagic.akibuki",
-        "processId": 27124,
+        "processId": 23137,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -156,6 +156,12 @@
             "deviceId": "V4EMOROZPBWW6LA6",
             "name": "com.momagic.akibuki",
             "processId": 27124,
+            "exited": false
+        },
+        {
+            "deviceId": "V4EMOROZPBWW6LA6",
+            "name": "com.momagic.akibuki",
+            "processId": 23137,
             "exited": false
         }
     ],

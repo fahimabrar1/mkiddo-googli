@@ -15,7 +15,7 @@ public class LoginScreenController : MonoBehaviour
     public ProfileSO profileSO;
 
     public Button play;
-    public List<GameObject> panels;
+    public List<LoginScreenModel> panels;
 
 
     int loggedIn = 0;
@@ -242,6 +242,26 @@ public class LoginScreenController : MonoBehaviour
         rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
         rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
         rectTransform.pivot = new Vector2(0.5f, 0.5f);
+    }
+
+
+
+
+    /// <summary>
+    /// Update is called every frame, if the MonoBehaviour is enabled.
+    /// </summary>
+    void Update()
+    {
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            if (Input.GetKeyUp(KeyCode.Escape))
+            {
+                // Insert Code Here (I.E. Load Scene, Etc)
+                // OR Application.Quit();
+                OnClickBack();
+                return;
+            }
+        }
     }
 
 }

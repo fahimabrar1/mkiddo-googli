@@ -51,12 +51,9 @@ public class LoginPanelThree : LoginPanelBase
         MonthDropdown1.onValueChanged.AddListener(delegate { UpdateDaysDropdown(); });
         YearDropdown1.onValueChanged.AddListener(delegate { UpdateDaysDropdown(); });
 
-        UpdateDaysDropdown();
 
         ProfilePictureButton1.onClick.AddListener(delegate { PickImageFromGallery(); });
-        // Ensure the image fits within the 266x266 size constraint
-        loginScreenController.FitImageWithinBounds(ProfileImage, 266, 266);
-        loginScreenController.FitImageWithinBounds(ProfileImage1, 266, 266);
+
     }
 
     private void UpdateAllDropDowns()
@@ -107,6 +104,27 @@ public class LoginPanelThree : LoginPanelBase
         if (loginScreenController.profileSO.month != null || loginScreenController.profileSO.year != null)
         {
             UpdateAllDropDowns();
+        }
+        else
+        {
+            UpdateDaysDropdown();
+        }
+
+        if (loginScreenController.profileSO.childName.Length > 0)
+        {
+            nameField.text = loginScreenController.profileSO.childName;
+            nameField1.text = loginScreenController.profileSO.childName;
+        }
+
+        if (loginScreenController.profileSO.avatarPath.Length > 0)
+        {
+            StartCoroutine(LoadImageFromUrl(loginScreenController.profileSO.avatarPath));
+        }
+        else
+        {
+            // Ensure the image fits within the 266x266 size constraint
+            loginScreenController.FitImageWithinBounds(ProfileImage, 268, 266);
+            loginScreenController.FitImageWithinBounds(ProfileImage1, 268, 266);
         }
     }
 
@@ -161,6 +179,17 @@ public class LoginPanelThree : LoginPanelBase
 
     }
 
+
+
+    public void OnClickNext()
+    {
+        loginScreenController.OnClickNext();
+    }
+
+    public void OnClickBack()
+    {
+        loginScreenController.OnClickBack();
+    }
     public void OnUpdateName(string val)
     {
         nameField.text = val;
@@ -211,8 +240,8 @@ public class LoginPanelThree : LoginPanelBase
         ProfileImage1.sprite = avatars[index];
 
         // Ensure the image fits within the 266x266 size constraint
-        loginScreenController.FitImageWithinBounds(ProfileImage, 266, 266);
-        loginScreenController.FitImageWithinBounds(ProfileImage1, 266, 266);
+        loginScreenController.FitImageWithinBounds(ProfileImage, 268, 266);
+        loginScreenController.FitImageWithinBounds(ProfileImage1, 268, 266);
 
         loginScreenController.profileSO.childImageSprite = avatars[index];
         AllVerification();
@@ -280,8 +309,8 @@ public class LoginPanelThree : LoginPanelBase
                 ProfileImage1.SetNativeSize();
 
                 // Ensure the image fits within the 266x266 size constraint
-                loginScreenController.FitImageWithinBounds(ProfileImage, 266, 266);
-                loginScreenController.FitImageWithinBounds(ProfileImage1, 266, 266);
+                loginScreenController.FitImageWithinBounds(ProfileImage, 268, 266);
+                loginScreenController.FitImageWithinBounds(ProfileImage1, 268, 266);
 
                 loginScreenController.profileSO.childImageSprite = sprite;
                 loginScreenController.profileSO.avatarPath = url;
@@ -316,7 +345,7 @@ public class LoginPanelThree : LoginPanelBase
             if (texture != null)
             {
                 // Create a sprite from the texture
-                Rect rect = new(0, 0, 240, 240);
+                Rect rect = new(0, 0, texture.width, texture.height);
                 Vector2 pivot = new(0.5f, 0.5f);
                 Sprite sprite = Sprite.Create(texture, rect, pivot);
 
@@ -335,7 +364,6 @@ public class LoginPanelThree : LoginPanelBase
 
                 loginScreenController.profileSO.childImageSprite = sprite;
                 loginScreenController.profileSO.avatarPath = url;
-                humanImage.SetActive(false);
             }
             else
             {
