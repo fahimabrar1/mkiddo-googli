@@ -1,19 +1,13 @@
 {
     "m_SelectedDeviceId": "V4EMOROZPBWW6LA6",
     "m_SelectedProcess": {
-        "deviceId": "",
-        "name": "",
-        "processId": 0,
+        "deviceId": "V4EMOROZPBWW6LA6",
+        "name": "com.momagic.akibuki",
+        "processId": 22496,
         "exited": false
     },
     "m_SelectedPriority": 0,
     "m_KnownProcessesForSerialization": [
-        {
-            "deviceId": "V4EMOROZPBWW6LA6",
-            "name": "com.MoMagic.mkiddogoogli",
-            "processId": 27836,
-            "exited": true
-        },
         {
             "deviceId": "V4EMOROZPBWW6LA6",
             "name": "com.DefaultCompany.EnglishTracingBook",
@@ -36,6 +30,60 @@
             "deviceId": "V4EMOROZPBWW6LA6",
             "name": "com.mi.android.globallauncher",
             "processId": 2955,
+            "exited": true
+        },
+        {
+            "deviceId": "V4EMOROZPBWW6LA6",
+            "name": "com.mi.android.globallauncher",
+            "processId": 12794,
+            "exited": false
+        },
+        {
+            "deviceId": "V4EMOROZPBWW6LA6",
+            "name": "com.momagic.akibuki",
+            "processId": 24987,
+            "exited": false
+        },
+        {
+            "deviceId": "V4EMOROZPBWW6LA6",
+            "name": "com.momagic.akibuki",
+            "processId": 6920,
+            "exited": false
+        },
+        {
+            "deviceId": "V4EMOROZPBWW6LA6",
+            "name": "com.momagic.akibuki",
+            "processId": 11023,
+            "exited": false
+        },
+        {
+            "deviceId": "V4EMOROZPBWW6LA6",
+            "name": "com.momagic.akibuki",
+            "processId": 11749,
+            "exited": false
+        },
+        {
+            "deviceId": "V4EMOROZPBWW6LA6",
+            "name": "com.momagic.akibuki",
+            "processId": 16556,
+            "exited": false
+        },
+        {
+            "deviceId": "V4EMOROZPBWW6LA6",
+            "name": "com.momagic.akibuki",
+            "processId": 21104,
+            "exited": false
+        },
+        {
+            "deviceId": "V4EMOROZPBWW6LA6",
+            "name": "com.momagic.akibuki",
+            "processId": 21880,
+            "exited": false
+        },
+        {
+            "deviceId": "V4EMOROZPBWW6LA6",
+            "name": "com.momagic.akibuki",
+            "processId": 22496,
             "exited": false
         }
     ],

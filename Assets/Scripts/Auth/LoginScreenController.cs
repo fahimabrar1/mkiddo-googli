@@ -87,7 +87,6 @@ public class LoginScreenController : MonoBehaviour
         SceneManager.LoadSceneAsync(1);
     }
 
-    public string webClientId = "794416134528-8l6qfs5vg5om3v8q9c9reqel25ovj2ck.apps.googleusercontent.com";
 
     private GoogleSignInConfiguration configuration;
 
@@ -98,15 +97,16 @@ public class LoginScreenController : MonoBehaviour
         configuration = new GoogleSignInConfiguration
         {
             WebClientId = webClientId,
-            RequestIdToken = true
+            RequestIdToken = true,
+            RequestProfile = true,
+            RequestEmail = true,
         };
     }
 
     public void OnSignIn()
     {
         GoogleSignIn.Configuration = configuration;
-        GoogleSignIn.Configuration.RequestIdToken = true;
-        AddStatusText("Calling SignIn");
+        MyDebug.Log("Calling SignIn");
         GoogleSignIn.DefaultInstance.SignIn().ContinueWith(
           OnAuthenticationFinished, TaskScheduler.Default);
     }
@@ -114,12 +114,14 @@ public class LoginScreenController : MonoBehaviour
     public void OnSignOut()
     {
         AddStatusText("Calling SignOut");
+        MyDebug.Log("Calling SignOut");
         GoogleSignIn.DefaultInstance.SignOut();
     }
 
     public void OnDisconnect()
     {
         AddStatusText("Calling Disconnect");
+        MyDebug.Log("Calling Disconnect");
         GoogleSignIn.DefaultInstance.Disconnect();
     }
 
