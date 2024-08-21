@@ -71,10 +71,11 @@ public class LoginPanelFour : LoginPanelBase
                     Sprite sprite = Sprite.Create(texture, rect, pivot);
 
                     // Display the sprite in a UI Image and set to fill the avatar rect
+
                     avatar.sprite = sprite;
                     avatar.type = Image.Type.Simple;
-                    avatar.preserveAspect = false;
                     avatar.SetNativeSize();
+                    loginScreenController.FitImageWithinBounds(avatar, 266, 266);
                 }
                 else
                 {

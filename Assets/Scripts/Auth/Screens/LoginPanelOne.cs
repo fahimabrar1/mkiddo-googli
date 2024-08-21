@@ -36,9 +36,8 @@ public class LoginPanelOne : LoginPanelBase
     /// Start is called on the frame when a script is enabled just before
     /// any of the Update methods is called the first time.
     /// </summary>
-    void Start()
+    void OnEnable()
     {
-
 
         if (PlayerPrefs.GetInt("logged_in", 0) == 1)
         {
@@ -62,6 +61,13 @@ public class LoginPanelOne : LoginPanelBase
         OnUpdateCountryCode(11);
 
         Next.gameObject.SetActive(false);
+
+        loginScreenController.profileSO.day = "";
+        loginScreenController.profileSO.mobileNumber = "";
+        loginScreenController.profileSO.month = "";
+        loginScreenController.profileSO.year = "";
+        loginScreenController.profileSO.avatarPath = "";
+        loginScreenController.profileSO.childName = "";
     }
 
 

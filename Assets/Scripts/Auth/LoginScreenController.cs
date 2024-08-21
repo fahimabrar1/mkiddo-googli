@@ -87,6 +87,7 @@ public class LoginScreenController : MonoBehaviour
         SceneManager.LoadSceneAsync(1);
     }
 
+    public string webClientId = "584952533235-hn2qg6lmd2mav8gunb4815lpq7rl9881.apps.googleusercontent.com";
 
     private GoogleSignInConfiguration configuration;
 
@@ -218,4 +219,29 @@ public class LoginScreenController : MonoBehaviour
         MyDebug.Log($"Google: {text}");
 
     }
+
+
+
+    public void FitImageWithinBounds(Image image, float maxWidth, float maxHeight)
+    {
+        RectTransform rectTransform = image.rectTransform;
+
+        // Get the sprite's original size
+        float originalWidth = image.sprite.rect.width;
+        float originalHeight = image.sprite.rect.height;
+
+        // Calculate the scale factor to fit within the max width and height
+        float widthRatio = maxWidth / originalWidth;
+        float heightRatio = maxHeight / originalHeight;
+        float scaleFactor = Mathf.Max(widthRatio, heightRatio);
+
+        // Apply the scale to the rect transform
+        rectTransform.sizeDelta = new Vector2(originalWidth * scaleFactor, originalHeight * scaleFactor);
+        // Reset the position, anchor, and pivot to ensure the image stays centered
+        rectTransform.anchoredPosition = Vector2.zero;
+        rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
+        rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
+        rectTransform.pivot = new Vector2(0.5f, 0.5f);
+    }
+
 }
