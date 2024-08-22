@@ -9,16 +9,17 @@ using System.Threading.Tasks;
 using System.Collections;
 public class LoginPanelOne : LoginPanelBase
 {
-    public Button Back;
     public Button Next;
     public GameObject NextPanel;
+
+    public Sprite InputField1;
+    public Sprite InputField2;
+    public Image inputImage;
 
     public List<GameObject> panels;
 
     [Header("Panel One")]
-    public TMP_Dropdown numberDropdown;
     public int numberDropdownIndex = 0;
-    public Button TypeHereButton;
     public Button SignInWithGoogle;
     [Header("Panel Two")]
 
@@ -35,9 +36,8 @@ public class LoginPanelOne : LoginPanelBase
     /// Start is called on the frame when a script is enabled just before
     /// any of the Update methods is called the first time.
     /// </summary>
-    void Start()
+    void OnEnable()
     {
-
 
         if (PlayerPrefs.GetInt("logged_in", 0) == 1)
         {
@@ -45,7 +45,7 @@ public class LoginPanelOne : LoginPanelBase
         }
         myWebRequest = new();
         // Create a list to hold the dropdown options
-        List<TMP_Dropdown.OptionData> options = new List<TMP_Dropdown.OptionData>();
+        List<TMP_Dropdown.OptionData> options = new();
 
         // Iterate through the countryMobileCodes and create OptionData objects
         foreach (string code in Utility.CountryDetails.countryMobileCodes)
@@ -56,42 +56,48 @@ public class LoginPanelOne : LoginPanelBase
 
 
         // Add the options to the dropdown
-        numberDropdown.AddOptions(options);
         numberDropdown1.AddOptions(options);
-        numberDropdown.value = 11;
         numberDropdown1.value = 11;
         OnUpdateCountryCode(11);
+
+        Next.gameObject.SetActive(false);
+
+        loginScreenController.profileSO.day = "";
+        loginScreenController.profileSO.mobileNumber = "";
+        loginScreenController.profileSO.month = "";
+        loginScreenController.profileSO.year = "";
+        loginScreenController.profileSO.avatarPath = "";
+        loginScreenController.profileSO.childName = "";
     }
 
 
-    public void OnTapDialerButton(int num)
-    {
-
-        if (numberText.text.Length <= 10)
-        {
-            numberText.text += num.ToString();
-            loginScreenController.profileSO.mobileNumber = numberText.text;
-            textLimitText.text = numberText.text.Length + "/10";
-            Next.gameObject.SetActive(true);
-        }
-
-    }
     public void OnTapDialerButton(string num)
     {
-        Debug.Log(num);
+        MyDebug.Log(num);
+
+        if (num.Length > 0 && num[0] == '0')
+        {
+            numberText.text = "";
+            textLimitText.text = "0/10";
+            return;
+        }
         if (numberText.text.Length <= 10 && num.Length > 0)
         {
             numberText.text = num.ToString();
             loginScreenController.profileSO.mobileNumber = numberText.text;
             textLimitText.text = numberText.text.Length + "/10";
-            Next.gameObject.SetActive(true);
+            if (numberText.text.Length < 10)
+            {
+                inputImage.sprite = InputField1;
+                Next.gameObject.SetActive(false);
+            }
+            else
+            {
+                inputImage.sprite = InputField2;
+                Next.gameObject.SetActive(true);
+            }
         }
-        else if (num.Length == 0)
-        {
-            loginScreenController.profileSO.mobileNumber = "";
-            textLimitText.text = "0/10";
-            Next.gameObject.SetActive(false);
-        }
+
     }
 
     public void OnTapNumberPanel()
@@ -140,9 +146,8 @@ public class LoginPanelOne : LoginPanelBase
     {
         if (result.status_code == 200)
         {
-
-            NextPanel.SetActive(true);
-            gameObject.SetActive(false);
+            Next.gameObject.SetActive(false);
+            loginScreenController.OnClickNext();
         }
         else if (result.status_code == 402)
         {
@@ -162,7 +167,6 @@ public class LoginPanelOne : LoginPanelBase
         warningText.gameObject.transform.DOScale(Vector3.one, 0.2f).SetAutoKill(true);
         Next.gameObject.SetActive(false);
     }
-
 
     #region Google
 
