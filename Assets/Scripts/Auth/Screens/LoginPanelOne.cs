@@ -71,6 +71,21 @@ public class LoginPanelOne : LoginPanelBase
     }
 
 
+
+    public void OnTapDialerButton(int num)
+    {
+
+        if (numberText.text.Length <= 10)
+        {
+            numberText.text += num.ToString();
+            loginScreenController.profileSO.mobileNumber = numberText.text;
+            textLimitText.text = numberText.text.Length + "/10";
+            Next.gameObject.SetActive(true);
+        }
+
+    }
+
+
     public void OnTapDialerButton(string num)
     {
         MyDebug.Log(num);
