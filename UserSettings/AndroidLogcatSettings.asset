@@ -1,9 +1,9 @@
 {
     "m_SelectedDeviceId": "V4EMOROZPBWW6LA6",
     "m_SelectedProcess": {
-        "deviceId": "V4EMOROZPBWW6LA6",
-        "name": "com.momagic.akibuki",
-        "processId": 23137,
+        "deviceId": "",
+        "name": "",
+        "processId": 0,
         "exited": false
     },
     "m_SelectedPriority": 0,
