@@ -1,10 +1,6 @@
-using System.IO;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
-using System;
-using IndieStudio.EnglishTracingBook.Game;
+
 
 public class HomeGridPanelAkibuki : MonoBehaviour
 {
@@ -18,7 +14,7 @@ public class HomeGridPanelAkibuki : MonoBehaviour
 
     public void OnClickPanel()
     {
-        akibukiHomeController.OnClickPanel(ID);
+        akibukiHomeController.OnClickSubPanel(ID);
     }
 }
 
