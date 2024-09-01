@@ -12,24 +12,36 @@ namespace IndieStudio.DrawingAndColoring.Logic
 {
 	public class SceneStartup : MonoBehaviour
 	{
-			// Use this for initialization
-			void Start ()
-			{
-					ShowAd ();
-			}
+		// Use this for initialization
+		void Start()
+		{
+			ShowAd();
+		}
 
-			public void ShowAd ()
+		public void ShowAd()
+		{
+			if (SceneManager.GetActiveScene().name == "Album")
 			{
-					if (SceneManager.GetActiveScene().name == "Album") {
-						AdsManager.instance.ShowAdvertisment (AdPackage.AdEvent.Event.ON_LOAD_ALBUM_SCENE);
-					} else if (SceneManager.GetActiveScene().name == "Game") {
-						AdsManager.instance.ShowAdvertisment (AdPackage.AdEvent.Event.ON_LOAD_GAME_SCENE);
-					} 
+				AdsManager.instance.ShowAdvertisment(AdPackage.AdEvent.Event.ON_LOAD_ALBUM_SCENE);
 			}
-			
-			void OnDestroy ()
+			else if (SceneManager.GetActiveScene().name == "Game")
 			{
-					AdsManager.instance.HideAdvertisment ();
+				AdsManager.instance.ShowAdvertisment(AdPackage.AdEvent.Event.ON_LOAD_GAME_SCENE);
 			}
+		}
+
+		void OnDestroy()
+		{
+			try
+			{
+
+				AdsManager.instance.HideAdvertisment();
+			}
+			catch (System.Exception)
+			{
+
+				Debug.Log("Tried To Destry Ads Manager");
+			}
+		}
 	}
 }

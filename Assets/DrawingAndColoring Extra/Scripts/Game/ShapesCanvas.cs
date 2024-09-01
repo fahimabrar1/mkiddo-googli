@@ -11,7 +11,8 @@ using System.Collections.Generic;
 namespace IndieStudio.DrawingAndColoring.Logic
 {
 	[DisallowMultipleComponent]
-	public class ShapesCanvas : MonoBehaviour {
+	public class ShapesCanvas : MonoBehaviour
+	{
 
 		public static ShapesCanvas instance;
 
@@ -26,33 +27,40 @@ namespace IndieStudio.DrawingAndColoring.Logic
 		public static Text shapeOrder;
 
 		// Use this for initialization
-		void Awake () {
-			if (instance == null) {
+		void Awake()
+		{
+			if (instance == null)
+			{
 				instance = this;
-				DontDestroyOnLoad (gameObject);
+				DontDestroyOnLoad(gameObject);
 
-				SetShapeOrderReference();
+				// SetShapeOrderReference();
 
 				//Instantiate the shapes
-				InstantiateShapes ();
-			} else {
+				InstantiateShapes();
+			}
+			else
+			{
 				//Set up the render camera of the Canvas
-				Canvas canvas = instance.GetComponent<Canvas> ();
-				if (canvas.worldCamera == null) {
+				Canvas canvas = instance.GetComponent<Canvas>();
+				if (canvas.worldCamera == null)
+				{
 					canvas.worldCamera = Camera.main;
 				}
 
-				SetShapeOrderReference();
+				// SetShapeOrderReference();
 
-				Destroy (gameObject);
+				Destroy(gameObject);
 			}
 		}
 
 		/// <summary>
 		/// Set the shape order reference.
 		/// </summary>
-		private static void SetShapeOrderReference(){
-			if(shapeOrder == null){
+		private static void SetShapeOrderReference()
+		{
+			if (shapeOrder == null)
+			{
 				shapeOrder = GameObject.Find("ShapeOrder").GetComponent<Text>();
 			}
 		}
@@ -60,39 +68,46 @@ namespace IndieStudio.DrawingAndColoring.Logic
 		/// <summary>
 		/// Instantiate the shapes.
 		/// </summary>
-		public void InstantiateShapes(){
-			
-			if (shapesContainer == null) {
+		public void InstantiateShapes()
+		{
+
+			if (shapesContainer == null)
+			{
 				Debug.LogError("Shapes Container is undefined");
 				return;
 			}
 
-			if (ShapesManager.instance.shapes.Count == 0) {
+			if (ShapesManager.instance.shapes.Count == 0)
+			{
 				Debug.LogWarning("No Shapes Found in the list");
 			}
 
 			//Destroy all shapes in the shapesContainer
-			foreach (Transform child in shapesContainer) {
+			foreach (Transform child in shapesContainer)
+			{
 				Destroy(child.gameObject);
 			}
-			
+
 			RectTransform rectTransform;
-			
-			for (int i = 0 ; i < ShapesManager.instance.shapes.Count ;i++){
-				if(ShapesManager.instance.shapes[i] == null){
+
+			for (int i = 0; i < ShapesManager.instance.shapes.Count; i++)
+			{
+				if (ShapesManager.instance.shapes[i] == null)
+				{
 					continue;
 				}
-				GameObject shape = Instantiate (ShapesManager.instance.shapes[i].gamePrefab, Vector3.zero, Quaternion.identity) as GameObject;
-				shape.name  = ShapesManager.instance.shapes[i].gamePrefab.name;//set the name of the shape
-				if (shape.name == "FreeArea") {//Hide Free Area image
-					shape.GetComponent<Image> ().enabled = false;
+				GameObject shape = Instantiate(ShapesManager.instance.shapes[i].gamePrefab, Vector3.zero, Quaternion.identity) as GameObject;
+				shape.name = ShapesManager.instance.shapes[i].gamePrefab.name;//set the name of the shape
+				if (shape.name == "FreeArea")
+				{//Hide Free Area image
+					shape.GetComponent<Image>().enabled = false;
 				}
-				shape.transform.SetParent (shapesContainer);//set the parent of the shape
+				shape.transform.SetParent(shapesContainer);//set the parent of the shape
 				rectTransform = shape.GetComponent<RectTransform>();//get RectTransform component
-				//rectTransform.offsetMax = rectTransform.offsetMin = Vector2.zero;//reset offset
+																	//rectTransform.offsetMax = rectTransform.offsetMin = Vector2.zero;//reset offset
 				rectTransform.anchoredPosition3D = Vector3.zero;//reset anchor position
 				shape.transform.localScale = Vector3.one;//reset the scale to (1,1,1)
-				shape.SetActive (false);//disable the shape
+				shape.SetActive(false);//disable the shape
 				ShapesManager.instance.shapes[i].gamePrefab = shape.gameObject;
 			}
 		}
