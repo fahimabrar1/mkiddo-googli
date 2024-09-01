@@ -15,15 +15,25 @@ public class AkibukiHomeSubController : MonoBehaviour
     public Color WhiteColor;
 
 
-
-    // Start is called before the first frame update
-    void Start()
+    /// <summary>
+    /// This function is called when the object becomes enabled and active.
+    /// </summary>
+    void OnEnable()
     {
         NextButton.onClick.AddListener(() => OnIncrementPanelIndex());
         BackButton.onClick.AddListener(() => OnDecrementPanelIndex());
 
-        panelIndex = 0;
         OnUpdatePanel();
+        panelIndex = 0;
+    }
+
+    /// <summary>
+    /// This function is called when the behaviour becomes disabled or inactive.
+    /// </summary>
+    void OnDisable()
+    {
+        NextButton.onClick.RemoveAllListeners();
+        BackButton.onClick.RemoveAllListeners();
     }
 
 
