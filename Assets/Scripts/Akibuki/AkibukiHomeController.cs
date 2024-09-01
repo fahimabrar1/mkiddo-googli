@@ -10,10 +10,12 @@ public class AkibukiHomeController : MonoBehaviour
 
 
     public List<GameObject> panels;
+    public List<GameObject> ContentPanels;
 
     public GameObject backButton;
 
     public int panelIndex;
+    public bool isOnSubPanels;
 
 
 
@@ -23,8 +25,9 @@ public class AkibukiHomeController : MonoBehaviour
 
     public void OnClickSubPanel(int index)
     {
-        OnIncrementPanelIndex();
-        OnUpdatePanel();
+        isOnSubPanels = true;
+        OnDisablePanel(panels);
+        OnUpdatePanel(ContentPanels, index);
     }
 
 
@@ -41,7 +44,12 @@ public class AkibukiHomeController : MonoBehaviour
 
     public void OnBackPress()
     {
-        if (panelIndex > 0)
+        if (isOnSubPanels)
+        {
+            OnDisablePanel(ContentPanels);
+            isOnSubPanels = false;
+        }
+        else if (panelIndex > 0)
         {
             OnDecrementPanelIndex();
             backButton.SetActive(panelIndex != 0);
@@ -51,14 +59,25 @@ public class AkibukiHomeController : MonoBehaviour
 
 
 
+    public void OnDisablePanel(List<GameObject> objects)
+    {
+        for (int i = 0; i < objects.Count; i++)
+        {
+            objects[i].SetActive(false);
+        }
+    }
     public void OnUpdatePanel()
     {
-        for (int i = 0; i < panels.Count; i++)
-        {
-            panels[i].SetActive(false);
-        }
-
+        OnDisablePanel(panels);
         panels[panelIndex].SetActive(true);
+    }
+
+
+    public void OnUpdatePanel(List<GameObject> objects, int index)
+    {
+        OnDisablePanel(objects);
+
+        objects[index].SetActive(true);
     }
 
     public void OnIncrementPanelIndex()

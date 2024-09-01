@@ -19,17 +19,13 @@ public class AkibukiHomeSubController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        NextButton.onClick.AddListener(() => OnIncrementPanelIndex());
+        BackButton.onClick.AddListener(() => OnDecrementPanelIndex());
+
         panelIndex = 0;
         OnUpdatePanel();
     }
-    public void OnBackPress()
-    {
-        if (panelIndex > 0)
-        {
-            OnDecrementPanelIndex();
-        }
-        OnUpdatePanel();
-    }
+
 
 
 
