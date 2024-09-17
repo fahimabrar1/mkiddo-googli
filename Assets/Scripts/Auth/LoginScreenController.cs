@@ -53,7 +53,6 @@ public class LoginScreenController : MonoBehaviour
         {
             panels[i].SetActive(false);
         }
-
         panels[currentPanelIndex].SetActive(true);
     }
 

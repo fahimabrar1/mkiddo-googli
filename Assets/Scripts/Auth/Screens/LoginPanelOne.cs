@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Collections;
 public class LoginPanelOne : LoginPanelBase
 {
+    public Button Back;
     public Button Next;
     public GameObject NextPanel;
 
@@ -60,6 +61,7 @@ public class LoginPanelOne : LoginPanelBase
         numberDropdown1.value = 11;
         OnUpdateCountryCode(11);
 
+        Back.gameObject.SetActive(false);
         Next.gameObject.SetActive(false);
 
         loginScreenController.profileSO.day = "";
