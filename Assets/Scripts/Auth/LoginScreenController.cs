@@ -247,6 +247,8 @@ public class LoginScreenController : MonoBehaviour
 
 
 
+    public
+
     /// <summary>
     /// Update is called every frame, if the MonoBehaviour is enabled.
     /// </summary>
@@ -262,6 +264,13 @@ public class LoginScreenController : MonoBehaviour
                 return;
             }
         }
+    }
+
+
+
+    public void OnHoHome()
+    {
+        SceneManager.LoadScene(1);
     }
 
 }

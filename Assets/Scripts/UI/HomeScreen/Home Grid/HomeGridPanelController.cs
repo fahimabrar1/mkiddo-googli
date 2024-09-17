@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -136,7 +137,7 @@ public class HomeGridPanelController : MonoBehaviour
         UpdateTotalProgress();
     }
 
-    private void UpdateTotalProgress()
+    private async void UpdateTotalProgress()
     {
         float totalProgress = 0;
 
@@ -154,6 +155,7 @@ public class HomeGridPanelController : MonoBehaviour
             {
                 panel.SetSaveLevelByuContentFOlderName();
             }
+            await Task.Delay(500);
             OnPanelPress?.Invoke();
             OnPanelPress = null;
             ProgressBarSlider.value = 0;

@@ -19,7 +19,7 @@ public class HomeGridPanel : MonoBehaviour
 
     private MyWebRequest myWebRequest;
 
-    private int sceneID = 1;
+    private string sceneID = "Home";
 
 
     internal void SetContent(int ID, int blockID, Content content, string folderName, HomeGridPanelController homeGridPanelController)
@@ -79,24 +79,27 @@ public class HomeGridPanel : MonoBehaviour
     {
         if (VideoBlockID.Equals(117))
         {
-            sceneID = 2;
+            // Image Sorting
+            sceneID = "Image Sorting";
         }
         else if (VideoBlockID.Equals(107))
 
         {
-            sceneID = 3;
+            sceneID = "Drag And Drop";
         }
         else if (VideoBlockID.Equals(137))
         {
-            sceneID = 4;
+            sceneID = "Matching 2 Sides";
         }
         else if (VideoBlockID.Equals(128))
         {
-            sceneID = 5;
+            // Flash Cards
+            sceneID = "Flash Cards";
         }
         else if (VideoBlockID.Equals(96))
         {
-            sceneID = 6;
+            // Letter Traching
+            sceneID = "Letter Tracing";
             int level = PlayerPrefs.GetInt($"{content.name.ToSnakeCase()}", 0);
             PlayerPrefs.SetInt($"{content.name.ToSnakeCase()}_temp", level);
             PlayerPrefs.Save();
@@ -105,7 +108,8 @@ public class HomeGridPanel : MonoBehaviour
         }
         else if (VideoBlockID.Equals(97))
         {
-            sceneID = 6;
+            // Number Traching
+            sceneID = "Letter Tracing";
             int level = PlayerPrefs.GetInt($"{content.name.ToSnakeCase()}", 0);
             PlayerPrefs.SetInt($"{content.name.ToSnakeCase()}_temp", level);
             PlayerPrefs.Save();
@@ -114,7 +118,7 @@ public class HomeGridPanel : MonoBehaviour
         }
         else
         {
-            sceneID = 1;
+            sceneID = "Home";
         }
 
     }
