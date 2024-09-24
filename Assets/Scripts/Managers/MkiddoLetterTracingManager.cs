@@ -126,17 +126,13 @@ public class MkiddoLetterTracingManager : LevelBaseManager
     {
         if (tempLevel == level)
             level++;
-        PlayerPrefs.SetInt($"{panelDataSO.gameName}", (level == headerButtons.Count - 1) ? 0 : level);
-        PlayerPrefs.SetInt($"{panelDataSO.gameName}_temp", level);
-
-        PlayerPrefs.Save();
-
+        MyPlayerPrefabs.Instance.SetInt($"{panelDataSO.gameName}", (level == headerButtons.Count - 1) ? 0 : level);
+        MyPlayerPrefabs.Instance.SetInt($"{panelDataSO.gameName}_temp", level);
     }
 
     internal void SaveTempLevel(int id)
     {
-        PlayerPrefs.SetInt($"{panelDataSO.gameName}_temp", id);
-        PlayerPrefs.Save();
+        MyPlayerPrefabs.Instance.SetInt($"{panelDataSO.gameName}_temp", id);
         SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
     }
 

@@ -89,10 +89,10 @@ public class LoginPanelTwo : LoginPanelBase
             fileProcessor.SaveJsonToFile(fileProcessor.userFilePath, JsonUtility.ToJson(result));
             Debug.Log("Before Saved Token");
 
-            MyPlayerPrefas.Instance.SetString("access_token", result.accessToken);
+            MyPlayerPrefabs.Instance.SetString("access_token", result.accessToken);
             Debug.Log("Saved Token");
 
-            var a = MyPlayerPrefas.Instance.GetString("access_token");
+            var a = MyPlayerPrefabs.Instance.GetString("access_token");
             Debug.Log("After Fetching  Token" + a);
             loginScreenController.OnClickNext();
         }

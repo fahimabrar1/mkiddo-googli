@@ -134,35 +134,46 @@ public class HomeGridPanelController : MonoBehaviour
             return;
         }
         downloadProgresses[downloadId] = downloadValue;
-        UpdateTotalProgress();
+        StartCoroutine(UpdateTotalProgress());
     }
 
-    private async void UpdateTotalProgress()
+    private IEnumerator UpdateTotalProgress()
     {
         float totalProgress = 0;
 
+        // Calculate total progress from the download progress list
         foreach (var progress in downloadProgresses)
         {
             totalProgress += progress;
         }
 
         totalProgress /= totalDownloads;
+
+        // Update progress bar UI
         ProgressBarSlider.value = totalProgress;
         ProgressBarTexct.text = "Downloading: " + Mathf.RoundToInt(totalProgress * 100).ToString() + "%";
+
+        // If download is complete (totalProgress is 100%)
         if (totalProgress == 1)
         {
             foreach (var panel in homeGridPanels)
             {
                 panel.SetSaveLevelByuContentFOlderName();
             }
-            await Task.Delay(500);
+
+            // Wait for half a second before proceeding
+            yield return new WaitForSeconds(0.5f);
+
+            // Trigger the panel press event
             OnPanelPress?.Invoke();
             OnPanelPress = null;
+
+            // Reset progress bar
             ProgressBarSlider.value = 0;
             ProgressBarObject.SetActive(false);
         }
-        // Update your progress bar UI here
-        // e.g., progressBar.fillAmount = totalProgress;
+
+        // Log the progress
         MyDebug.Log("Total Progress: " + totalProgress);
     }
 }

@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class MyPlayerPrefas : MonoBehaviour
+public class MyPlayerPrefabs : MonoBehaviour
 {
-    public static MyPlayerPrefas Instance;
+    public static MyPlayerPrefabs Instance;
     private ES3Settings es3settings;
     /// <summary>
     /// Awake is called when the script instance is being loaded.

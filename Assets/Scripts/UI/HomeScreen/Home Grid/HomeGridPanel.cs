@@ -32,7 +32,7 @@ public class HomeGridPanel : MonoBehaviour
         this.content = content;
         VideoBlockID = blockID;
 
-        StartCoroutine(myWebRequest.FetchImageAsync(content.thumbnail, image));
+        StartCoroutine(myWebRequest.FetchImageIEnumerator(content.thumbnail, image));
     }
 
 
@@ -100,9 +100,8 @@ public class HomeGridPanel : MonoBehaviour
         {
             // Letter Traching
             sceneID = "Letter Tracing";
-            int level = PlayerPrefs.GetInt($"{content.name.ToSnakeCase()}", 0);
-            PlayerPrefs.SetInt($"{content.name.ToSnakeCase()}_temp", level);
-            PlayerPrefs.Save();
+            int level = MyPlayerPrefabs.Instance.GetInt($"{content.name.ToSnakeCase()}", 0);
+            MyPlayerPrefabs.Instance.SetInt($"{content.name.ToSnakeCase()}_temp", level);
             ShapesManager shapesManager = ShapesManager.shapesManagers["UShapesManager"];
             ShapesManager.shapesManagerReference = "UShapesManager";
         }
@@ -111,8 +110,7 @@ public class HomeGridPanel : MonoBehaviour
             // Number Traching
             sceneID = "Letter Tracing";
             int level = PlayerPrefs.GetInt($"{content.name.ToSnakeCase()}", 0);
-            PlayerPrefs.SetInt($"{content.name.ToSnakeCase()}_temp", level);
-            PlayerPrefs.Save();
+            MyPlayerPrefabs.Instance.SetInt($"{content.name.ToSnakeCase()}_temp", level);
             ShapesManager shapesManager = ShapesManager.shapesManagers["NShapesManager"];
             ShapesManager.shapesManagerReference = "NShapesManager";
         }
@@ -125,8 +123,7 @@ public class HomeGridPanel : MonoBehaviour
 
     internal void SetSaveLevelByuContentFOlderName()
     {
-        PlayerPrefs.SetInt($"{gameName}", 0);
-        PlayerPrefs.Save();
+        MyPlayerPrefabs.Instance.SetInt($"{gameName}", 0);
     }
 }
 

@@ -129,8 +129,8 @@ public class MyWebRequest
 
 
 
-    // Method to fetch the image asynchronously from the specified URL
-    public IEnumerator FetchImageAsync(string url, Image image)
+    // Method to fetch the image Enumerator from the specified URL
+    public IEnumerator FetchImageIEnumerator(string url, Image image)
     {
         using UnityWebRequest www = UnityWebRequestTexture.GetTexture(url);
 
@@ -159,7 +159,7 @@ public class MyWebRequest
         }
     }
 
-    // Method to fetch the image asynchronously from the specified URL
+    // Method to fetch the image Enumerator from the specified URL
     public IEnumerator SendOTP(string url, string mobileNumber, Action<MyWebReqSuccessCallback> OnSuccessCallback, Action<MyWebReqFailedCallback> OnFailedCallback)
     {
 
