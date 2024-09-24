@@ -42,6 +42,7 @@ public class LoginPanelTwo : LoginPanelBase
         loginScreenController.profileSO.month = "";
         loginScreenController.profileSO.year = "";
         loginScreenController.profileSO.avatarPath = "";
+        headerText.text = $"Enter your four digit code that we have sent to your mobile number ({loginScreenController.profileSO.countryCode} {loginScreenController.profileSO.mobileNumber})";
 
         if (inputField.text.Length > 0)
             Next.gameObject.SetActive(false);
@@ -63,7 +64,6 @@ public class LoginPanelTwo : LoginPanelBase
 
     void Start()
     {
-        headerText.text = $"Enter your four digit code that we have sent to your mobile number ({loginScreenController.profileSO.countryCode} {loginScreenController.profileSO.mobileNumber})";
         resultText.gameObject.transform.localScale = Vector3.zero;
         resultText.gameObject.SetActive(false);
         // Ensure all input fields are cleared initially
@@ -90,9 +90,11 @@ public class LoginPanelTwo : LoginPanelBase
             FileProcessor fileProcessor = new();
             UpdateUserData(result);
             fileProcessor.SaveJsonToFile(fileProcessor.userFilePath, JsonUtility.ToJson(result));
+            MyDebug.Log("Before Saved Prefab");
+
             PlayerPrefs.SetString("access_token", result.accessToken);
             PlayerPrefs.Save();
-
+            MyDebug.Log("Saved Prefab");
             await Task.Delay(2000);
             loginScreenController.OnClickNext();
         }
@@ -108,17 +110,20 @@ public class LoginPanelTwo : LoginPanelBase
 
     private void UpdateUserData(MkiddOOnVerificationSuccessModel result)
     {
-        var dates = result.child_info[0].birth_date.Split('-');
+        if (result.child_info.Length > 0)
+        {
+            var dates = result.child_info[0].birth_date.Split('-');
 
-        loginScreenController.profileSO.id = result.uid;
-        loginScreenController.profileSO.child_id = result.child_info[0].child_id;
+            loginScreenController.profileSO.id = result.uid;
+            loginScreenController.profileSO.child_id = result.child_info[0].child_id;
 
-        loginScreenController.profileSO.year = dates[0];
-        loginScreenController.profileSO.month = dates[1].StartsWith("0") == true ? dates[1][1..] : dates[1];
-        loginScreenController.profileSO.day = dates[2].StartsWith("0") == true ? dates[2][1..] : dates[2];
+            loginScreenController.profileSO.year = dates[0];
+            loginScreenController.profileSO.month = dates[1].StartsWith("0") == true ? dates[1][1..] : dates[1];
+            loginScreenController.profileSO.day = dates[2].StartsWith("0") == true ? dates[2][1..] : dates[2];
 
-        loginScreenController.profileSO.childName = result.child_info[0].name;
-        loginScreenController.profileSO.avatarPath = result.child_info[0].profile_path;
+            loginScreenController.profileSO.childName = result.child_info[0].name;
+            loginScreenController.profileSO.avatarPath = result.child_info[0].profile_path;
+        }
     }
     public void OnFailedCallback(MyWebReqFailedCallback result)
     {

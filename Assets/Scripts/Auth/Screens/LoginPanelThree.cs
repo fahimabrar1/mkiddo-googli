@@ -53,6 +53,8 @@ public class LoginPanelThree : LoginPanelBase
 
 
         ProfilePictureButton1.onClick.AddListener(delegate { PickImageFromGallery(); });
+        Back.gameObject.SetActive(false);
+        AllVerification();
 
     }
 
@@ -257,7 +259,7 @@ public class LoginPanelThree : LoginPanelBase
 
     public void AllVerification()
     {
-        Next.gameObject.SetActive(loginScreenController.profileSO.avatarPath.Length > 0 &&
+        Next.gameObject.SetActive((loginScreenController.profileSO.avatarPath.Length > 0 || loginScreenController.profileSO.childImageSprite != null) &&
         loginScreenController.profileSO.childName.Length > 0 &&
         loginScreenController.profileSO.day.Length > 0 &&
         loginScreenController.profileSO.month.Length > 0 &&

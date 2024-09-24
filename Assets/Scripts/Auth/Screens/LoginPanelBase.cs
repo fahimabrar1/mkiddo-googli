@@ -13,4 +13,10 @@ public class LoginPanelBase : MonoBehaviour
     {
         loginScreenController.OnClickPlay();
     }
+
+
+    public virtual void OnClickBack()
+    {
+        loginScreenController.OnClickBack();
+    }
 }
