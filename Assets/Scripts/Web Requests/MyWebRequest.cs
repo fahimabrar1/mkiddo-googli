@@ -130,16 +130,14 @@ public class MyWebRequest
 
 
     // Method to fetch the image asynchronously from the specified URL
-    public async void FetchImageAsync(string url, Image image)
+    public IEnumerator FetchImageAsync(string url, Image image)
     {
         using UnityWebRequest www = UnityWebRequestTexture.GetTexture(url);
-        var requestOperation = www.SendWebRequest();
 
-        while (!requestOperation.isDone)
-        {
-            await Task.Yield(); // Yield control back to Unity until the request is done
-        }
+        // Send the web request and wait for it to complete
+        yield return www.SendWebRequest();
 
+        // Check for errors in the web request
         if (www.result != UnityWebRequest.Result.Success)
         {
             MyDebug.LogError("Failed to fetch image: " + www.error);
@@ -162,81 +160,75 @@ public class MyWebRequest
     }
 
     // Method to fetch the image asynchronously from the specified URL
-    public async void SendOTP(string url, string mobileNumber, Action<MyWebReqSuccessCallback> OnSuccessCallback, Action<MyWebReqFailedCallback> OnFailedCallback)
+    public IEnumerator SendOTP(string url, string mobileNumber, Action<MyWebReqSuccessCallback> OnSuccessCallback, Action<MyWebReqFailedCallback> OnFailedCallback)
     {
+
         // Construct the JSON payload as a string
         string jsonPayload = $"{{\"msisdn\":\"{mobileNumber}\",\"source\":\"app\",\"app_name\":\"mKiddo_v:2.0.0\",\"app_signature\":\"xjnlFYUXJq3\"}}";
 
         // Create a UnityWebRequest for POST
-        using UnityWebRequest www = new(baseUrl + url, UnityWebRequest.kHttpVerbPOST);
-
-        // Convert the JSON string to a byte array
-        byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonPayload);
-
-        // Set the request body
-        www.uploadHandler = new UploadHandlerRaw(bodyRaw);
-        www.downloadHandler = new DownloadHandlerBuffer();
+        using UnityWebRequest www = new UnityWebRequest(baseUrl + url, UnityWebRequest.kHttpVerbPOST)
+        {
+            // Convert the JSON string to a byte array
+            uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(jsonPayload)),
+            downloadHandler = new DownloadHandlerBuffer()
+        };
 
         // Set the content type to application/json
         www.SetRequestHeader("Content-Type", "application/json");
 
-        // Send the request and wait for the response
-        var requestOperation = www.SendWebRequest();
+        // Send the request and wait for it to complete
+        yield return www.SendWebRequest();
 
-        while (!requestOperation.isDone)
-        {
-            await Task.Yield(); // Yield control back to Unity until the request is done
-        }
-
+        // Check if the request was successful
         if (www.result != UnityWebRequest.Result.Success)
         {
+            // If the request failed, invoke the failure callback
             OnFailedCallback?.Invoke(JsonUtility.FromJson<MyWebReqFailedCallback>(www.downloadHandler.text));
             Debug.LogError("Failed to send OTP: " + www.downloadHandler.text);
         }
         else
         {
+            // If the request was successful, invoke the success callback
             OnSuccessCallback?.Invoke(JsonUtility.FromJson<MyWebReqSuccessCallback>(www.downloadHandler.text));
             Debug.Log("OTP sent successfully: " + www.downloadHandler.text);
         }
+
     }
 
-    public async void VerifyOTP(string url, string number, string otp, Action<MkiddOOnVerificationSuccessModel> OnSuccessCallback, Action<MyWebReqFailedCallback> OnFailedCallback)
+    public IEnumerator VerifyOTP(string url, string number, string otp, Action<MkiddOOnVerificationSuccessModel> OnSuccessCallback, Action<MyWebReqFailedCallback> OnFailedCallback)
     {
+        // Remove the '+' from the phone number
         number = number.Replace("+", "");
+
         // Construct the JSON payload as a string
         string jsonPayload = $"{{\"app_name\":\"mKiddo_v:2.6.1.beta\",\"source\":\"app\",\"login_by\":\"MSISDN\",\"msisdn\":\"{number}\",\"otp\":\"{otp}\"}}";
 
         MyDebug.Log(jsonPayload);
 
         // Create a UnityWebRequest for POST
-        using UnityWebRequest www = new(baseUrl + url, UnityWebRequest.kHttpVerbPOST);
-
-        // Convert the JSON string to a byte array
-        byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonPayload);
-
-        // Set the request body
-        www.uploadHandler = new UploadHandlerRaw(bodyRaw);
-        www.downloadHandler = new DownloadHandlerBuffer();
+        using UnityWebRequest www = new UnityWebRequest(baseUrl + url, UnityWebRequest.kHttpVerbPOST)
+        {
+            uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(jsonPayload)),
+            downloadHandler = new DownloadHandlerBuffer()
+        };
 
         // Set the content type to application/json
         www.SetRequestHeader("Content-Type", "application/json");
 
-        // Send the request and wait for the response
-        var requestOperation = www.SendWebRequest();
+        // Send the request and wait for it to complete
+        yield return www.SendWebRequest();
 
-        while (!requestOperation.isDone)
-        {
-            await Task.Yield(); // Yield control back to Unity until the request is done
-        }
-
+        // Check if the request was successful
         if (www.result != UnityWebRequest.Result.Success)
         {
-
+            // If the request failed, invoke the failure callback
             OnFailedCallback?.Invoke(JsonUtility.FromJson<MyWebReqFailedCallback>(www.downloadHandler.text));
             Debug.LogError("Failed to verify OTP: " + www.downloadHandler.text);
         }
         else
         {
+            // If the request was successful, invoke the success callback
             OnSuccessCallback?.Invoke(JsonUtility.FromJson<MkiddOOnVerificationSuccessModel>(www.downloadHandler.text));
             Debug.Log("OTP verified successfully: " + www.downloadHandler.text);
         }
