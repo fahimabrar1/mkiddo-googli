@@ -1,11 +1,9 @@
 using UnityEngine;
 using TMPro;
-using System.Diagnostics.Tracing;
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.UI;
 using DG.Tweening;
-using System.Threading.Tasks;
 public class LoginPanelTwo : LoginPanelBase
 {
     public Button Back;
@@ -50,7 +48,6 @@ public class LoginPanelTwo : LoginPanelBase
 
 
         resendButton.onClick.AddListener(OnClickResendCode);
-
     }
 
 
@@ -78,7 +75,7 @@ public class LoginPanelTwo : LoginPanelBase
     }
 
 
-    public async void OnSuccessCallback(MkiddOOnVerificationSuccessModel result)
+    public void OnSuccessCallback(MkiddOOnVerificationSuccessModel result)
     {
         if (result.status_code == 200)
         {
@@ -90,12 +87,13 @@ public class LoginPanelTwo : LoginPanelBase
             FileProcessor fileProcessor = new();
             UpdateUserData(result);
             fileProcessor.SaveJsonToFile(fileProcessor.userFilePath, JsonUtility.ToJson(result));
-            MyDebug.Log("Before Saved Prefab");
+            Debug.Log("Before Saved Token");
 
-            PlayerPrefs.SetString("access_token", result.accessToken);
-            PlayerPrefs.Save();
-            MyDebug.Log("Saved Prefab");
-            await Task.Delay(2000);
+            MyPlayerPrefas.Instance.SetString("access_token", result.accessToken);
+            Debug.Log("Saved Token");
+
+            var a = MyPlayerPrefas.Instance.GetString("access_token");
+            Debug.Log("After Fetching  Token" + a);
             loginScreenController.OnClickNext();
         }
         else
