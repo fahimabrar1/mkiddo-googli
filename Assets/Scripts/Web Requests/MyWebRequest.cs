@@ -24,45 +24,6 @@ public class MyWebRequest
         }
     }
 
-
-    // Use a JavaScript function to unzip in WebGL
-    [DllImport("__Internal")]
-    private static extern void UnzipInWebGL(byte[] zipData, string gameType, string fileName);
-
-
-    public IEnumerator DownloadAndUnzipWeb(string url, string fileName, string gameType, int downloadID, Action<float, int> OnUpdateDownloadProgress)
-    {
-        UnityWebRequest www = UnityWebRequest.Get(url);
-
-        www.SendWebRequest();
-
-        while (!www.isDone)
-        {
-            OnUpdateDownloadProgress?.Invoke(www.downloadProgress, downloadID);
-            yield return new WaitForSeconds(0.05f);
-        }
-
-        if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.DataProcessingError || www.result == UnityWebRequest.Result.ProtocolError)
-        {
-            MyDebug.Log($"Error for file:{fileName}, error: {www.result}");
-        }
-        else
-        {
-            // Instead of writing to a file, handle the downloaded data in-memory
-            byte[] zipData = www.downloadHandler.data;
-
-            // Pass the zip data to a JavaScript function to handle unzipping (JSZip)
-            MyDebug.Log("Handling zip file in WebGL using JSZip...");
-            UnzipInWebGL(zipData, gameType, fileName);
-
-            OnUpdateDownloadProgress?.Invoke(1, downloadID);
-        }
-
-        www.Dispose();
-    }
-
-
-
     public IEnumerator DownloadAndUnzip(string url, string fileName, string gameType, int downloadID, Action<float, int> OnUpdateDownloadProgress, string access_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbl9ieSI6Ik1TSVNETiIsImdvb2dsZV9pZCI6Ijk4NzQ1NjM3NDI4OTEtMzAiLCJ1aWQiOjM4MTg4LCJtc2lzZG4iOiI4ODAxNjg3MDU2MTQwIiwiZW1haWwiOiIiLCJzb3VyY2UiOiJhcHAiLCJhcHBfbmFtZSI6Im1LaWRkb192OjIuNi4xLmJldGEiLCJpYXQiOjE3MTI0MzA1MjcsImV4cCI6MTcxMjg2MjUyN30.oFouaGLiza11cSFODgS5TjqRWLgAjvntNM0A9HAwH0c")
     {
         UnityWebRequest www = UnityWebRequest.Get(url);
