@@ -58,18 +58,37 @@ public class DragAndDropManager : DropManager
     private int TOTAL_FILES_TO_LOAD = 0;
     private int TOTAL_FILES_LOADED = 0;
 
+    List<string> audioCombList;
+
+
+    public void OnLoadAudioFiles(List<string> audios)
+    { }
+
     // Awake is called when the script instance is being loaded
     private void Awake()
     {
         // Construct the file path for the sorted image and audio files
         string dragCombFilePath = Application.persistentDataPath + $"/googli/{panelDataSO.gamePanelData.gameTypeName}/drag_comb/drag_comb";
+
         string dragFilePath = Application.persistentDataPath + $"/googli/{panelDataSO.gamePanelData.gameTypeName}/{panelDataSO.contentTypeFolderName}/{panelDataSO.contentTypeFolderName}";
 
         string prefix = "";
+        audioCombList = new();
 
-        // all combination audios
-        var audioCombList = FileProcessor.GetSortedAudioFiles(dragCombFilePath, "aud_comb_");
-
+        // #if UNITY_WEBGL && !UNITY_EDITOR
+        //                 // all combination audios
+        //                 StartCoroutine(FileProcessor.GetSortedAudioFilesFromWeb(dragCombFilePath, (val) => { audioCombList = val; }, "aud_comb_"));
+        //                 for (int i = 0; i < audioCombList.Count; i++)
+        //                 {
+        //                     Debug.Log("Got Comb for webgl: " + audioCombList[i]);
+        //                 }
+        // #else
+        audioCombList = FileProcessor.GetSortedAudioFiles(dragCombFilePath, "aud_comb_");
+        for (int i = 0; i < audioCombList.Count; i++)
+        {
+            Debug.Log("Got Comb for webgl: " + audioCombList[i]);
+        }
+        // #endif
         // getting all audios
         var allAudios = FileProcessor.GetSortedAudioFiles(dragCombFilePath);
         // getting all combined content
@@ -79,13 +98,21 @@ public class DragAndDropManager : DropManager
         //getting all final combinations
         var combIMList = FileProcessor.GetSortedImageFiles(dragCombFilePath, "im_comb_");
 
+        Debug.Log("Got all  the file");
 
         // Get the current level from the player preferences
         level = PlayerPrefs.GetInt($"{panelDataSO.gameName}", 0);
 
 
         TOTAL_FILES_TO_LOAD++;
-        FileProcessor.GetAudioClipByFileName($"{dragCombFilePath}\\{initendAudioFile}", (clip) =>
+        string _dragCombFilePath = "";
+#if UNITY_WEBGL && !UNITY_EDITOR
+
+         _dragCombFilePath = $"{dragCombFilePath}/{initendAudioFile}";
+#else
+        _dragCombFilePath = $"{dragCombFilePath}/{initendAudioFile}";
+#endif
+        FileProcessor.GetAudioClipByFileName(_dragCombFilePath, (clip) =>
         {
             dragAndDropAudioPlayer.OnsetInitEndAudio(clip);
             LoadCheck();

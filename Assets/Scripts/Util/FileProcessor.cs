@@ -1,12 +1,10 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using UnityEngine;
-using UnityEngine.Networking;
 
 public class FileProcessor
 {
@@ -63,6 +61,7 @@ public class FileProcessor
     {
         return allFiles.Where(file => targetFileNames.Contains(Path.GetFileName(file))).ToList();
     }
+
 
     public static List<string> GetSortedAudioFiles(string directoryPath, string prefix = "")
     {
@@ -196,20 +195,47 @@ public class FileProcessor
         return resizedTexture;
     }
 
+    // public static void GetAudioClipByFileName(string filePath, Action<AudioClip> onComplete)
+    // {
+    //     if (File.Exists(filePath) && AudioExtensions.Contains(Path.GetExtension(filePath).ToLower()))
+    //     {
+    //         AudioLoader audioLoader = new GameObject("AudioLoader").AddComponent<AudioLoader>();
+    //         MyDebug.Log($"FILE NAME: {filePath}");
+    //         audioLoader.LoadAudioClipCoroutine(filePath, onComplete);
+    //     }
+    //     else
+    //     {
+    //         MyDebug.LogWarning($"Audio file not found or invalid: {filePath}");
+    //         onComplete?.Invoke(null);
+    //     }
+    // }
+
     public static void GetAudioClipByFileName(string filePath, Action<AudioClip> onComplete)
     {
+        // #if UNITY_WEBGL && !UNITY_EDITOR
+        //     // In WebGL, use UnityWebRequest to fetch the audio file from the server
+        //     MyDebug.Log($"WEBGL MODE: Fetching Audio from URL: {filePath}");
+        //     AudioLoader audioLoader = new GameObject("AudioLoader").AddComponent<AudioLoader>();
+        //     audioLoader.LoadAudioClipFromWeb(filePath, onComplete);
+        // #else
+        // Local file loading for non-WebGL builds
+        Debug.Log($"Trying to get auudio for  {filePath}");
+
         if (File.Exists(filePath) && AudioExtensions.Contains(Path.GetExtension(filePath).ToLower()))
         {
+            Debug.Log($"ahs audio  on path: {filePath}");
             AudioLoader audioLoader = new GameObject("AudioLoader").AddComponent<AudioLoader>();
-            MyDebug.Log($"FILE NAME: {filePath}");
+            Debug.Log($"FILE NAME: {filePath}");
             audioLoader.LoadAudioClipCoroutine(filePath, onComplete);
         }
         else
         {
-            MyDebug.LogWarning($"Audio file not found or invalid: {filePath}");
+            Debug.LogWarning($"Audio file not found or invalid: {filePath}");
             onComplete?.Invoke(null);
         }
+        // #endif
     }
+
 
     #region Json File Handler
 

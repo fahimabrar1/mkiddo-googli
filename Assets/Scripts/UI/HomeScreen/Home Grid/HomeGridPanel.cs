@@ -32,7 +32,7 @@ public class HomeGridPanel : MonoBehaviour
         this.content = content;
         VideoBlockID = blockID;
 
-        StartCoroutine(myWebRequest.FetchImageIEnumerator(content.thumbnail, image));
+        StartCoroutine(myWebRequest.FetchImageIEnumeratorWeb(content.thumbnail, image));
     }
 
 

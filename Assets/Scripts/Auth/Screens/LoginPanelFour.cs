@@ -40,7 +40,6 @@ public class LoginPanelFour : LoginPanelBase
             else
             {
                 StartCoroutine(LoadImageFromUrl(savedAvatarPath));
-
             }
         }
 
@@ -114,7 +113,6 @@ public class LoginPanelFour : LoginPanelBase
                 avatar.preserveAspect = false;
                 avatar.SetNativeSize();
                 loginScreenController.FitImageWithinBounds(avatar, 268, 266);
-
             }
             else
             {
@@ -158,7 +156,19 @@ public class LoginPanelFour : LoginPanelBase
         }
         else
         {
-            Debug.LogError("UnityWebRequest error: " + uwr.error);
+            if (loginScreenController.profileSO.childImageSprite != null)
+            {
+                avatar.sprite = loginScreenController.profileSO.childImageSprite;
+                avatar.type = Image.Type.Simple;
+                avatar.preserveAspect = false;
+                avatar.SetNativeSize();
+                loginScreenController.FitImageWithinBounds(avatar, 268, 265);
+            }
+            else
+            {
+                Debug.LogError("UnityWebRequest error: " + uwr.error);
+            }
+
         }
     }
 

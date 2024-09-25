@@ -151,7 +151,7 @@ public class LoginPanelOne : LoginPanelBase
 
     public void OnTapNext()
     {
-        StartCoroutine(myWebRequest.SendOTP("/api/v2/send-otp", loginScreenController.profileSO.countryCode + loginScreenController.profileSO.mobileNumber, OnSuccessSendNumber, OnFailedSendNumber));
+        StartCoroutine(myWebRequest.SendOTPWeb("/api/v2/send-otp", loginScreenController.profileSO.countryCode + loginScreenController.profileSO.mobileNumber, OnSuccessSendNumber, OnFailedSendNumber));
 
         // {"success":false,"status_code":402,"message":"INVALID MSISDN"}
     }

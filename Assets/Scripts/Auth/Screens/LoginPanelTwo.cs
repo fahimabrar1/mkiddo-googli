@@ -185,13 +185,13 @@ public class LoginPanelTwo : LoginPanelBase
                 otp += text.text;
             }
 
-            StartCoroutine(myWebRequest.VerifyOTP("/api/V3/auth/sign-in", loginScreenController.profileSO.countryCode + loginScreenController.profileSO.mobileNumber, otp, OnSuccessCallback, OnFailedCallback));
+            StartCoroutine(myWebRequest.VerifyOTPWeb("/api/V3/auth/sign-in", loginScreenController.profileSO.countryCode + loginScreenController.profileSO.mobileNumber, otp, OnSuccessCallback, OnFailedCallback));
         }
     }
 
     public void OnTapNext()
     {
-        StartCoroutine(myWebRequest.VerifyOTP("/api/V3/auth/sign-in", loginScreenController.profileSO.countryCode + loginScreenController.profileSO.mobileNumber, otp, OnSuccessCallback, OnFailedCallback));
+        StartCoroutine(myWebRequest.VerifyOTPWeb("/api/V3/auth/sign-in", loginScreenController.profileSO.countryCode + loginScreenController.profileSO.mobileNumber, otp, OnSuccessCallback, OnFailedCallback));
     }
 
 
@@ -223,7 +223,7 @@ public class LoginPanelTwo : LoginPanelBase
         {
             otp += text.text;
         }
-        StartCoroutine(myWebRequest.SendOTP("/api/v2/send-otp", loginScreenController.profileSO.countryCode + loginScreenController.profileSO.mobileNumber, null, null));
+        StartCoroutine(myWebRequest.SendOTPWeb("/api/v2/send-otp", loginScreenController.profileSO.countryCode + loginScreenController.profileSO.mobileNumber, null, null));
         StartCoroutine(ResendCooldownCoroutine());
     }
 
