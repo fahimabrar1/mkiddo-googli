@@ -29,6 +29,10 @@ public class LoginPanelTwo : LoginPanelBase
     void OnEnable()
     {
         myWebRequest = new();
+        resultText.text = "";
+        resultText.gameObject.transform.localScale = Vector3.zero;
+        resultText.gameObject.gameObject.SetActive(false);
+
         resendCodeText.text = "Resend";
         resendButton.interactable = true;
         resendCodeText.color = Color.black;
@@ -41,9 +45,17 @@ public class LoginPanelTwo : LoginPanelBase
         loginScreenController.profileSO.year = "";
         loginScreenController.profileSO.avatarPath = "";
         headerText.text = $"Enter your four digit code that we have sent to your mobile number ({loginScreenController.profileSO.countryCode} {loginScreenController.profileSO.mobileNumber})";
+        for (int i = 0; i < PinFields.Count; i++)
+        {
+            PinFields[i].text = "";
+        }
 
         if (inputField.text.Length > 0)
+        {
             Next.gameObject.SetActive(false);
+
+            inputField.text = "";
+        }
         Back.gameObject.SetActive(true);
 
 

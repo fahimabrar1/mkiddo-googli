@@ -25,7 +25,7 @@ public class LoginScreenController : MonoBehaviour
     /// </summary>
     void Start()
     {
-        loggedIn = PlayerPrefs.GetInt("is_logged_in", 0);
+        loggedIn = MyPlayerPrefabs.Instance.GetInt("is_logged_in", 0);
         if (loggedIn == 1)
             OnClickPlay();
         else
@@ -162,8 +162,8 @@ public class LoginScreenController : MonoBehaviour
     //     profileSO.childName = task.Result.DisplayName;
     //     profileSO.isSignUsingGoogle = true;
     //     profileSO.ImageURI = task.Result.ImageUrl;
-    //     PlayerPrefs.SetString("access_token", task.Result.IdToken);
-    //     PlayerPrefs.Save();
+    //     MyPlayerPrefabs.Instance.SetString("access_token", task.Result.IdToken);
+    //     MyPlayerPrefabs.Instance.Save();
 
     //     OnJumpTo(3);
     // }

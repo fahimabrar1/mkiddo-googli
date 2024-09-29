@@ -38,7 +38,7 @@ public class LoginPanelOne : LoginPanelBase
     void OnEnable()
     {
 
-        if (PlayerPrefs.GetInt("logged_in", 0) == 1)
+        if (MyPlayerPrefabs.Instance.GetInt("logged_in", 0) == 1)
         {
             FindObjectOfType<GameManager>().LoadSceneAsync(1);
         }
@@ -53,7 +53,7 @@ public class LoginPanelOne : LoginPanelBase
             options.Add(option);
         }
 
-
+        numberText.text = "";
         // Add the options to the dropdown
         numberDropdown1.AddOptions(options);
         numberDropdown1.value = 11;
@@ -68,6 +68,9 @@ public class LoginPanelOne : LoginPanelBase
         loginScreenController.profileSO.year = "";
         loginScreenController.profileSO.avatarPath = "";
         loginScreenController.profileSO.childName = "";
+
+        inputImage.sprite = InputField1;
+
     }
 
 
@@ -75,12 +78,27 @@ public class LoginPanelOne : LoginPanelBase
     public void OnTapDialerButton(int num)
     {
 
+        if (numberText.text.Length == 0 && num == 0)
+        {
+            numberText.text = "";
+            textLimitText.text = "0/10";
+            return;
+        }
         if (numberText.text.Length < 10)
         {
             numberText.text += num.ToString();
             loginScreenController.profileSO.mobileNumber = numberText.text;
             textLimitText.text = numberText.text.Length + "/10";
-            Next.gameObject.SetActive(true);
+            if (numberText.text.Length < 10)
+            {
+                inputImage.sprite = InputField1;
+                Next.gameObject.SetActive(false);
+            }
+            else
+            {
+                inputImage.sprite = InputField2;
+                Next.gameObject.SetActive(true);
+            }
         }
 
     }
@@ -90,13 +108,13 @@ public class LoginPanelOne : LoginPanelBase
     {
         MyDebug.Log(num);
 
-        if (num.Length > 0 && num[0] == '0')
+        if (numberText.text.Length == 0 && num.Length > 0 && num[0] == '0')
         {
             numberText.text = "";
             textLimitText.text = "0/10";
             return;
         }
-        if (numberText.text.Length < 10 && num.Length > 0)
+        if (num.Length <= 10 && num.Length > 0)
         {
             numberText.text = num.ToString();
             loginScreenController.profileSO.mobileNumber = numberText.text;
@@ -119,6 +137,8 @@ public class LoginPanelOne : LoginPanelBase
     {
         panels[0].SetActive(false);
         panels[1].SetActive(true);
+        Next.gameObject.SetActive(numberText.text.Length == 10);
+
     }
 
 

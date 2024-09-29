@@ -51,8 +51,7 @@ public class LoginPanelFour : LoginPanelBase
 
     public void LoggedIn()
     {
-        PlayerPrefs.SetInt("is_logged_in", 1);
-        PlayerPrefs.Save();
+        MyPlayerPrefabs.Instance.SetInt("is_logged_in", 1);
     }
 
     private IEnumerator LoadImageFromAppDir(string path)
