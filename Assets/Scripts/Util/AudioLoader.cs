@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -33,6 +34,8 @@ public class AudioLoader : MonoBehaviour
             onComplete?.Invoke(clip);
         }
     }
+
+
     public void LoadAudioClipCoroutine(string filePath, Action<AudioClip> OnLoadAudioClip)
     {
         StartCoroutine(LoadAudioCoroutine(filePath, OnLoadAudioClip));
@@ -42,12 +45,49 @@ public class AudioLoader : MonoBehaviour
     {
         string url = "";
 #if UNITY_WEBGL && !UNITY_EDITOR
-        url =  filePath;
-        Debug.Log($"File Path: {filePath}");
+
+        url = filePath;
+        Debug.Log($"File Path For Loading: {filePath}");
+
+
+        byte[] loadData = File.ReadAllBytes(filePath); // Read raw bytes from the file
+        Debug.Log($"got the bytes");
+
+        float[] samples = new float[loadData.Length * 4];
+        Debug.Log($"got the samples");
+
+        Buffer.BlockCopy(loadData, 0, samples, 0, loadData.Length);
+        Debug.Log($"block copied");
+        int channels = 2; //Assuming audio is stereo or change to 1 if it's mono
+        int sampleRate = 44100; //Assuming your samplerate is 44100 or change to 48000 or whatever is appropriate
+
+        AudioClip clip = AudioClip.Create("ClipName", samples.Length, channels, sampleRate, false);
+        Debug.Log($"created clip");
+        clip.SetData(samples, 0);
+        Debug.Log($"set clip data");
+        GameObject objj = new("AS");
+        var ass = objj.AddComponent<AudioSource>();
+        ass.clip = clip;
+        ass.volume = 1;
+        ass.pitch = 1;
+        ass.Play();
+        onLoadAudioClip?.Invoke(clip);
+        Debug.Log($"set clip data");
+        yield return new WaitForSeconds(0.01f);
+
+        Debug.Log($"Loaded audio from file: {Path.GetFileName(filePath)}");
+
+
+        // Even though this is not asynchronous, you must return something in a coroutine
 #else
+
+
+
+
+
         url = "file://" + filePath;
         Debug.Log($"File Path: {filePath}");
-#endif
+
 
         // using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(url, AudioType.UNKNOWN))
         // {
@@ -108,7 +148,8 @@ public class AudioLoader : MonoBehaviour
 
         }
 
-
+#endif
 
     }
+
 }
