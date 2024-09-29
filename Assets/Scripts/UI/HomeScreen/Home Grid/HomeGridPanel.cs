@@ -109,7 +109,7 @@ public class HomeGridPanel : MonoBehaviour
         {
             // Number Traching
             sceneID = "Letter Tracing";
-            int level = PlayerPrefs.GetInt($"{content.name.ToSnakeCase()}", 0);
+            int level = MyPlayerPrefabs.Instance.GetInt($"{content.name.ToSnakeCase()}", 0);
             MyPlayerPrefabs.Instance.SetInt($"{content.name.ToSnakeCase()}_temp", level);
             ShapesManager shapesManager = ShapesManager.shapesManagers["NShapesManager"];
             ShapesManager.shapesManagerReference = "NShapesManager";

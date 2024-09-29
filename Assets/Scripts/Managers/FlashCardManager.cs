@@ -93,7 +93,7 @@ public class FlashCardManager : LevelBaseManager
         flashCardAudioPlayer.Initialize(letterAudioList.Count);
 
         // Get the current level from the player preferences
-        level = PlayerPrefs.GetInt($"{panelDataSO.gameName}", 0);
+        level = MyPlayerPrefabs.Instance.GetInt($"{panelDataSO.gameName}", 0);
         currentCardIndex = level;
         for (int i = 0; i < letterAudioList.Count; i++)
         {
@@ -228,7 +228,6 @@ public class FlashCardManager : LevelBaseManager
 
     public override void SaveLevel()
     {
-        PlayerPrefs.SetInt($"{panelDataSO.gameName}", level);
-        PlayerPrefs.Save();
+        MyPlayerPrefabs.Instance.SetInt($"{panelDataSO.gameName}", level);
     }
 }

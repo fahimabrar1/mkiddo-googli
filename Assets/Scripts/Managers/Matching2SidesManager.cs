@@ -42,7 +42,7 @@ public class Matching2SidesManager : LevelBaseManager
         // Get the sorted image and audio files from the file processor
         var imagesList = FileProcessor.GetSortedImageFilesForMatchingSides(filePath);
         var audioList = FileProcessor.GetSortedAudioFiles(filePath);
-        level = PlayerPrefs.GetInt($"{panelDataSO.gameName}", 0);
+        level = MyPlayerPrefabs.Instance.GetInt($"{panelDataSO.gameName}", 0);
 
         // Process image pairs
         ProcessImagePairs(imagesList);
@@ -135,7 +135,6 @@ public class Matching2SidesManager : LevelBaseManager
     public override void SaveLevel()
     {
         int finalLevel = (TOTAL_PAIRS % 4 == 0) ? Mathf.FloorToInt(TOTAL_PAIRS / 4 - 1) : Mathf.FloorToInt(TOTAL_PAIRS / 4 - 1) + 1;
-        PlayerPrefs.SetInt($"{panelDataSO.gameName}", (level == finalLevel) ? 0 : ++level);
-        PlayerPrefs.Save();
+        MyPlayerPrefabs.Instance.SetInt($"{panelDataSO.gameName}", (level == finalLevel) ? 0 : ++level);
     }
 }

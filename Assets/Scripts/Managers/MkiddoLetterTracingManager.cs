@@ -35,8 +35,8 @@ public class MkiddoLetterTracingManager : LevelBaseManager
     /// </summary>
     private void OnEnable()
     {
-        level = PlayerPrefs.GetInt($"{panelDataSO.gameName}", 0);
-        tempLevel = PlayerPrefs.GetInt($"{panelDataSO.gameName}_temp", 0);
+        level = MyPlayerPrefabs.Instance.GetInt($"{panelDataSO.gameName}", 0);
+        tempLevel = MyPlayerPrefabs.Instance.GetInt($"{panelDataSO.gameName}_temp", 0);
 
         LockShapeToggle(tempLevel > level);
 

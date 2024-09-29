@@ -101,7 +101,7 @@ public class DragAndDropManager : DropManager
         Debug.Log("Got all  the file");
 
         // Get the current level from the player preferences
-        level = PlayerPrefs.GetInt($"{panelDataSO.gameName}", 0);
+        level = MyPlayerPrefabs.Instance.GetInt($"{panelDataSO.gameName}", 0);
 
 
         TOTAL_FILES_TO_LOAD++;
@@ -355,8 +355,6 @@ public class DragAndDropManager : DropManager
     public override void SaveLevel()
     {
         MyDebug.Log("SAVING.......");
-        PlayerPrefs.SetInt($"{panelDataSO.gameName}", (level == totalAudio - 1) ? 0 : ++level);
-        MyDebug.Log("SAVING......." + level);
-        PlayerPrefs.Save();
+        MyPlayerPrefabs.Instance.SetInt($"{panelDataSO.gameName}", (level == totalAudio - 1) ? 0 : ++level);
     }
 }

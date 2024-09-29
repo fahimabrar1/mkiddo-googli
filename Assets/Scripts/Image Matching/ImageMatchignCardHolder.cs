@@ -84,8 +84,6 @@ public class ImageMatchignCardHolder : LevelBaseManager
     public override void SaveLevel()
     {
         MyDebug.Log("SAVING.......");
-        PlayerPrefs.SetInt($"{panelDataSO.gameName}", (level == MAX_LEVEL - 1) ? 0 : ++level);
-        MyDebug.Log("SAVING......." + level);
-        PlayerPrefs.Save();
+        MyPlayerPrefabs.Instance.SetInt($"{panelDataSO.gameName}", (level == MAX_LEVEL - 1) ? 0 : ++level);
     }
 }
