@@ -74,6 +74,8 @@ namespace IndieStudio.EnglishTracingBook.Utility
             {
                 if (canvasGroup != null)
                 {
+                    if (!canvasGroup.gameObject.activeInHierarchy)
+                        canvasGroup.gameObject.SetActive(true);
                     canvasGroup.alpha = 1;
                     StartCoroutine(CanvasFade(FadeType.FADE_OUT));
                 }

@@ -3,7 +3,7 @@
     "m_SelectedProcess": {
         "deviceId": "V4EMOROZPBWW6LA6",
         "name": "com.momagic.appekhori",
-        "processId": 12816,
+        "processId": 19941,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -66,6 +66,24 @@
             "deviceId": "V4EMOROZPBWW6LA6",
             "name": "com.momagic.appekhori",
             "processId": 12816,
+            "exited": false
+        },
+        {
+            "deviceId": "V4EMOROZPBWW6LA6",
+            "name": "com.momagic.appekhori",
+            "processId": 27139,
+            "exited": false
+        },
+        {
+            "deviceId": "V4EMOROZPBWW6LA6",
+            "name": "com.momagic.appekhori",
+            "processId": 12622,
+            "exited": false
+        },
+        {
+            "deviceId": "V4EMOROZPBWW6LA6",
+            "name": "com.momagic.appekhori",
+            "processId": 19941,
             "exited": false
         }
     ],
