@@ -38,9 +38,15 @@ public class LoginPanelOne : LoginPanelBase
     void OnEnable()
     {
 
-        if (MyPlayerPrefabs.Instance.GetInt("logged_in", 0) == 1)
+        try
         {
-            FindObjectOfType<GameManager>().LoadSceneAsync(1);
+            if (MyPlayerPrefabs.Instance.GetInt("logged_in", 0) == 1)
+            {
+                FindObjectOfType<GameManager>().LoadSceneAsync(1);
+            }
+        }
+        catch (System.Exception)
+        {
         }
         myWebRequest = new();
         // Create a list to hold the dropdown options

@@ -11,6 +11,7 @@ public class HomeGridPanel : MonoBehaviour
     public int ID;
     public Image image;
     public Content content;
+    public GameObject loadinginddicator;
     public int VideoBlockID;
     public string contentTypeFolderName;
     public string gameName;
@@ -31,8 +32,14 @@ public class HomeGridPanel : MonoBehaviour
         gameName = content.name.ToSnakeCase();
         this.content = content;
         VideoBlockID = blockID;
+        loadinginddicator.SetActive(true);
 
-        StartCoroutine(myWebRequest.FetchImageIEnumeratorWeb(content.thumbnail, image));
+        StartCoroutine(myWebRequest.FetchImageIEnumeratorWeb(content.thumbnail, image, OnFetchComplete: OnCompleteFetching));
+    }
+
+    private void OnCompleteFetching()
+    {
+        loadinginddicator.SetActive(false);
     }
 
 

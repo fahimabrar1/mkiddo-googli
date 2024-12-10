@@ -151,7 +151,7 @@ public class MyWebRequest
 
 
     // Method to fetch the image Enumerator from the specified URL
-    public IEnumerator FetchImageIEnumeratorWeb(string url, Image image)
+    public IEnumerator FetchImageIEnumeratorWeb(string url, Image image, Action OnFetchComplete = null)
     {
         using UnityWebRequest www = UnityWebRequestTexture.GetTexture(url);
 
@@ -172,6 +172,7 @@ public class MyWebRequest
             if (image != null)
             {
                 image.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
+                OnFetchComplete?.Invoke();
             }
             else
             {
